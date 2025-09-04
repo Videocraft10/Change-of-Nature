@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjpjdk1acisbh"]
+
+[ext_resource type="Script" uid="uid://ybsubt4o2jvd" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_mgvwg"]
+
+[node name="DungeonRoom3D" type="Node3D"]
+script = ExtResource("1_mgvwg")
+metadata/_custom_type_script = "uid://ybsubt4o2jvd"

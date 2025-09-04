@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=7 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
+[ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
+[ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -17,7 +19,7 @@ tonemap_mode = 2
 [node name="world" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 1, 0)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -27,14 +29,20 @@ environment = SubResource("Environment_r3fl7")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5005, -6)
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, -2, 6)
+[node name="Ground" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(6.22, 0, 0, 0, 1, 0, 0, 0, 6.22, 3.5, -2.0005, 6)
+material_override = ExtResource("1_r4e4k")
 use_collision = true
-size = Vector3(50, 0.001, 50)
+size = Vector3(50, 1, 50)
+material = ExtResource("1_ny0t1")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-size = Vector3(6, 5, 1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.5, 0.5)
+material_override = ExtResource("1_r4e4k")
+size = Vector3(14, 4, 1)
+material = ExtResource("1_r4e4k")
 
 [node name="ProtoController" parent="." instance=ExtResource("1_72lju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 can_sprint = true
 can_freefly = true
