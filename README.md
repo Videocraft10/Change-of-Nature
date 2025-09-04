@@ -1,2 +1,2 @@
 # Change of Nature
-Change of Nature Game Revison Control
+Change of Nature Game Revision Control
