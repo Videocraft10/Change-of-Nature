@@ -28,6 +28,10 @@ extends CharacterBody3D
 ## How fast do we freefly?
 @export var freefly_speed : float = 25.0
 
+#Auto-Death Hight
+@export_group("Gameplay")
+@export var death_hight : float = -50
+
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
 @export var input_left : String = "ui_left"
@@ -117,7 +121,15 @@ func _physics_process(delta: float) -> void:
 	
 	# Use velocity to actually move
 	move_and_slide()
+	
+	# Check for hight death
+	check_fall()
 
+## Checks if a player has fallen enough to be reset
+func check_fall():
+	if global_transform.origin.y < death_hight:
+		global_transform.origin = Vector3.ZERO
+		velocity = Vector3.ZERO # Reset Velocity
 
 ## Rotate us to look around.
 ## Base of controller rotates around y (left/right). Head rotates around x (up/down).
