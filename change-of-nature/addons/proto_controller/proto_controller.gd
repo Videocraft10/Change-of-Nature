@@ -30,7 +30,9 @@ extends CharacterBody3D
 
 #Auto-Death Hight
 @export_group("Gameplay")
-@export var death_hight : float = -50
+@export var void_death_hight : float = -50
+@export var void_respwan_loc : Vector3 = Vector3.ZERO
+
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
@@ -127,8 +129,8 @@ func _physics_process(delta: float) -> void:
 
 ## Checks if a player has fallen enough to be reset
 func check_fall():
-	if global_transform.origin.y < death_hight:
-		global_transform.origin = Vector3.ZERO
+	if global_transform.origin.y < void_death_hight:
+		global_transform.origin = void_respwan_loc
 		velocity = Vector3.ZERO # Reset Velocity
 
 ## Rotate us to look around.
