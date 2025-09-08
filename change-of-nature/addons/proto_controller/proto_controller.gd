@@ -32,6 +32,7 @@ extends CharacterBody3D
 @export_group("Gameplay")
 @export var void_death_hight : float = -50
 @export var void_respwan_loc : Vector3 = Vector3.ZERO
+@export var fall_gravity_multiplier : float = 1.0
 
 
 @export_group("Input Actions")
@@ -54,6 +55,7 @@ var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed : float = 0.0
 var freeflying : bool = false
+var is_falling_after_jump : bool = false
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
@@ -91,15 +93,23 @@ func _physics_process(delta: float) -> void:
 		move_and_collide(motion)
 		return
 	
+	
+	if is_on_floor():
+		is_falling_after_jump = false
+		
 	# Apply gravity to velocity
 	if has_gravity:
 		if not is_on_floor():
-			velocity += get_gravity() * delta
+			var gravity_to_apply = get_gravity()
+			if is_falling_after_jump:
+				gravity_to_apply *= fall_gravity_multiplier
+			velocity += gravity_to_apply * delta
 
 	# Apply jumping
 	if can_jump:
 		if Input.is_action_just_pressed(input_jump) and is_on_floor():
 			velocity.y = jump_velocity
+			is_falling_after_jump = true
 
 	# Modify speed based on sprinting
 	if can_sprint and Input.is_action_pressed(input_sprint):
@@ -119,7 +129,7 @@ func _physics_process(delta: float) -> void:
 			velocity.z = move_toward(velocity.z, 0, move_speed)
 	else:
 		velocity.x = 0
-		velocity.y = 0
+		velocity.z = 0 # This was velocity.y before, corrected to Z for consistency.
 	
 	# Use velocity to actually move
 	move_and_slide()

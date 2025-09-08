@@ -42,7 +42,13 @@ material_override = ExtResource("1_r4e4k")
 size = Vector3(14, 4, 1)
 material = ExtResource("1_r4e4k")
 
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(6.22, 0, 0, 0, 0.5, 5.38668, 0, -0.866025, 3.11, 6.39, 0.9995, -2)
+size = Vector3(2, 1, 1)
+material = ExtResource("1_ny0t1")
+
 [node name="ProtoController" parent="." instance=ExtResource("1_72lju")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 can_sprint = true
 can_freefly = true
+fall_gravity_multiplier = 1.2

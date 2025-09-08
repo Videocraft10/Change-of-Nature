@@ -15,6 +15,7 @@ height = 1.8
 
 [node name="ProtoController" type="CharacterBody3D"]
 script = ExtResource("1_ucva2")
+sprint_speed = 14.0
 input_left = "move_left"
 input_right = "move_right"
 input_forward = "move_up"
