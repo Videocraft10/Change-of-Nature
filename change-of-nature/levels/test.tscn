@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=8 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
@@ -15,6 +15,9 @@ sky_material = SubResource("ProceduralSkyMaterial_noarx")
 background_mode = 2
 sky = SubResource("Sky_a0tk4")
 tonemap_mode = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ny0t1"]
+fractal_octaves = 4
 
 [node name="world" type="Node3D"]
 
@@ -52,3 +55,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 can_sprint = true
 can_freefly = true
 fall_gravity_multiplier = 1.2
+noise = SubResource("FastNoiseLite_ny0t1")
