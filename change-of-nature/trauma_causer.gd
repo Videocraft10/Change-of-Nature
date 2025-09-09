@@ -8,7 +8,9 @@ func cause_trauma():
 		if area.has_method("trauma_ready") && area.trauma_ready("yes"):
 			area.add_trauma_transmit(trauma_amount)
 			
-func trauma_reduction_rate():
+	func trauma_reduction_rate():
+		area.
+			
 	
 
 

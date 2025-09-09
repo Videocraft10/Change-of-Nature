@@ -188,8 +188,7 @@ func _physics_process(delta: float) -> void:
 
 func trauma_reduction(reduction_rate:float):
 	trauma_reduction_rate = reduction_rate
-	
-	
+	print("trauma rate reduced")
 
 func add_trauma(trauma_amount:float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 5.0)
