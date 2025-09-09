@@ -52,26 +52,10 @@ material = ExtResource("1_ny0t1")
 
 [node name="ProtoController" parent="." instance=ExtResource("1_72lju")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.775306, 0.442935, -0.592994)
-can_move = null
-has_gravity = null
-can_jump = null
 can_sprint = true
 can_freefly = true
-look_speed = null
-base_speed = null
-jump_velocity = null
-freefly_speed = null
-void_death_hight = null
-void_respwan_loc = null
-fall_gravity_multiplier = null
-trauma_reduction_rate = null
+trauma_reduction_rate = 1.0
 noise = SubResource("FastNoiseLite_r4e4k")
-noise_speed = null
-max_x = null
-max_y = null
-max_z = null
-input_sprint = null
-input_freefly = null
 
 [node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08745, 1.26362e-05, 0.000246048)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8076, 1.41532, 0.000246048)

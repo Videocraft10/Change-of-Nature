@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=8 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://cr2a33cn8wsqp" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
+[ext_resource type="Script" uid="uid://dc2iavqoaof1l" path="res://addons/proto_controller/area_3d.gd" id="2_wr06p"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g2uji"]
 
@@ -19,32 +20,14 @@ height = 1.8
 
 [node name="ProtoController" type="CharacterBody3D"]
 script = ExtResource("1_ucva2")
-can_move = null
-has_gravity = null
-can_jump = null
-can_sprint = null
-can_freefly = null
-look_speed = null
-base_speed = null
-jump_velocity = null
 sprint_speed = 14.0
-freefly_speed = null
-void_death_hight = null
-void_respwan_loc = null
-fall_gravity_multiplier = null
-trauma_reduction_rate = null
+trauma_reduction_rate = 0.5
 noise = SubResource("FastNoiseLite_g2uji")
-noise_speed = null
-max_x = null
-max_y = null
-max_z = null
 input_left = "move_left"
 input_right = "move_right"
 input_forward = "move_up"
 input_back = "move_down"
 input_jump = "jump"
-input_sprint = null
-input_freefly = null
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -60,6 +43,7 @@ shape = SubResource("CapsuleShape3D_iof21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Area3D" type="Area3D" parent="Head"]
+script = ExtResource("2_wr06p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Area3D"]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)

@@ -5,5 +5,13 @@ extends Area3D
 func cause_trauma():
 	var trauma_areas := get_overlapping_areas()
 	for area in trauma_areas:
-		if area.has_method("add_trauma"):
-			area.add_trauma(trauma_amount)
+		if area.has_method("trauma_ready") && area.trauma_ready("yes"):
+			area.add_trauma_transmit(trauma_amount)
+			
+func trauma_reduction_rate():
+	
+
+
+		#if area.has_method("add_trauma"):
+			#print("has trauma")
+			#area.add_trauma(trauma_amount)
