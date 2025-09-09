@@ -5,6 +5,7 @@
 
 extends CharacterBody3D
 
+#region @exports
 ## Can we move around?
 @export var can_move : bool = true
 ## Are we affected by gravity?
@@ -34,6 +35,13 @@ extends CharacterBody3D
 @export var void_respwan_loc : Vector3 = Vector3.ZERO
 @export var fall_gravity_multiplier : float = 1.0
 
+@export_group("Camera Shake")
+@export var trauma_reduction_rate := 1.0
+@export var noise : FastNoiseLite
+@export var noise_speed := 50.0
+@export var max_x := 10.0
+@export var max_y := 10.0
+@export var max_z := 5.0
 
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
@@ -50,19 +58,32 @@ extends CharacterBody3D
 @export var input_sprint : String = "sprint"
 ## Name of Input Action to toggle freefly mode.
 @export var input_freefly : String = "freefly"
+#endregion
 
+#region var's
 var mouse_captured : bool = false
 var look_rotation : Vector2
 var move_speed : float = 0.0
 var freeflying : bool = false
 var is_falling_after_jump : bool = false
+var trauma := 0.0
+var time := 0.0
+#endregion
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
+@onready var camera := $Head/Area3D/CollisionShape3D/Camera3D as Camera3D
+var inital_rotation : Vector3
+
+
+#region Func's
+func is_it(what):
+	return "Player" == what
 
 func _ready() -> void:
 	check_input_mappings()
+	inital_rotation = camera.rotation
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 
@@ -84,6 +105,34 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			disable_freefly()
 
+var infTrauma := false
+
+func _process(_delta):
+	time += _delta
+	trauma = max(trauma - _delta * trauma_reduction_rate, 0.0)
+	
+	camera.rotation_degrees.x = inital_rotation.x + max_x * get_shake_intensity() * get_noise_from_seed(0)
+	camera.rotation_degrees.y = inital_rotation.y + max_y * get_shake_intensity() * get_noise_from_seed(1)
+	camera.rotation_degrees.z = inital_rotation.z + max_z * get_shake_intensity() * get_noise_from_seed(2)
+	
+	if infTrauma:
+		add_trauma(.1)
+		
+	## Testing input
+	#if Input.is_action_just_pressed("sprint"):
+		#print("sprint")
+		#add_trauma(5)
+		#trauma_reduction_rate = 5
+		#await get_tree().create_timer(5).timeout
+		#add_trauma(2)
+		#if infTrauma:
+			#infTrauma = false
+			#print("false")
+		#else:
+			#infTrauma = true
+			#print("true")
+		
+		
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
@@ -136,6 +185,20 @@ func _physics_process(delta: float) -> void:
 	
 	# Check for hight death
 	check_fall()
+
+func trauma_reduction(reduction_rate:float):
+	trauma_reduction_rate = reduction_rate
+	print("trauma rate reduced")
+
+func add_trauma(trauma_amount:float):
+	trauma = clamp(trauma + trauma_amount, 0.0, 5.0)
+	
+func get_shake_intensity() -> float:
+	return trauma * trauma
+
+func get_noise_from_seed(_seed : int) -> float:
+	noise.seed = _seed
+	return noise.get_noise_1d(time * noise_speed)
 
 ## Checks if a player has fallen enough to be reset
 func check_fall():
@@ -200,5 +263,4 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
-
-	
+#endregion
