@@ -35,7 +35,7 @@ extends CharacterBody3D
 @export var fall_gravity_multiplier : float = 1.0
 
 @export_group("Camera Shake")
-@export var trama_reduction_rate := 1.0
+@export var trauma_reduction_rate := 1.0
 @export var noise : FastNoiseLite
 @export var noise_speed := 50.0
 @export var max_x := 10.0
@@ -63,18 +63,19 @@ var look_rotation : Vector2
 var move_speed : float = 0.0
 var freeflying : bool = false
 var is_falling_after_jump : bool = false
-var truama := 0.0
+var trauma := 0.0
 var time := 0.0
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera := $Head/Area3D/CollisionShape3D/Camera3D as Camera3D
-@onready var inital_rotation := Camera3D.rotation as Vector3
+var inital_rotation : Vector3
 
 
 func _ready() -> void:
 	check_input_mappings()
+	inital_rotation = camera.rotation
 	look_rotation.y = rotation.y
 	look_rotation.x = head.rotation.x
 
@@ -96,14 +97,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			disable_freefly()
 
-func _process(delta):
-	time += delta
-	truama = max(truama - delta * trama_reduction_rate, 0.0)
+func _process(_delta):
+	time += _delta
+	trauma = max(trauma - _delta * trauma_reduction_rate, 0.0)
 	
 	camera.rotation_degrees.x = inital_rotation.x + max_x * get_shake_intensity() * get_noise_from_seed(0)
 	camera.rotation_degrees.y = inital_rotation.y + max_y * get_shake_intensity() * get_noise_from_seed(1)
 	camera.rotation_degrees.z = inital_rotation.z + max_z * get_shake_intensity() * get_noise_from_seed(2)
 	
+	if Input.is_key_just_pressed(key):
+		print("gpressed")
+		
 func _physics_process(delta: float) -> void:
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
@@ -157,11 +161,11 @@ func _physics_process(delta: float) -> void:
 	# Check for hight death
 	check_fall()
 
-func add_truama(truama_amount:float):
-	truama = clamp(truama + truama_amount, 0.0, 1.0)
+func add_trauma(trauma_amount:float):
+	trauma = clamp(trauma + trauma_amount, 0.0, 1.0)
 	
 func get_shake_intensity() -> float:
-	return truama * truama
+	return trauma * trauma
 
 func get_noise_from_seed(_seed : int) -> float:
 	noise.seed = _seed

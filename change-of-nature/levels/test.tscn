@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=9 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
 [ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
+[ext_resource type="PackedScene" uid="uid://bd1pjnumtk111" path="res://levels/LV_screenshake_demo.tscn" id="4_r4e4k"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -16,8 +17,7 @@ background_mode = 2
 sky = SubResource("Sky_a0tk4")
 tonemap_mode = 2
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ny0t1"]
-fractal_octaves = 4
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r4e4k"]
 
 [node name="world" type="Node3D"]
 
@@ -51,8 +51,27 @@ size = Vector3(2, 1, 1)
 material = ExtResource("1_ny0t1")
 
 [node name="ProtoController" parent="." instance=ExtResource("1_72lju")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.775306, 0.442935, -0.592994)
+can_move = null
+has_gravity = null
+can_jump = null
 can_sprint = true
 can_freefly = true
-fall_gravity_multiplier = 1.2
-noise = SubResource("FastNoiseLite_ny0t1")
+look_speed = null
+base_speed = null
+jump_velocity = null
+freefly_speed = null
+void_death_hight = null
+void_respwan_loc = null
+fall_gravity_multiplier = null
+trauma_reduction_rate = null
+noise = SubResource("FastNoiseLite_r4e4k")
+noise_speed = null
+max_x = null
+max_y = null
+max_z = null
+input_sprint = null
+input_freefly = null
+
+[node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.08745, 1.26362e-05, 0.000246048)
