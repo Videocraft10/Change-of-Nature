@@ -73,7 +73,7 @@ var time := 0.0
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
-@onready var camera := $Head/Area3D/CollisionShape3D/Camera3D as Camera3D
+@onready var camera := $Head/Trauma_Collision/CollisionShape3D/Camera3D as Camera3D
 var inital_rotation : Vector3
 
 

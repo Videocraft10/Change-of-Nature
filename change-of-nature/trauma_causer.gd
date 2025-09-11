@@ -8,10 +8,11 @@ func cause_trauma():
 		if area.has_method("trauma_ready") && area.trauma_ready("yes"):
 			area.add_trauma_transmit(trauma_amount)
 			
-	func trauma_reduction_rate():
-		area.
-			
-	
+func trauma_reduction_rate():
+	var trauma_areas := get_overlapping_areas()
+	for area in trauma_areas:
+		if area.has_method("trauma_ready") && area.trauma_ready("yes"):
+			area.trauma_reduction(1.0)  # idouble check this plz
 
 
 		#if area.has_method("add_trauma"):
