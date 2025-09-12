@@ -73,7 +73,7 @@ var time := 0.0
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
-@onready var camera := $Head/Trauma_Collision/CollisionShape3D/Camera3D as Camera3D
+@onready var camera := $Head/Area3D/CollisionShape3D/Camera3D as Camera3D
 var inital_rotation : Vector3
 
 
@@ -188,7 +188,6 @@ func _physics_process(delta: float) -> void:
 
 func trauma_reduction(reduction_rate:float):
 	trauma_reduction_rate = reduction_rate
-	print("trauma rate reduced")
 
 func add_trauma(trauma_amount:float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 5.0)

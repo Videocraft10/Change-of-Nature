@@ -1,7 +1,5 @@
 extends Node3D
 
-# Constant Trauma Test area
-
 func _process(_delta):
 	$trauma_causer.cause_trauma()
 	$trauma_causer.trauma_reduction_rate()
