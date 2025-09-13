@@ -6,17 +6,15 @@
 
 ### What is Hackclub Shiba?
 
-Hack club is a non-profit orginaztion that helps high school students get exicted about coding! The top 30 games in Hackclub Shiba get to go to Tokyo, Japan and make a arcade with the games they made!! (soo cool)
+Hack club is a non-profit organization that helps high school students get excited about coding! The top 30 games in Hackclub Shiba get to go to Tokyo, Japan and make a arcade with the games they made! (soo cool!)
 
 # What is Change of Nature?
 
-Change of Nature is a 'kinda' horror game created in Godot 4.4.1. The player will traverse though room after room, facing unexplainable phonomonans. Be careful! As right when you think you have somthing figured out, it might ***change its nature!!*** (omg name drop!!!)
+Change of Nature is a 'kinda' horror game created in Godot 4.4.1. The player will traverse though room after room, facing unexplainable phenomena. Be careful! As right when you think you have something figured out, it might ***change its nature!!*** (omg name drop!!)
 
 ### The Story (lore!)
 
 *work in progress*
-
-
 
 ### How to play?
 
@@ -34,15 +32,19 @@ Clip Studio Paint
 
 Adobe Photoshop
 
-Adobe Preimeire Pro
+Adobe Premiere Pro
 
-### Insperation
+### Inspiration
 
 Inspired by Roblox Pressure
 
 ## Credits
 
 *tbd*
+
+#### AI Usage
+
+Github Copilot was used in coding.
 
 #### AI Usage
 
