@@ -45,7 +45,3 @@ Inspired by Roblox Pressure
 #### AI Usage
 
 Github Copilot was used in coding.
-
-#### AI Usage
-
-Github Copoilot was used in coding.
