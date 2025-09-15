@@ -68,6 +68,7 @@ var freeflying : bool = false
 var is_falling_after_jump : bool = false
 var trauma := 0.0
 var time := 0.0
+var max_trauma := 1.0
 #endregion
 
 ## IMPORTANT REFERENCES
@@ -105,7 +106,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			disable_freefly()
 
-var infTrauma := false
+#var infTrauma := false # Trauma Testing
 
 func _process(_delta):
 	time += _delta
@@ -115,8 +116,8 @@ func _process(_delta):
 	camera.rotation_degrees.y = inital_rotation.y + max_y * get_shake_intensity() * get_noise_from_seed(1)
 	camera.rotation_degrees.z = inital_rotation.z + max_z * get_shake_intensity() * get_noise_from_seed(2)
 	
-	if infTrauma:
-		add_trauma(.1)
+	#if infTrauma:
+		#add_trauma(.1) # Continuous trauma for testing
 		
 	## Testing input
 	#if Input.is_action_just_pressed("sprint"):
@@ -193,7 +194,7 @@ func add_trauma(trauma_amount:float):
 	trauma = clamp(trauma + trauma_amount, 0.0, 5.0)
 	
 func get_shake_intensity() -> float:
-	return trauma * trauma
+	return trauma * trauma * max_trauma
 
 func get_noise_from_seed(_seed : int) -> float:
 	noise.seed = _seed

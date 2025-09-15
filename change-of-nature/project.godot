@@ -24,7 +24,8 @@ enabled=PackedStringArray("res://addons/SimpleDungeons/plugin.cfg", "res://addon
 folder_colors={
 "res://blueprints/": "blue",
 "res://levels/": "red",
-"res://levels/rooms/": "pink"
+"res://levels/rooms/": "pink",
+"res://materials/": "green"
 }
 
 [input]

@@ -9,3 +9,8 @@ func add_trauma_transmit(trauma_amount_transmit:float):
 	
 func trauma_reduction(reduction_amount_transmit:float):
 	$"../..".trauma_reduction(reduction_amount_transmit)
+
+func set_max_trauma(max_trauma_amount:float):
+	$'../..'.max_trauma = max_trauma_amount
+	print("Max trauma set to: ", max_trauma_amount)
+	return
