@@ -16,7 +16,7 @@ height = 1.8
 radius = 0.4
 height = 1.8
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_g2uji"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wr06p"]
 
 [node name="ProtoController" type="CharacterBody3D"]
 script = ExtResource("1_ucva2")
@@ -43,10 +43,11 @@ shape = SubResource("CapsuleShape3D_iof21")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 
 [node name="Area3D" type="Area3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.774382, 0)
 script = ExtResource("2_wr06p")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Head/Area3D"]
-transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
-shape = SubResource("SphereShape3D_g2uji")
+transform = Transform3D(1.05, 0, 0, 0, 1.05, 0, 0, 0, 1.05, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_wr06p")
 
-[node name="Camera3D" type="Camera3D" parent="Head/Area3D/CollisionShape3D"]
+[node name="Camera3D" type="Camera3D" parent="Head"]

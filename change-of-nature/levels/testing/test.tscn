@@ -59,7 +59,7 @@ trauma_reduction_rate = 1.0
 noise = SubResource("FastNoiseLite_r4e4k")
 
 [node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8076, 1.41532, 0.000246048)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8076, 1.41532, 3.00025)
 
 [node name="Test_Angler" parent="." instance=ExtResource("5_wegei")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.340441, 2.03713, 17.326)
