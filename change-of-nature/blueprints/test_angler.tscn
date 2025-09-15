@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cslgeocb65cwj"]
+
+[ext_resource type="Texture2D" uid="uid://dfudfj6ceynqf" path="res://textures/entities/TX_MeanGuyAngler.png" id="1_7rtyf"]
+[ext_resource type="PackedScene" uid="uid://dkbhtspnbje5c" path="res://blueprints/BP_trauma_causer.tscn" id="2_nopmt"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4tqmj"]
+
+[node name="Test_Angler" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.407425, 0, 0, 0, 0.407425, 0, 0, 0, 0.407425, 0, 0, 0)
+billboard = 2
+texture = ExtResource("1_7rtyf")
+
+[node name="trauma_causer" parent="." instance=ExtResource("2_nopmt")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="trauma_causer"]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+shape = SubResource("SphereShape3D_4tqmj")

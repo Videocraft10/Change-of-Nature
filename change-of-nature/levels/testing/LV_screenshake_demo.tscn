@@ -9,6 +9,7 @@
 script = ExtResource("1_0qv54")
 
 [node name="trauma_causer" parent="." instance=ExtResource("1_o06q7")]
+is_distance_based = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="trauma_causer"]
 transform = Transform3D(1.32285, 0, 0, 0, 1.32285, 0, 0, 0, 1.32285, 0, 0, 0)

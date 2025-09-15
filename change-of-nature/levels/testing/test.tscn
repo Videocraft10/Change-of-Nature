@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=10 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
 [ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
 [ext_resource type="PackedScene" uid="uid://bd1pjnumtk111" path="res://levels/testing/LV_screenshake_demo.tscn" id="4_r4e4k"]
+[ext_resource type="PackedScene" uid="uid://cslgeocb65cwj" path="res://blueprints/test_angler.tscn" id="5_wegei"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -59,3 +60,6 @@ noise = SubResource("FastNoiseLite_r4e4k")
 
 [node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.8076, 1.41532, 0.000246048)
+
+[node name="Test_Angler" parent="." instance=ExtResource("5_wegei")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.340441, 2.03713, 17.326)
