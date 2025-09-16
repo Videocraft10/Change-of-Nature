@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=15 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
 [ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
 [ext_resource type="PackedScene" uid="uid://bd1pjnumtk111" path="res://levels/testing/LV_screenshake_demo.tscn" id="4_r4e4k"]
-[ext_resource type="PackedScene" uid="uid://cslgeocb65cwj" path="res://blueprints/test_angler.tscn" id="5_wegei"]
+[ext_resource type="PackedScene" uid="uid://cslgeocb65cwj" path="res://blueprints/scenes/test_angler.tscn" id="5_wegei"]
+[ext_resource type="Script" uid="uid://dr8pswhf2d7mx" path="res://levels/testing/path_3d.gd" id="6_knuv6"]
+[ext_resource type="PackedScene" uid="uid://c4x4c4b1dwpsb" path="res://blueprints/scenes/BP_test_collision_box.tscn" id="7_jv5v4"]
+[ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="8_4vbj0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -19,6 +22,16 @@ sky = SubResource("Sky_a0tk4")
 tonemap_mode = 2
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_r4e4k"]
+
+[sub_resource type="Curve3D" id="Curve3D_wegei"]
+closed = true
+_data = {
+"points": PackedVector3Array(6, 0, 0, -6, 0, 0, -1, 0, 23, 2.3, 0, -1.1, -2.3, 0, 1.1, -9, 0, 11, 4, 0, -3.2, -4, 0, 3.2, -17.2222, 0, 9.27083, 1.5, 0, 0.4, -1.5, 0, -0.4, -42, 0, 13, 1.4, 0, 6, -1.4, 0, -6, -54, 0, -3, -3.3, 0, 0.9, 3.3, 0, -0.9, -43, 0, -26, -3.3, 0, 1.5, 3.3, 0, -1.5, -37, 0, -35, -0.5, 0, 4.1, 0.5, 0, -4.1, -28, 0, -28, -1.8, 0, -1.4, 1.8, 0, 1.4, -7, 0, -28, 0, 0, -1.5, 0, 0, 1.5, 5, 0, -18, -2.7, 0, -1, 2.7, 0, 1, 10, 0, -9, 4, 0, -5, -4, 0, 5, 12, 0, 0, 9, 0, 1, -9, 0, -1, 6, 0, 12),
+"tilts": PackedFloat32Array(0, -0.261799, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ky343"]
 
 [node name="world" type="Node3D"]
 
@@ -62,4 +75,26 @@ noise = SubResource("FastNoiseLite_r4e4k")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8076, 1.41532, 3.00025)
 
 [node name="Test_Angler" parent="." instance=ExtResource("5_wegei")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.340441, 2.03713, 17.326)
+transform = Transform3D(-4.74355e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.74355e-08, -38, 1.99999, 27)
+
+[node name="test_angler_path" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 4)
+curve = SubResource("Curve3D_wegei")
+script = ExtResource("6_knuv6")
+
+[node name="test_angler_path_follow" type="PathFollow3D" parent="test_angler_path"]
+transform = Transform3D(-4.37103e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.37103e-08, -1, 0, 23)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="test_angler_path/test_angler_path_follow"]
+transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0, 2, 0)
+remote_path = NodePath("../../../Test_Angler")
+
+[node name="test_collision_box" parent="." instance=ExtResource("7_jv5v4")]
+transform = Transform3D(1.496, 0, 0, 0, 1.496, 0, 0, 0, 1.496, -25, 0, 26)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="test_collision_box"]
+shape = SubResource("BoxShape3D_ky343")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="test_collision_box"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+material = ExtResource("8_4vbj0")

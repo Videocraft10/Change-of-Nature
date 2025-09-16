@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4x4c4b1dwpsb"]
+
+[ext_resource type="Script" uid="uid://cbayrkx0funmv" path="res://blueprints/scripts/test_collision_box.gd" id="1_5s2r0"]
+
+[node name="test_collision_box" type="Area3D"]
+script = ExtResource("1_5s2r0")
