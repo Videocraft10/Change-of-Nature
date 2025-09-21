@@ -96,5 +96,4 @@ transform = Transform3D(1.496, 0, 0, 0, 1.496, 0, 0, 0, 1.496, -25, 0, 26)
 shape = SubResource("BoxShape3D_ky343")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="test_collision_box"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material = ExtResource("8_4vbj0")
