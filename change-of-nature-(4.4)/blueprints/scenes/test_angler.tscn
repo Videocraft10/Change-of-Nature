@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://cslgeocb65cwj"]
+
+[ext_resource type="Texture2D" uid="uid://dfudfj6ceynqf" path="res://textures/entities/TX_MeanGuyAngler.png" id="1_7rtyf"]
+[ext_resource type="Script" uid="uid://vqxdp06v1hiv" path="res://blueprints/scripts/test_angler.gd" id="1_vg8qn"]
+[ext_resource type="PackedScene" uid="uid://dkbhtspnbje5c" path="res://blueprints/scenes/BP_trauma_causer.tscn" id="2_nopmt"]
+[ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="3_bllg2"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_bllg2"]
+
+[node name="Test_Angler" type="Node3D"]
+script = ExtResource("1_vg8qn")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.407425, 0, 0, 0, 0.407425, 0, 0, 0, 0.407425, 0, 0, 0)
+billboard = 2
+texture = ExtResource("1_7rtyf")
+
+[node name="trauma_causer" parent="." instance=ExtResource("2_nopmt")]
+set_trauma_amount = 0.2
+max_trauma = 0.2
+is_distance_based = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="trauma_causer"]
+transform = Transform3D(14.8688, 0, 0, 0, 14.8688, 0, 0, 0, 14.8688, 0, 0, 0)
+shape = SubResource("SphereShape3D_bllg2")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="trauma_causer"]
+transform = Transform3D(14.9395, 0, 0, 0, 14.9395, 0, 0, 0, 14.9395, 0, 0, 0)
+rings = 16
+material = ExtResource("3_bllg2")

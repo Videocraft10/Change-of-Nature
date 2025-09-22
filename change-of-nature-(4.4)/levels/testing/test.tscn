@@ -1,0 +1,99 @@
+[gd_scene load_steps=15 format=3 uid="uid://d3ul0uoa1ila"]
+
+[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
+[ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
+[ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
+[ext_resource type="PackedScene" uid="uid://bd1pjnumtk111" path="res://levels/testing/LV_screenshake_demo.tscn" id="4_r4e4k"]
+[ext_resource type="PackedScene" uid="uid://cslgeocb65cwj" path="res://blueprints/scenes/test_angler.tscn" id="5_wegei"]
+[ext_resource type="Script" uid="uid://dr8pswhf2d7mx" path="res://levels/testing/path_3d.gd" id="6_knuv6"]
+[ext_resource type="PackedScene" uid="uid://c4x4c4b1dwpsb" path="res://blueprints/scenes/BP_test_collision_box.tscn" id="7_jv5v4"]
+[ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="8_4vbj0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
+sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
+
+[sub_resource type="Sky" id="Sky_a0tk4"]
+sky_material = SubResource("ProceduralSkyMaterial_noarx")
+
+[sub_resource type="Environment" id="Environment_r3fl7"]
+background_mode = 2
+sky = SubResource("Sky_a0tk4")
+tonemap_mode = 2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r4e4k"]
+
+[sub_resource type="Curve3D" id="Curve3D_wegei"]
+closed = true
+_data = {
+"points": PackedVector3Array(6, 0, 0, -6, 0, 0, -1, 0, 23, 2.3, 0, -1.1, -2.3, 0, 1.1, -9, 0, 11, 4, 0, -3.2, -4, 0, 3.2, -17.2222, 0, 9.27083, 1.5, 0, 0.4, -1.5, 0, -0.4, -42, 0, 13, 1.4, 0, 6, -1.4, 0, -6, -54, 0, -3, -3.3, 0, 0.9, 3.3, 0, -0.9, -43, 0, -26, -3.3, 0, 1.5, 3.3, 0, -1.5, -37, 0, -35, -0.5, 0, 4.1, 0.5, 0, -4.1, -28, 0, -28, -1.8, 0, -1.4, 1.8, 0, 1.4, -7, 0, -28, 0, 0, -1.5, 0, 0, 1.5, 5, 0, -18, -2.7, 0, -1, 2.7, 0, 1, 10, 0, -9, 4, 0, -5, -4, 0, 5, 12, 0, 0, 9, 0, 1, -9, 0, -1, 6, 0, 12),
+"tilts": PackedFloat32Array(0, -0.261799, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 13
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ky343"]
+
+[node name="world" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 1, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r3fl7")
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5005, -6)
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(6.22, 0, 0, 0, 1, 0, 0, 0, 6.22, 3.5, -2.0005, 6)
+material_override = ExtResource("1_r4e4k")
+use_collision = true
+size = Vector3(50, 1, 50)
+material = ExtResource("1_ny0t1")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.5, 0.5, 0.5)
+material_override = ExtResource("1_r4e4k")
+size = Vector3(14, 4, 1)
+material = ExtResource("1_r4e4k")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(6.22, 0, 0, 0, 0.5, 5.38668, 0, -0.866025, 3.11, 6.39, 0.9995, -2)
+size = Vector3(2, 1, 1)
+material = ExtResource("1_ny0t1")
+
+[node name="ProtoController" parent="." instance=ExtResource("1_72lju")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.775306, 0.442935, -0.592994)
+can_sprint = true
+can_freefly = true
+trauma_reduction_rate = 1.0
+noise = SubResource("FastNoiseLite_r4e4k")
+
+[node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8076, 1.41532, 3.00025)
+
+[node name="Test_Angler" parent="." instance=ExtResource("5_wegei")]
+transform = Transform3D(-4.74355e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.74355e-08, -38, 1.99999, 27)
+
+[node name="test_angler_path" type="Path3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 4)
+curve = SubResource("Curve3D_wegei")
+script = ExtResource("6_knuv6")
+
+[node name="test_angler_path_follow" type="PathFollow3D" parent="test_angler_path"]
+transform = Transform3D(-4.37103e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.37103e-08, -1, 0, 23)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="test_angler_path/test_angler_path_follow"]
+transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0, 2, 0)
+remote_path = NodePath("../../../Test_Angler")
+
+[node name="test_collision_box" parent="." instance=ExtResource("7_jv5v4")]
+transform = Transform3D(1.496, 0, 0, 0, 1.496, 0, 0, 0, 1.496, -25, 0, 26)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="test_collision_box"]
+shape = SubResource("BoxShape3D_ky343")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="test_collision_box"]
+material = ExtResource("8_4vbj0")

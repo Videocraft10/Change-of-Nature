@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://bd1pjnumtk111"]
+
+[ext_resource type="Script" uid="uid://bbw0i7ug7dnb5" path="res://blueprints/scripts/BP_screenshake_demo.gd" id="1_0qv54"]
+[ext_resource type="PackedScene" uid="uid://dkbhtspnbje5c" path="res://blueprints/scenes/BP_trauma_causer.tscn" id="1_o06q7"]
+[ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="3_cbx2c"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_g0kef"]
+
+[node name="screenshake_demo" type="Node3D"]
+script = ExtResource("1_0qv54")
+
+[node name="trauma_causer" parent="." instance=ExtResource("1_o06q7")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="trauma_causer"]
+transform = Transform3D(1.32285, 0, 0, 0, 1.32285, 0, 0, 0, 1.32285, 0, 0, 0)
+shape = SubResource("SphereShape3D_g0kef")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="trauma_causer"]
+transform = Transform3D(1.3459, 0, 0, 0, 1.3459, 0, 0, 0, 1.3459, 0, 0, 0)
+rings = 16
+material = ExtResource("3_cbx2c")
