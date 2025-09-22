@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=16 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dr8pswhf2d7mx" path="res://levels/testing/path_3d.gd" id="6_knuv6"]
 [ext_resource type="PackedScene" uid="uid://c4x4c4b1dwpsb" path="res://blueprints/scenes/BP_test_collision_box.tscn" id="7_jv5v4"]
 [ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="8_4vbj0"]
+[ext_resource type="PackedScene" uid="uid://ct62fivgednjx" path="res://models/SmallDoor.blend" id="9_jv5v4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -75,7 +76,7 @@ noise = SubResource("FastNoiseLite_r4e4k")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8076, 1.41532, 3.00025)
 
 [node name="Test_Angler" parent="." instance=ExtResource("5_wegei")]
-transform = Transform3D(-4.74355e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.74355e-08, -38, 1.99999, 27)
+transform = Transform3D(-4.7435538e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.7435538e-08, -38, 1.999994, 27)
 
 [node name="test_angler_path" type="Path3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 0, 4)
@@ -83,7 +84,7 @@ curve = SubResource("Curve3D_wegei")
 script = ExtResource("6_knuv6")
 
 [node name="test_angler_path_follow" type="PathFollow3D" parent="test_angler_path"]
-transform = Transform3D(-4.37103e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.37103e-08, -1, 0, 23)
+transform = Transform3D(-4.3710337e-08, 0, 0.999976, 0, 0.999997, 0, -0.999976, 0, -4.3710337e-08, -1, 0, 23)
 
 [node name="RemoteTransform3D" type="RemoteTransform3D" parent="test_angler_path/test_angler_path_follow"]
 transform = Transform3D(1, 0, 3.72529e-09, 0, 1, 0, -3.72529e-09, 0, 1, 0, 2, 0)
@@ -97,3 +98,6 @@ shape = SubResource("BoxShape3D_ky343")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="test_collision_box"]
 material = ExtResource("8_4vbj0")
+
+[node name="SmallDoor" parent="." instance=ExtResource("9_jv5v4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 65)
