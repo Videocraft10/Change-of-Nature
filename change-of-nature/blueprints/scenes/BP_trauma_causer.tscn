@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dkbhtspnbje5c"]
-
-[ext_resource type="Script" uid="uid://ddx0aoebe26jf" path="res://blueprints/scripts/trauma_causer.gd" id="1_6a1cb"]
-
-[node name="trauma_causer" type="Area3D"]
-script = ExtResource("1_6a1cb")
