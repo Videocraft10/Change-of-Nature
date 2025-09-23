@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://catipc47tyk1v"]
+
+[ext_resource type="PackedScene" uid="uid://cjwdouxbqmp0o" path="res://blueprints/scenes/BP_small_door.tscn" id="1_4ycub"]
+[ext_resource type="Script" uid="uid://bqwxr7prnd3si" path="res://levels/rooms/dr_testing_gen_door.gd" id="1_i3rc6"]
+[ext_resource type="PackedScene" uid="uid://kraf0a5n1ej6" path="res://levels/rooms/DR_living_room.tscn" id="2_p4fg4"]
+
+[node name="DR_Testing_Gen_Door" type="Node3D"]
+script = ExtResource("1_i3rc6")
+room_scenes = Array[PackedScene]([ExtResource("2_p4fg4")])
+
+[node name="BP_SmallDoor" parent="." instance=ExtResource("1_4ycub")]
+
+[node name="ConnectionPoint" type="Marker3D" parent="." groups=["connection_points"]]
+transform = Transform3D(1, 0, 0, 0, 1.6800001, 0, 0, 0, 1, 0, 0, 0)
+
+[connection signal="body_entered" from="BP_SmallDoor" to="." method="_on_bp_small_door_body_entered"]

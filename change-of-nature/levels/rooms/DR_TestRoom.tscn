@@ -8,39 +8,40 @@ script = ExtResource("1_mgvwg")
 metadata/_custom_type_script = "uid://ybsubt4o2jvd"
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012969971, -0.36621094, 0.015609741)
+transform = Transform3D(1, 0, 0, 0, 1.9, 0, 0, 0, 1, -0.0012969971, -4.522206, 0.015609741)
 size = Vector3(9.976044, 0.26757813, 9.9534)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012969971, 4.703215, 0.015609741)
+transform = Transform3D(1, 0, 0, 0, 1.9, 0, 0, 0, 1, -0.0012969971, 5.1097035, 0.015609741)
 size = Vector3(9.976044, 0.26757813, 9.9534)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.860111, 2.2496018, 0.015609741)
+transform = Transform3D(1, 0, 0, 0, 1.9, 0, 0, 0, 1, -4.860111, 0.44783854, 0.015609741)
 size = Vector3(0.25841522, 5.1748047, 9.9534)
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.017000198, 2.2496018, -4.751549)
+transform = Transform3D(1, 0, 0, 0, 1.9, 0, 0, 0, 1, -0.017000198, 0.44783854, -4.751549)
 size = Vector3(9.944637, 5.1748047, 0.41908264)
 
 [node name="CSGBox3D6" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.017000198, 2.2496018, 4.7639027)
+transform = Transform3D(1, 0, 0, 0, 1.9, 0, 0, 0, 1, -0.017000198, 0.44783854, 4.7639027)
 size = Vector3(9.944637, 5.1748047, 0.41908264)
 
 [node name="CSGBox3D7" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.2352004, 0, 0, 0, 0.6512555, 0, 0, 0, 1, -0.017000198, 1.4496498, 4.7639027)
+transform = Transform3D(0.2352004, 0, 0, 0, 1.2373854, 0, 0, 0, 1, -0.017000198, -1.0720702, 4.7639027)
 operation = 2
 size = Vector3(9.944637, 5.1748047, 0.41908264)
 
 [node name="CSGBox3D8" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(0.2352004, 0, 0, 0, 0.6512555, 0, 0, 0, 1, -0.017000198, 1.4496498, -4.7369823)
+transform = Transform3D(0.2352004, 0, 0, 0, 1.2373854, 0, 0, 0, 1, -0.017000198, -1.0720702, -4.7369823)
 operation = 2
 size = Vector3(9.944637, 5.1748047, 0.5479202)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8589935, 2.2496018, 0.015609741)
+transform = Transform3D(1, 0, 0, 0, 1.9, 0, 0, 0, 1, 4.8589935, 0.44783854, 0.015609741)
 size = Vector3(0.25841522, 5.1748047, 9.9534)
 
 [node name="DOOROut" type="Node3D" parent="."]
