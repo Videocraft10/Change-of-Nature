@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjwdouxbqmp0o"]
+
+[ext_resource type="Script" uid="uid://dhfndwa257brw" path="res://blueprints/scripts/BP_small_door.gd" id="1_w5rg7"]
+[ext_resource type="PackedScene" uid="uid://c0bkyf3r6kxet" path="res://models/SmallDoor.blend" id="2_32evo"]
+[ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="3_32evo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o70se"]
+size = Vector3(4, 2.9223633, 1.8525391)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_32evo"]
+size = Vector3(0.4243164, 2.8950806, 1.835083)
+
+[node name="BP_SmallDoor" type="Area3D"]
+script = ExtResource("1_w5rg7")
+
+[node name="SmallDoor" parent="." instance=ExtResource("2_32evo")]
+
+[node name="Small_Door_Activation_collison" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0028381348, 1.4384274, -0.030761719)
+shape = SubResource("BoxShape3D_o70se")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Small_Door_Activation_collison"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012573242, 0.0027770996, -0.004699707)
+size = Vector3(4.0046387, 2.9126587, 1.8548584)
+material = ExtResource("3_32evo")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04663086, 1.4363708, -0.019958496)
+shape = SubResource("BoxShape3D_32evo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

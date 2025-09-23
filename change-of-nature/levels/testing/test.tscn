@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=17 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
@@ -8,7 +8,8 @@
 [ext_resource type="Script" uid="uid://dr8pswhf2d7mx" path="res://levels/testing/path_3d.gd" id="6_knuv6"]
 [ext_resource type="PackedScene" uid="uid://c4x4c4b1dwpsb" path="res://blueprints/scenes/BP_test_collision_box.tscn" id="7_jv5v4"]
 [ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="8_4vbj0"]
-[ext_resource type="PackedScene" uid="uid://c53yonkrcbmi3" path="res://models/SmallDoor.blend" id="9_jv5v4"]
+[ext_resource type="PackedScene" uid="uid://c0bkyf3r6kxet" path="res://models/SmallDoor.blend" id="9_jv5v4"]
+[ext_resource type="PackedScene" uid="uid://cjwdouxbqmp0o" path="res://blueprints/scenes/BP_small_door.tscn" id="10_4vbj0"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -100,4 +101,7 @@ shape = SubResource("BoxShape3D_ky343")
 material = ExtResource("8_4vbj0")
 
 [node name="SmallDoor" parent="." instance=ExtResource("9_jv5v4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.4375515, 0.006559611, -0.92939234)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.3772345, 0.0065599685, 16.300694)
+
+[node name="BP_SmallDoor" parent="." instance=ExtResource("10_4vbj0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.061912, 0.0065599685, 25.395657)
