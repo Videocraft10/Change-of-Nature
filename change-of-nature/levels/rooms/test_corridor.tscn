@@ -1,0 +1,34 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb2fmo38bhgmc"]
+
+[ext_resource type="Script" uid="uid://ybsubt4o2jvd" path="res://addons/SimpleDungeons/DungeonRoom3D.gd" id="1_kdm35"]
+
+[node name="Test_Corridor" type="Node3D"]
+script = ExtResource("1_kdm35")
+metadata/_custom_type_script = "uid://ybsubt4o2jvd"
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+size = Vector3(10, 10, 10)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D"]
+operation = 2
+size = Vector3(9, 9, 9)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(0.415, 0, 0, 0, 0.745, 0, 0, 0, 0.115, 0, -1.1403862, -4.7568917)
+operation = 2
+size = Vector3(9, 9, 9)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(0.415, 0, 0, 0, 0.745, 0, 0, 0, 0.115, 0, -1.1403862, 4.684537)
+operation = 2
+size = Vector3(9, 9, 9)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-1.8140225e-08, 0, 0.115, 0, 0.745, 0, -0.415, 0, -5.0268096e-09, -4.5959992, -1.14, 0)
+operation = 2
+size = Vector3(9, 9, 9)
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="CSGBox3D"]
+transform = Transform3D(-1.8140225e-08, 0, 0.115, 0, 0.745, 0, -0.415, 0, -5.0268096e-09, 4.7751074, -1.14, 0)
+operation = 2
+size = Vector3(9, 9, 9)
