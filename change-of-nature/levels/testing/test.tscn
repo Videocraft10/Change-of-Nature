@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://dr8pswhf2d7mx" path="res://levels/testing/path_3d.gd" id="6_knuv6"]
 [ext_resource type="PackedScene" uid="uid://c4x4c4b1dwpsb" path="res://blueprints/scenes/BP_test_collision_box.tscn" id="7_jv5v4"]
 [ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="8_4vbj0"]
-[ext_resource type="PackedScene" uid="uid://ct62fivgednjx" path="res://models/SmallDoor.blend" id="9_jv5v4"]
+[ext_resource type="PackedScene" uid="uid://c53yonkrcbmi3" path="res://models/SmallDoor.blend" id="9_jv5v4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -100,4 +100,4 @@ shape = SubResource("BoxShape3D_ky343")
 material = ExtResource("8_4vbj0")
 
 [node name="SmallDoor" parent="." instance=ExtResource("9_jv5v4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47, 0, 65)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.4375515, 0.006559611, -0.92939234)
