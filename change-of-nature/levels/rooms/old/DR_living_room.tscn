@@ -13,7 +13,7 @@ metadata/_custom_type_script = "uid://ybsubt4o2jvd"
 transform = Transform3D(1, 0, 0, 0, -7.343513e-08, 1, 0, -1.6800001, -4.371139e-08, -5, -4.480404, -10)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="RoomConnectionPoint"]
-transform = Transform3D(1, 0, 0, 0, -2.6018684e-08, -0.5952381, 0, 1, -4.371139e-08, 5, -5.952381, 4.480404)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5952381, 5, -5.9523816, 4.480404)
 material_override = SubResource("StandardMaterial3D_4ghq1")
 use_collision = true
 

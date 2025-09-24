@@ -55,7 +55,22 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 			var door_global_transform = $DoorConnectionPoint.global_transform
 			room_instance.global_transform = room_instance.global_transform.translated(
 				door_global_transform.origin - connection_point.global_transform.origin
-			)
+				)
+			var conn_point_euler = connection_point.global_transform.basis.get_euler()
+			var x_rot = conn_point_euler.x
+			var y_rot = conn_point_euler.y
+			var z_rot = conn_point_euler.z
+			print("Connection point rotation (x, y, z):", x_rot, y_rot, z_rot)
+			# Calculate the difference in rotation between the connection point and the door
+			var door_euler = $DoorConnectionPoint.global_transform.basis.get_euler()
+			var conn_euler = connection_point.global_transform.basis.get_euler()
+			var rotation_diff = door_euler - conn_euler
+			print("Rotation difference (x, y, z):", rotation_diff)
+			# Apply the rotation difference to the room so the connection point aligns with the door
+			room_instance.rotate_object_local(Vector3(1, 0, 0), rotation_diff.x)
+			room_instance.rotate_object_local(Vector3(0, 1, 0), rotation_diff.y)
+			room_instance.rotate_object_local(Vector3(0, 0, 1), rotation_diff.z)
+
 		else:
 			print("No connection points found in the room!")
 			# Fall back to the previous behavior
