@@ -35,9 +35,32 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 		# We add it to the parent of the door so it doesn't move with the door.
 		get_parent().add_child(room_instance)
 
-		# 4. Move the new room to the exact transform of this door node.
-		room_instance.global_transform = self.global_transform
-							### make it so it transforms the connector point, not the ENTIRE ROOM!!!
+		# 4. Find a connection point in the room
+		var connection_point = null
+		var connection_points = []
+		
+		# Get all nodes in the room with the group "connection_points"
+		for node in room_instance.get_children():
+			if node.is_in_group("connection_points"):
+				connection_points.append(node)
+		
+		# Check if we found any connection points
+		if connection_points.size() > 0:
+			# Select the first connection point (or you could pick randomly)
+			connection_point = connection_points[0]
+			print("Found connection point in room:", connection_point.name)
+			
+			# 5. Align the room so the connection point matches our door position
+			# Calculate the position offset
+			var door_global_transform = $DoorConnectionPoint.global_transform
+			room_instance.global_transform = room_instance.global_transform.translated(
+				door_global_transform.origin - connection_point.global_transform.origin
+			)
+		else:
+			print("No connection points found in the room!")
+			# Fall back to the previous behavior
+			room_instance.global_transform = $DoorConnectionPoint.global_transform
+	
 	elif body.is_in_group("player") and RoomGenerated:
 		print("Room already Generated")
 	pass # Replace with function body.

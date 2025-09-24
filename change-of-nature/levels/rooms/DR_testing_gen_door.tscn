@@ -10,7 +10,7 @@ room_scenes = Array[PackedScene]([ExtResource("2_p4fg4")])
 
 [node name="BP_SmallDoor" parent="." instance=ExtResource("1_4ycub")]
 
-[node name="ConnectionPoint" type="Marker3D" parent="." groups=["connection_points"]]
-transform = Transform3D(1, 0, 0, 0, 1.6800001, 0, 0, 0, 1, 0, 0, 0)
+[node name="DoorConnectionPoint" type="RayCast3D" parent="." groups=["connection_points"]]
+transform = Transform3D(-4.371139e-08, 1.6800001, 0, -1, -7.343513e-08, 0, 0, 0, 1, 0, 0, 0)
 
 [connection signal="body_entered" from="BP_SmallDoor" to="." method="_on_bp_small_door_body_entered"]
