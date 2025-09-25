@@ -2,11 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://cjwdouxbqmp0o" path="res://blueprints/scenes/BP_small_door.tscn" id="1_4ycub"]
 [ext_resource type="Script" uid="uid://bqwxr7prnd3si" path="res://levels/rooms/old/dr_testing_gen_door.gd" id="1_i3rc6"]
-[ext_resource type="PackedScene" uid="uid://kraf0a5n1ej6" path="res://levels/rooms/old/DR_living_room.tscn" id="2_p4fg4"]
+[ext_resource type="PackedScene" uid="uid://ds82dcpr0xffw" path="res://levels/rooms/dr_test_basic_room.tscn" id="2_wwq5f"]
 
 [node name="DR_Testing_Gen_Door" type="Node3D"]
 script = ExtResource("1_i3rc6")
-room_scenes = Array[PackedScene]([ExtResource("2_p4fg4")])
+room_scenes = Array[PackedScene]([ExtResource("2_wwq5f")])
+door_spawn_scene = null
 
 [node name="BP_SmallDoor" parent="." instance=ExtResource("1_4ycub")]
 

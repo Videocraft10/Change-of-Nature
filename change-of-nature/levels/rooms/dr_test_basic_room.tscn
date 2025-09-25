@@ -1,11 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://ds82dcpr0xffw"]
 
-[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_s184r"]
+[ext_resource type="PackedScene" uid="uid://2ga6l5767v0q" path="res://levels/rooms/old/dr_2_testing_gen_door.tscn" id="1_s184r"]
 
-[node name="DR_TestBasicRoom" type="Node3D"]
+[node name="DR_TestBasicRoom" type="RayCast3D"]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="TestBasicRoom" type="CSGCombiner3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5097103, 0)
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -3.031263, -5.026947, 0)
+use_collision = true
 
 [node name="Room" type="CSGBox3D" parent="TestBasicRoom"]
 size = Vector3(10, 7, 10)
@@ -19,13 +21,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8769817, -1.5937243, -0.03
 operation = 2
 size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
-[node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_s184r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.053489685, -1.4442945, 0.03338623)
-
 [node name="DoorCutout2" type="CSGBox3D" parent="TestBasicRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.872278, -1.5937243, -0.03338623)
 operation = 2
 size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
-[node name="RoomConnectionPoint" type="RayCast3D" parent="." groups=["connection_points"]]
-transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 4.9861913, 0.4739079, -0.03338623)
+[node name="CSGBox3D" type="CSGBox3D" parent="TestBasicRoom"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.3245249, -2.9653292, 1.6617329)
+
+[node name="DR2_Testing_Gen_Door" parent="." instance=ExtResource("1_s184r")]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -0.005275289, -10.00614, 0.06852543)
