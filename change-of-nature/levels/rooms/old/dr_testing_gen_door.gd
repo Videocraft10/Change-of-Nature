@@ -4,6 +4,7 @@ extends Node3D
 
 var RoomGenerated = false
 
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
@@ -22,6 +23,7 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 			return
 
 		print("Generating Room at door's location.")
+		RoomGenerated = true
 		
 		# 1. Pick a random scene from the array.
 		var random_room_scene = room_scenes.pick_random()
@@ -33,19 +35,47 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 		# We add it to the parent of the door so it doesn't move with the door.
 		get_parent().add_child(room_instance)
 
-		# 4. Since the room's root node is the connection point, 
-		# we just need to match it with the door's connection point
-		var door_transform = $DoorConnectionPoint.global_transform
+		# 4. Find a connection point in the room
+		var connection_point = null
+		var connection_points = []
 		
-		# 5. Set the room's global position and rotation to match the door connection point, but do not scale
-		var new_basis = door_transform.basis.orthonormalized() # Remove any scaling from the basis
-		room_instance.global_transform = Transform3D(new_basis, door_transform.origin)
-
-		# Optional: Apply 180-degree rotation if the rooms need to face each other
-		# Uncomment if needed:
-		# room_instance.rotate_y(PI)
-
-		# Get the filename from the resource path (without extension)
-		var room_name = random_room_scene.resource_path.get_file().get_basename()
-		print("Room '" + room_name + "' Generated.")
+		# Get all nodes in the room with the group "connection_points"
+		for node in room_instance.get_children():
+			if node.is_in_group("connection_points"):
+				connection_points.append(node)
 		
+		# Check if we found any connection points
+		if connection_points.size() > 0:
+			# Select the first connection point (or you could pick randomly)
+			connection_point = connection_points[0]
+			print("Found connection point in room:", connection_point.name)
+			
+			# 5. Align the room so the connection point matches our door position
+			# Calculate the position offset
+			var door_global_transform = $DoorConnectionPoint.global_transform
+			room_instance.global_transform = room_instance.global_transform.translated(
+				door_global_transform.origin - connection_point.global_transform.origin
+				)
+			var conn_point_euler = connection_point.global_transform.basis.get_euler()
+			var x_rot = conn_point_euler.x
+			var y_rot = conn_point_euler.y
+			var z_rot = conn_point_euler.z
+			print("Connection point rotation (x, y, z):", x_rot, y_rot, z_rot)
+			# Calculate the difference in rotation between the connection point and the door
+			var door_euler = $DoorConnectionPoint.global_transform.basis.get_euler()
+			var conn_euler = connection_point.global_transform.basis.get_euler()
+			var rotation_diff = door_euler - conn_euler
+			print("Rotation difference (x, y, z):", rotation_diff)
+			# Apply the rotation difference to the room so the connection point aligns with the door
+			room_instance.rotate_object_local(Vector3(1, 0, 0), rotation_diff.x)
+			room_instance.rotate_object_local(Vector3(0, 1, 0), rotation_diff.y)
+			room_instance.rotate_object_local(Vector3(0, 0, 1), rotation_diff.z)
+
+		else:
+			print("No connection points found in the room!")
+			# Fall back to the previous behavior
+			room_instance.global_transform = $DoorConnectionPoint.global_transform
+	
+	elif body.is_in_group("player") and RoomGenerated:
+		print("Room already Generated")
+	pass # Replace with function body.
