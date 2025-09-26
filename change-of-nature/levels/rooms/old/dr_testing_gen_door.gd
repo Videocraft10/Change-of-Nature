@@ -1,39 +1,86 @@
 extends Node3D
 
 @export var room_scenes: Array[PackedScene]
+@export var room_scene_paths: Array[String] = []  # Use paths instead for self-reference
+@export var allow_self_reference: bool = false
+@export var current_scene_path: String = ""  # Set this to the current scene's path
 
 var RoomGenerated = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	# Auto-detect current scene path if not set
+	if current_scene_path.is_empty() and allow_self_reference:
+		# Try to find the scene file path of THIS specific room/node
+		# Look for the scene file that contains this node, not the main scene
+		var node = self
+		while node != null:
+			if node.scene_file_path != "":
+				current_scene_path = node.scene_file_path
+				print("Auto-detected room scene path:", current_scene_path)
+				break
+			node = node.get_parent()
+		
+		# If we still don't have a path, this might be the root scene
+		if current_scene_path.is_empty():
+			print("Warning: Could not auto-detect room scene path. Please set current_scene_path manually.")
+			print("Example: 'res://levels/rooms/dr_test_basic_room.tscn'")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 
 func _on_bp_small_door_body_entered(body: Node3D) -> void:
 	# Check if the body is the player and if a room hasn't been generated yet.
 	if body.is_in_group("player") and not RoomGenerated:
-		# Ensure the room_scenes array is not empty.
-		if room_scenes.is_empty():
-			print("No room scenes assigned to the door!")
-			return
-
 		print("Generating Room at door's location.")
 		RoomGenerated = true
 		
-		# 1. Pick a random scene from the array.
-		var random_room_scene = room_scenes.pick_random()
+		var room_instance: Node3D
 		
-		# 2. Create an instance of the chosen room.
-		var room_instance = random_room_scene.instantiate()
+		# Method 1: Use scene paths to avoid circular reference
+		if allow_self_reference and not current_scene_path.is_empty():
+			print("Loading self-referencing room from path:", current_scene_path)
+			var scene_resource = load(current_scene_path) as PackedScene
+			if scene_resource:
+				room_instance = scene_resource.instantiate()
+			else:
+				print("Failed to load scene from path:", current_scene_path)
+				return
+		else:
+			# Method 2: Use traditional PackedScene array
+			# Combine both arrays for selection
+			var available_scenes = []
+			
+			# Add PackedScenes
+			for scene in room_scenes:
+				if scene != null:
+					available_scenes.append(scene)
+			
+			# Add scenes from paths
+			for path in room_scene_paths:
+				if not path.is_empty():
+					var scene_resource = load(path) as PackedScene
+					if scene_resource:
+						available_scenes.append(scene_resource)
+			
+			if available_scenes.is_empty():
+				print("No room scenes available!")
+				return
+			
+			# Pick a random scene
+			var random_scene = available_scenes.pick_random()
+			room_instance = random_scene.instantiate()
 		
 		# 3. Add the new room to the scene tree.
 		# We add it to the parent of the door so it doesn't move with the door.
-		get_parent().add_child(room_instance)
+		# For nested rooms, consider adding to the root level to avoid transform issues
+		var target_parent = get_parent()
+		# Optional: Add to scene root instead for cleaner hierarchy
+		# target_parent = get_tree().current_scene
+		target_parent.add_child(room_instance)
 
 		# 4. Find a connection point in the room
 		var connection_point = null

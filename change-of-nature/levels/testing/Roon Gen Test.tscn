@@ -1,15 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cbb4aogifdke3"]
+[gd_scene load_steps=3 format=3 uid="uid://cbb4aogifdke3"]
 
 [ext_resource type="Script" uid="uid://cgps6jgoapfa8" path="res://addons/SimpleDungeons/DungeonGenerator3D.gd" id="1_g5kub"]
-[ext_resource type="PackedScene" uid="uid://cjpjdk1acisbh" path="res://levels/rooms/old/DR_TestRoom.tscn" id="2_0kscp"]
-[ext_resource type="PackedScene" uid="uid://kraf0a5n1ej6" path="res://levels/rooms/old/DR_living_room.tscn" id="2_4up0e"]
-[ext_resource type="PackedScene" uid="uid://d1e6p63bcvxw2" path="res://levels/rooms/old/DR_test_stair.tscn" id="4_1cu7y"]
 [ext_resource type="PackedScene" uid="uid://bb2fmo38bhgmc" path="res://levels/rooms/old/DR_test_corridor.tscn" id="5_v5oqg"]
 
 [node name="RoonGenTest" type="Node3D"]
 
 [node name="DungeonGenerator3D" type="Node3D" parent="."]
 script = ExtResource("1_g5kub")
-room_scenes = Array[PackedScene]([ExtResource("2_4up0e"), ExtResource("2_0kscp"), ExtResource("4_1cu7y")])
 corridor_room_scene = ExtResource("5_v5oqg")
 metadata/_custom_type_script = "uid://cgps6jgoapfa8"
