@@ -2,7 +2,7 @@ extends Node3D
 
 @export var room_scenes: Array[PackedScene]
 @export var room_scene_paths: Array[String] = []  # Use paths instead for self-reference
-@export var allow_self_reference: bool = false
+var allow_self_reference: bool = false
 @export var current_scene_path: String = ""  # Set this to the current scene's path
 
 var RoomGenerated = false

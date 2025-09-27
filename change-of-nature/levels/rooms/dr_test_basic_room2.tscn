@@ -10,6 +10,7 @@ albedo_color = Color(0.17254902, 1, 1, 1)
 [node name="TestBasicRoom" type="CSGCombiner3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5097103, 0)
 material_override = SubResource("StandardMaterial3D_qxrnh")
+use_collision = true
 
 [node name="Room" type="CSGBox3D" parent="TestBasicRoom"]
 size = Vector3(10, 7, 10)
@@ -25,7 +26,7 @@ size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
 [node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_qxrnh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11594248, -1.4504116, 0)
-allow_self_reference = true
+room_scene_paths = Array[String](["res://levels/rooms/dr_test_basic_room.tscn"])
 
 [node name="DoorCutout2" type="CSGBox3D" parent="TestBasicRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.872278, -1.5937243, -0.03338623)

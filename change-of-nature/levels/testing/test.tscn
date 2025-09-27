@@ -115,3 +115,4 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 33.830692, 75.95364, 93
 [node name="DR_Testing_Gen_Door" parent="." instance=ExtResource("12_76ovf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8720713, 0.015125036, 41.5226)
 room_scenes = Array[PackedScene]([ExtResource("13_guyg2")])
+room_scene_paths = Array[String](["res://levels/rooms/dr_test_basic_room2.tscn", "res://levels/rooms/dr_test_basic_room.tscn"])
