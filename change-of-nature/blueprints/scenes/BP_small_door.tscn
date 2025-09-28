@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="3_32evo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o70se"]
-size = Vector3(4, 2.9223633, 1.8525391)
+size = Vector3(8, 2.9223633, 1.8525391)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_32evo"]
 size = Vector3(0.4243164, 2.8950806, 1.835083)
@@ -20,8 +20,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0028381348, 1.4384274, -0.
 shape = SubResource("BoxShape3D_o70se")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Small_Door_Activation_collison"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012573242, 0.0027770996, -0.004699707)
-size = Vector3(4.0046387, 2.9126587, 1.8548584)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014892578, 0.0027770996, -0.004699707)
+size = Vector3(8, 2.9126587, 1.8548584)
 material = ExtResource("3_32evo")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]

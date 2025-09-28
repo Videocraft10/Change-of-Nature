@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://ds82dcpr0xffw"]
+[gd_scene load_steps=3 format=3 uid="uid://bb0k7goiumje0"]
 
-[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/DR_testing_gen_door.tscn" id="1_s184r"]
+[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_qxrnh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qxrnh"]
+albedo_color = Color(0.17254902, 1, 1, 1)
 
 [node name="DR_TestBasicRoom" type="Node3D"]
 
 [node name="TestBasicRoom" type="CSGCombiner3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5097103, 0)
+material_override = SubResource("StandardMaterial3D_qxrnh")
 use_collision = true
 
 [node name="Room" type="CSGBox3D" parent="TestBasicRoom"]
@@ -20,9 +24,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.8769817, -1.5937243, -0.03
 operation = 2
 size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
-[node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_s184r")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.053489685, -1.4442945, 0.03338623)
-room_scene_paths = Array[String](["res://levels/rooms/dr_test_basic_room2.tscn"])
+[node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_qxrnh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11594248, -1.4504116, 0)
+room_scene_paths = Array[String](["res://levels/rooms/dr_test_basic_room.tscn"])
 
 [node name="DoorCutout2" type="CSGBox3D" parent="TestBasicRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.872278, -1.5937243, -0.03338623)

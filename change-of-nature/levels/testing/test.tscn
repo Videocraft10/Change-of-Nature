@@ -11,8 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://c0bkyf3r6kxet" path="res://models/SmallDoor.blend" id="9_jv5v4"]
 [ext_resource type="PackedScene" uid="uid://cjwdouxbqmp0o" path="res://blueprints/scenes/BP_small_door.tscn" id="10_4vbj0"]
 [ext_resource type="PackedScene" uid="uid://cbb4aogifdke3" path="res://levels/testing/Roon Gen Test.tscn" id="11_ky343"]
-[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/DR_testing_gen_door.tscn" id="12_76ovf"]
-[ext_resource type="PackedScene" uid="uid://ds82dcpr0xffw" path="res://levels/rooms/dr_test_basic_room.tscn" id="13_guyg2"]
+[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="12_76ovf"]
+[ext_resource type="PackedScene" uid="uid://ds82dcpr0xffw" path="res://levels/rooms/old/dr_test_basic_room.tscn" id="13_guyg2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
