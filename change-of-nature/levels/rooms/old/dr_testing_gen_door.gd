@@ -1,9 +1,24 @@
 extends Node3D
 
-@export var room_scenes: Array[PackedScene]
+@export var room_files: Array[PackedScene]
 @export var room_scene_paths: Array[String] = []  # Use paths instead for self-reference
+@export var FinalRoom: String
+
 var allow_self_reference: bool = false
-@export var current_scene_path: String = ""  # Set this to the current scene's path
+var current_scene_path: String = ""  # Set this to the current scene's path
+
+@export_category("Gen Settings")
+@export var TurnRoomWeight = 0
+@export var FinalRoomWeight = 0
+@export var ForceNextRoom: String
+
+@export_category("Monster Settings")
+@export var TestBaddieWeight = 0
+
+# Next Room Vars
+var NextRoomTurn = false
+var NextRoomFinal = false
+var NextRoomIsForced = false
 
 var RoomGenerated = false
 
@@ -33,15 +48,42 @@ func _process(_delta: float) -> void:
 
 
 func _on_bp_small_door_body_entered(body: Node3D) -> void:
+	## Check Gen Settings
+	if ForceNextRoom:
+		NextRoomIsForced = true
+	
+	if TurnRoomWeight >= 100:
+		NextRoomTurn = true
+		
+	if FinalRoomWeight >= 100:
+		NextRoomFinal = true
+	
 	# Check if the body is the player and if a room hasn't been generated yet.
 	if body.is_in_group("player") and not RoomGenerated:
 		print("Generating Room at door's location.")
-		RoomGenerated = true
+		
+		# Add random weights when door is first opened
+		var final_room_increase = randi_range(1, 4)
+		var turn_room_increase = randi_range(1, 30)
+		FinalRoomWeight += final_room_increase
+		TurnRoomWeight += turn_room_increase
+		print("Increased FinalRoomWeight by ", final_room_increase, " (now: ", FinalRoomWeight, ")")
+		print("Increased TurnRoomWeight by ", turn_room_increase, " (now: ", TurnRoomWeight, ")")
 		
 		var room_instance: Node3D
 		
+		# Check if we should force a specific room
+		if not ForceNextRoom.is_empty():
+			print("Loading forced room from path:", ForceNextRoom)
+			var forced_scene_resource = load(ForceNextRoom) as PackedScene
+			if forced_scene_resource:
+				room_instance = forced_scene_resource.instantiate()
+				print("Successfully loaded forced room")
+			else:
+				print("Failed to load forced room from path:", ForceNextRoom)
+				return
 		# Method 1: Use scene paths to avoid circular reference
-		if allow_self_reference and not current_scene_path.is_empty():
+		elif allow_self_reference and not current_scene_path.is_empty():
 			print("Loading self-referencing room from path:", current_scene_path)
 			var scene_resource = load(current_scene_path) as PackedScene
 			if scene_resource:
@@ -55,7 +97,7 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 			var available_scenes = []
 			
 			# Add PackedScenes
-			for scene in room_scenes:
+			for scene in room_files:
 				if scene != null:
 					available_scenes.append(scene)
 			
@@ -117,11 +159,15 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 			room_instance.rotate_object_local(Vector3(1, 0, 0), rotation_diff.x)
 			room_instance.rotate_object_local(Vector3(0, 1, 0), rotation_diff.y)
 			room_instance.rotate_object_local(Vector3(0, 0, 1), rotation_diff.z)
+			RoomGenerated = true
 
 		else:
 			print("No connection points found in the room!")
 			# Fall back to the previous behavior
 			room_instance.global_transform = $DoorConnectionPoint.global_transform
+			
+		### Room and Monster Weights
+		
 	
 	elif body.is_in_group("player") and RoomGenerated:
 		print("Room already Generated")
