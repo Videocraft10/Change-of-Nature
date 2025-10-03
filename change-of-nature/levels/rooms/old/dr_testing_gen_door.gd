@@ -1,5 +1,7 @@
 extends Node3D
 
+signal door_opened(door_node: Node3D, room_instance: Node3D)
+
 @export var room_files: Array[PackedScene]
 @export var room_scene_paths: Array[String] = []  # Use paths instead for self-reference
 @export var FinalRoom: String
@@ -7,18 +9,7 @@ extends Node3D
 var allow_self_reference: bool = false
 var current_scene_path: String = ""  # Set this to the current scene's path
 
-@export_category("Gen Settings")
-@export var TurnRoomWeight = 0
-@export var FinalRoomWeight = 0
-@export var ForceNextRoom: String
 
-@export_category("Monster Settings")
-@export var TestBaddieWeight = 0
-
-# Next Room Vars
-var NextRoomTurn = false
-var NextRoomFinal = false
-var NextRoomIsForced = false
 
 var RoomGenerated = false
 
@@ -40,6 +31,39 @@ func _ready() -> void:
 		if current_scene_path.is_empty():
 			print("Warning: Could not auto-detect room scene path. Please set current_scene_path manually.")
 			print("Example: 'res://levels/rooms/dr_test_basic_room.tscn'")
+	
+	# Auto-connect to BP_LevelScript if it exists
+	var level_script = find_level_script()
+	if level_script and level_script.has_method("_on_dr_testing_gen_door_door_opened"):
+		if not door_opened.is_connected(level_script._on_dr_testing_gen_door_door_opened):
+			door_opened.connect(level_script._on_dr_testing_gen_door_door_opened)
+			print("Auto-connected door signal to level script: ", name)
+		else:
+			print("Door signal already connected: ", name)
+	else:
+		print("Warning: Could not find BP_LevelScript or connection method for door: ", name)
+
+func find_level_script() -> Node:
+	# Look for BP_LevelScript in the scene tree
+	var current_scene = get_tree().current_scene
+	
+	# First, try to find a node with BP_LevelScript script
+	var nodes_to_check = [current_scene]
+	
+	while nodes_to_check.size() > 0:
+		var node = nodes_to_check.pop_front()
+		
+		# Check if this node has the BP_LevelScript
+		if node.get_script() != null:
+			var script_path = node.get_script().get_path()
+			if script_path.ends_with("BP_LevelScript.gd"):
+				return node
+		
+		# Add children to check
+		for child in node.get_children():
+			nodes_to_check.append(child)
+	
+	return null
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,42 +72,14 @@ func _process(_delta: float) -> void:
 
 
 func _on_bp_small_door_body_entered(body: Node3D) -> void:
-	## Check Gen Settings
-	if ForceNextRoom:
-		NextRoomIsForced = true
-	
-	if TurnRoomWeight >= 100:
-		NextRoomTurn = true
-		
-	if FinalRoomWeight >= 100:
-		NextRoomFinal = true
-	
 	# Check if the body is the player and if a room hasn't been generated yet.
 	if body.is_in_group("player") and not RoomGenerated:
 		print("Generating Room at door's location.")
 		
-		# Add random weights when door is first opened
-		var final_room_increase = randi_range(1, 4)
-		var turn_room_increase = randi_range(1, 30)
-		FinalRoomWeight += final_room_increase
-		TurnRoomWeight += turn_room_increase
-		print("Increased FinalRoomWeight by ", final_room_increase, " (now: ", FinalRoomWeight, ")")
-		print("Increased TurnRoomWeight by ", turn_room_increase, " (now: ", TurnRoomWeight, ")")
-		
 		var room_instance: Node3D
 		
-		# Check if we should force a specific room
-		if not ForceNextRoom.is_empty():
-			print("Loading forced room from path:", ForceNextRoom)
-			var forced_scene_resource = load(ForceNextRoom) as PackedScene
-			if forced_scene_resource:
-				room_instance = forced_scene_resource.instantiate()
-				print("Successfully loaded forced room")
-			else:
-				print("Failed to load forced room from path:", ForceNextRoom)
-				return
 		# Method 1: Use scene paths to avoid circular reference
-		elif allow_self_reference and not current_scene_path.is_empty():
+		if allow_self_reference and not current_scene_path.is_empty():
 			print("Loading self-referencing room from path:", current_scene_path)
 			var scene_resource = load(current_scene_path) as PackedScene
 			if scene_resource:
@@ -165,10 +161,10 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 			print("No connection points found in the room!")
 			# Fall back to the previous behavior
 			room_instance.global_transform = $DoorConnectionPoint.global_transform
-			
-		### Room and Monster Weights
+			RoomGenerated = true
 		
+		# Emit the signal after room generation is complete
+		door_opened.emit(self, room_instance)
 	
 	elif body.is_in_group("player") and RoomGenerated:
 		print("Room already Generated")
-	pass # Replace with function body.

@@ -22,7 +22,6 @@ size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
 [node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_s184r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.053489685, -1.4442945, 0.03338623)
-room_scene_paths = Array[String](["res://levels/rooms/dr_test_basic_room2.tscn"])
 
 [node name="DoorCutout2" type="CSGBox3D" parent="TestBasicRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.872278, -1.5937243, -0.03338623)

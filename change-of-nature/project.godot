@@ -28,6 +28,10 @@ folder_colors={
 "res://materials/": "green"
 }
 
+[global_group]
+
+Level=""
+
 [input]
 
 move_left={

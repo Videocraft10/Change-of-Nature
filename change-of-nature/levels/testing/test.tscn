@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=20 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
+[ext_resource type="Script" uid="uid://da3hfg8a1cx0f" path="res://blueprints/scripts/BP_LevelScript.gd" id="1_guyg2"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
 [ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
 [ext_resource type="PackedScene" uid="uid://bd1pjnumtk111" path="res://levels/testing/LV_screenshake_demo.tscn" id="4_r4e4k"]
@@ -37,7 +38,8 @@ point_count = 13
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ky343"]
 
-[node name="world" type="Node3D"]
+[node name="world" type="Node3D" groups=["Level"]]
+script = ExtResource("1_guyg2")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 1, 0)
@@ -112,4 +114,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.061912, 0.0065599685, 25.39
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 33.830692, 75.95364, 93.70662)
 
 [node name="DR_Testing_Gen_Door" parent="." instance=ExtResource("12_76ovf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8720713, 0.015125036, 41.5226)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8756933, 0.035556555, 41.518417)
+
+[connection signal="door_opened" from="DR_Testing_Gen_Door" to="." method="_on_dr_testing_gen_door_door_opened"]
