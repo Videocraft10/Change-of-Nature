@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://brvi0bgxs3esb"]
+
+[ext_resource type="PackedScene" uid="uid://54hd13cbgiap" path="res://models/props/PR_FloodLight.tscn" id="1_if2vo"]
+
+[node name="PR_FloodLight" instance=ExtResource("1_if2vo")]
+
+[node name="SpotLight3D" parent="FloodLight2" index="1"]
+light_energy = 0.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="FloodLight2/SpotLight3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2257415e-08, 0, -0.28041697)
+light_color = Color(0.8666667, 0.94509804, 0.7764706, 1)
+light_energy = 5.0
+light_size = 0.3
+light_bake_mode = 1
+distance_fade_enabled = true
+distance_fade_begin = 100.0
+distance_fade_length = 20.0
+omni_range = 11.33265

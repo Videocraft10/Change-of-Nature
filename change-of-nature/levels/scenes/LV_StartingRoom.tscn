@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cjsgxu6nmjnrp"]
+[gd_scene load_steps=19 format=3 uid="uid://cjsgxu6nmjnrp"]
 
 [ext_resource type="PackedScene" uid="uid://cs1aj3kcrqshv" path="res://models/Dock#1App.blend" id="1_utwxn"]
 [ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="2_iqise"]
@@ -6,18 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="4_iqise"]
 [ext_resource type="PackedScene" uid="uid://6wxrivt4sx1b" path="res://models/props/PR_Fan.tscn" id="5_xtj1d"]
 [ext_resource type="PackedScene" uid="uid://54hd13cbgiap" path="res://models/props/PR_FloodLight.tscn" id="6_4r8qw"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xtj1d"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-
-[sub_resource type="Sky" id="Sky_4r8qw"]
-sky_material = SubResource("ProceduralSkyMaterial_xtj1d")
-
-[sub_resource type="Environment" id="Environment_v0o40"]
-background_mode = 2
-sky = SubResource("Sky_4r8qw")
-tonemap_mode = 2
+[ext_resource type="PackedScene" uid="uid://blbi4sm1lal8r" path="res://textures/vfx/smoke/vfx_fan_smoke.tscn" id="7_v0o40"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xtj1d"]
 size = Vector3(13.2724, 1, 33.087257)
@@ -52,14 +41,6 @@ size = Vector3(0.110946655, 4.296753, 17.519165)
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_xtj1d"]
 
 [node name="DR_StartingDock#1" type="Node3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_v0o40")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
-directional_shadow_max_distance = 1.0
 
 [node name="Dock#1App" parent="." instance=ExtResource("1_utwxn")]
 
@@ -122,20 +103,55 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10695791, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25315037, 2.508429, -2)
 
 [node name="ProtoController" parent="." instance=ExtResource("4_iqise")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.539959, 0.442935, -0.592994)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.138466, 0.041431427, -29.276787)
 can_sprint = true
 can_freefly = true
 trauma_reduction_rate = 1.0
 noise = SubResource("FastNoiseLite_xtj1d")
 
-[node name="PR_Fan" parent="." instance=ExtResource("5_xtj1d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7749996, 27.949863, 25.0176)
-
-[node name="PR_Fan3" parent="." instance=ExtResource("5_xtj1d")]
+[node name="Fans" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7749996, 28.207863, -30.97868)
 
-[node name="PR_Fan2" parent="." instance=ExtResource("5_xtj1d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7749996, 27.949863, -89.698715)
+[node name="PR_Fan" parent="Fans" instance=ExtResource("5_xtj1d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25799942, 55.996277)
 
-[node name="PR_FloodLight" parent="." instance=ExtResource("6_4r8qw")]
-transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, 0.71866643, 5.6988153, 7.4989576)
+[node name="VFX_FanSmoke" parent="Fans/PR_Fan" instance=ExtResource("7_v0o40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78928566, -1.2368126, -0.1429596)
+
+[node name="PR_Fan3" parent="Fans" instance=ExtResource("5_xtj1d")]
+
+[node name="VFX_FanSmoke3" parent="Fans/PR_Fan3" instance=ExtResource("7_v0o40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78928566, -1.494812, 0.14178658)
+
+[node name="PR_Fan2" parent="Fans" instance=ExtResource("5_xtj1d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25799942, -58.720036)
+
+[node name="VFX_FanSmoke2" parent="Fans/PR_Fan2" instance=ExtResource("7_v0o40")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.78928566, -1.2368126, -0.49404144)
+
+[node name="FloodLights" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5097028, 6.5555816, 0)
+
+[node name="PR_FloodLight" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, 0)
+
+[node name="PR_FloodLight4" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, -20)
+
+[node name="PR_FloodLight5" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, -40)
+
+[node name="PR_FloodLight6" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, -60)
+
+[node name="PR_FloodLight7" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, -80)
+
+[node name="PR_FloodLight8" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, -100)
+
+[node name="PR_FloodLight2" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, 20)
+
+[node name="PR_FloodLight3" parent="FloodLights" instance=ExtResource("6_4r8qw")]
+transform = Transform3D(0.3956811, 0.30567375, 0, -0.30567375, 0.3956811, 0, 0, 0, 0.5, -0.066, 0.05, 40)

@@ -49,3 +49,13 @@ script = ExtResource("1_7ffxe")
 libraries = {
 &"": SubResource("AnimationLibrary_i2cc4")
 }
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.930048, 0.020481825, 0)
+light_color = Color(1, 0, 0, 1)
+light_energy = 16.0
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 80.0
+distance_fade_shadow = 90.0
+omni_range = 48.739975

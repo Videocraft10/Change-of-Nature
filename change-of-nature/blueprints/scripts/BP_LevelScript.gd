@@ -26,13 +26,24 @@ var SpawnMonster = false
 var CurrentMonsterWeight = 0
 
 # Door Numbering
-var current_door_number = 1
+var current_door_number = 0
+
+func _ready() -> void:
+	# Wait for the scene to be fully loaded, then increment door number
+	# This ensures the first preplaced door gets 00, and generated doors start at 01
+	await get_tree().process_frame
+	current_door_number += 1
+	print("World loaded, door number incremented to: ", current_door_number)
 
 func get_current_door_number() -> String:
 	# Format as two-digit string (01, 02, 03, etc.)
 	return "%02d" % current_door_number
 
 func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3D) -> void: 
+	# Increment door number first so the newly generated room gets the next number
+	current_door_number += 1
+	print("Door number incremented to: ", current_door_number)
+	
 	## Check Gen Settings
 	if ForceNextRoom:
 		NextRoomIsForced = true
@@ -68,9 +79,5 @@ func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3
 
 	# Handle forced room logic - you can modify the door's ForceNextRoom here if needed
 	# For example: door_node.ForceNextRoom = "res://some/special/room.tscn"
-	
-	# Increment door number for next room
-	current_door_number += 1
-	print("Door number incremented to: ", current_door_number)
 	
 	print("Door opened: ", door_node.name, " - Room generated: ", room_instance.name)

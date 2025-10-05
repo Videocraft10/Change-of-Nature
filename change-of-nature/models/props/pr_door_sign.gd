@@ -12,6 +12,7 @@ func _ready() -> void:
 	else:
 		print("Warning: Could not find BP_LevelScript or get_current_door_number method")
 		DoorNumber.text = "??"
+		
 
 func find_level_script() -> Node:
 	# Look for BP_LevelScript in the scene tree
@@ -34,6 +35,7 @@ func find_level_script() -> Node:
 			nodes_to_check.append(child)
 	
 	return null
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

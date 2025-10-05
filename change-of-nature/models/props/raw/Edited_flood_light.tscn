@@ -3,8 +3,12 @@
 [ext_resource type="PackedScene" uid="uid://bvnk7fde2il02" path="res://models/props/raw/FloodLight.blend" id="1_nkcjf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kodfw"]
-shading_mode = 0
-albedo_color = Color(0.90538645, 1, 0.74088365, 1)
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.656884, 0.8667783, 0.59492314, 1)
+emission_energy_multiplier = 3.32
+stencil_flags = 2
+stencil_color = Color(1, 1, 1, 1)
 
 [node name="FloodLight2" instance=ExtResource("1_nkcjf")]
 

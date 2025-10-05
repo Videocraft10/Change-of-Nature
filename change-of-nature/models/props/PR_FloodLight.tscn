@@ -8,8 +8,11 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 [node name="FloodLight2" parent="." instance=ExtResource("1_etwhq")]
 
 [node name="SpotLight3D" type="SpotLight3D" parent="FloodLight2"]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.36244592, 0, 0)
-light_color = Color(0.8158697, 0.92267185, 0.68613595, 1)
-light_energy = 16.0
-spot_range = 12.909
-spot_angle = 36.39
+transform = Transform3D(-8.742278e-08, 0, -2, 0, 2, 0, 2, 0, -8.742278e-08, 0.55303407, -0.011272073, 0)
+light_color = Color(0.86805, 0.9457274, 0.7769294, 1)
+light_energy = 30.0
+shadow_enabled = true
+distance_fade_enabled = true
+spot_range = 4096.0
+spot_attenuation = 2.0
+spot_angle = 52.99
