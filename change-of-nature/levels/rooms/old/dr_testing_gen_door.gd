@@ -4,7 +4,10 @@ signal door_opened(door_node: Node3D, room_instance: Node3D)
 
 @export var room_files: Array[PackedScene]
 @export var room_scene_paths: Array[String] = []  # Use paths instead for self-reference
+@export var TurnRoomL: Array[String] = []  # Path to left turn rooms
+@export var TurnRoomR: Array[String] = []  # Path to right turn rooms
 @export var FinalRoom: String
+
 
 var allow_self_reference: bool = false
 var current_scene_path: String = ""  # Set this to the current scene's path
@@ -77,40 +80,101 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 		print("Generating Room at door's location.")
 		
 		var room_instance: Node3D
+		var level_script = find_level_script()
 		
-		# Method 1: Use scene paths to avoid circular reference
-		if allow_self_reference and not current_scene_path.is_empty():
-			print("Loading self-referencing room from path:", current_scene_path)
-			var scene_resource = load(current_scene_path) as PackedScene
-			if scene_resource:
-				room_instance = scene_resource.instantiate()
+		# Check if we should generate a turn room
+		if level_script and level_script.NextRoomTurn:
+			print("NextRoomTurn is true, checking turn room logic...")
+			
+			var selected_turn_room = ""
+			
+			# Check LastTurnL and LastTurnR states
+			if not level_script.LastTurnL and not level_script.LastTurnR:
+				# Both false, pick randomly
+				if randi() % 2 == 0 and not TurnRoomL.is_empty():
+					selected_turn_room = TurnRoomL.pick_random()
+					level_script.LastTurnL = true
+					print("Selected left turn room, set LastTurnL to true")
+				elif not TurnRoomR.is_empty():
+					selected_turn_room = TurnRoomR.pick_random()
+					level_script.LastTurnR = true
+					print("Selected right turn room, set LastTurnR to true")
+			elif level_script.LastTurnL and not level_script.LastTurnR:
+				# Left is true, choose right
+				if not TurnRoomR.is_empty():
+					selected_turn_room = TurnRoomR.pick_random()
+					level_script.LastTurnR = true
+					print("LastTurnL was true, selected right turn room, set LastTurnR to true")
+			elif not level_script.LastTurnL and level_script.LastTurnR:
+				# Right is true, choose left
+				if not TurnRoomL.is_empty():
+					selected_turn_room = TurnRoomL.pick_random()
+					level_script.LastTurnL = true
+					print("LastTurnR was true, selected left turn room, set LastTurnL to true")
+			elif level_script.LastTurnL and level_script.LastTurnR:
+				# Both true, reset both to false and pick randomly
+				level_script.LastTurnL = false
+				level_script.LastTurnR = false
+				print("Both LastTurnL and LastTurnR were true, reset both to false")
+				if randi() % 2 == 0 and not TurnRoomL.is_empty():
+					selected_turn_room = TurnRoomL.pick_random()
+					level_script.LastTurnL = true
+					print("Selected left turn room, set LastTurnL to true")
+				elif not TurnRoomR.is_empty():
+					selected_turn_room = TurnRoomR.pick_random()
+					level_script.LastTurnR = true
+					print("Selected right turn room, set LastTurnR to true")
+			
+			# Load the selected turn room
+			if not selected_turn_room.is_empty():
+				var scene_resource = load(selected_turn_room) as PackedScene
+				if scene_resource:
+					room_instance = scene_resource.instantiate()
+					print("Loaded turn room:", selected_turn_room)
+					# Reset turn room weight back to 0 after loading a turn room
+					level_script.TurnRoomWeight = 0
+					print("Reset TurnRoomWeight to 0 after generating turn room")
+				else:
+					print("Failed to load turn room from path:", selected_turn_room)
+					return
 			else:
-				print("Failed to load scene from path:", current_scene_path)
+				print("No valid turn room paths configured!")
 				return
 		else:
-			# Method 2: Use traditional PackedScene array
-			# Combine both arrays for selection
-			var available_scenes = []
-			
-			# Add PackedScenes
-			for scene in room_files:
-				if scene != null:
-					available_scenes.append(scene)
-			
-			# Add scenes from paths
-			for path in room_scene_paths:
-				if not path.is_empty():
-					var scene_resource = load(path) as PackedScene
-					if scene_resource:
-						available_scenes.append(scene_resource)
-			
-			if available_scenes.is_empty():
-				print("No room scenes available!")
-				return
-			
-			# Pick a random scene
-			var random_scene = available_scenes.pick_random()
-			room_instance = random_scene.instantiate()
+			# Regular room generation logic
+			# Method 1: Use scene paths to avoid circular reference
+			if allow_self_reference and not current_scene_path.is_empty():
+				print("Loading self-referencing room from path:", current_scene_path)
+				var scene_resource = load(current_scene_path) as PackedScene
+				if scene_resource:
+					room_instance = scene_resource.instantiate()
+				else:
+					print("Failed to load scene from path:", current_scene_path)
+					return
+			else:
+				# Method 2: Use traditional PackedScene array
+				# Combine both arrays for selection
+				var available_scenes = []
+				
+				# Add PackedScenes
+				for scene in room_files:
+					if scene != null:
+						available_scenes.append(scene)
+				
+				# Add scenes from paths
+				for path in room_scene_paths:
+					if not path.is_empty():
+						var scene_resource = load(path) as PackedScene
+						if scene_resource:
+							available_scenes.append(scene_resource)
+				
+				if available_scenes.is_empty():
+					print("No room scenes available!")
+					return
+				
+				# Pick a random scene
+				var random_scene = available_scenes.pick_random()
+				room_instance = random_scene.instantiate()
 		
 		# 3. Add the new room to the scene tree.
 		# We add it to the parent of the door so it doesn't move with the door.

@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccb8upmtcukyd"]
+
+[ext_resource type="PackedScene" uid="uid://bvnk7fde2il02" path="res://models/props/raw/FloodLight.blend" id="1_nkcjf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kodfw"]
+shading_mode = 0
+albedo_color = Color(0.90538645, 1, 0.74088365, 1)
+
+[node name="FloodLight2" instance=ExtResource("1_nkcjf")]
+
+[node name="FloodLight" parent="." index="0"]
+surface_material_override/1 = SubResource("StandardMaterial3D_kodfw")

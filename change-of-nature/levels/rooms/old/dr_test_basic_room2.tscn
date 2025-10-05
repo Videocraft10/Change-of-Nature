@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bb0k7goiumje0"]
+[gd_scene load_steps=4 format=3 uid="uid://bb0k7goiumje0"]
 
 [ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_qxrnh"]
+[ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_vkxnu"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qxrnh"]
 albedo_color = Color(0.17254902, 1, 1, 1)
@@ -26,6 +27,9 @@ size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
 [node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_qxrnh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.11594248, -1.4504116, 0)
+
+[node name="PR_DoorSign" parent="TestBasicRoom/DoorCutout/DR_Testing_Gen_Door" instance=ExtResource("2_vkxnu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27867985, 2.5126257, -1.5514987)
 
 [node name="DoorCutout2" type="CSGBox3D" parent="TestBasicRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.872278, -1.5937243, -0.03338623)

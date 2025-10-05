@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=20 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Script" uid="uid://da3hfg8a1cx0f" path="res://blueprints/scripts/BP_LevelScript.gd" id="1_guyg2"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://c0bkyf3r6kxet" path="res://models/SmallDoor.blend" id="9_jv5v4"]
 [ext_resource type="PackedScene" uid="uid://cjwdouxbqmp0o" path="res://blueprints/scenes/BP_small_door.tscn" id="10_4vbj0"]
 [ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="12_76ovf"]
+[ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="13_guyg2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_noarx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -111,5 +112,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.061912, 0.0065599685, 25.39
 
 [node name="DR_Testing_Gen_Door" parent="." instance=ExtResource("12_76ovf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.8756933, 0.035556555, 41.518417)
+
+[node name="PR_DoorSign" parent="DR_Testing_Gen_Door" instance=ExtResource("13_guyg2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 2, -2)
 
 [connection signal="door_opened" from="DR_Testing_Gen_Door" to="." method="_on_dr_testing_gen_door_door_opened"]

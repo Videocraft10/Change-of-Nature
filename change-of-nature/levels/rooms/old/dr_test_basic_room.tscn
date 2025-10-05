@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ds82dcpr0xffw"]
+[gd_scene load_steps=3 format=3 uid="uid://ds82dcpr0xffw"]
 
 [ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_s184r"]
+[ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_ph7n3"]
 
 [node name="DR_TestBasicRoom" type="Node3D"]
 
@@ -22,6 +23,9 @@ size = Vector3(0.33226013, 2.8947754, 1.8258057)
 
 [node name="DR_Testing_Gen_Door" parent="TestBasicRoom/DoorCutout" instance=ExtResource("1_s184r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.053489685, -1.4442945, 0.03338623)
+
+[node name="PR_DoorSign" parent="TestBasicRoom/DoorCutout/DR_Testing_Gen_Door" instance=ExtResource("2_ph7n3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20198298, 2.4983745, -1.7538273)
 
 [node name="DoorCutout2" type="CSGBox3D" parent="TestBasicRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.872278, -1.5937243, -0.03338623)

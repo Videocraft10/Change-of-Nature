@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp12k3nhbg735"]
+
+[ext_resource type="PackedScene" uid="uid://cl1ual45ocpnv" path="res://models/props/raw/Edited_door_sign.tscn" id="1_5lwqg"]
+[ext_resource type="Script" uid="uid://bncsbapwahtrj" path="res://models/props/pr_door_sign.gd" id="1_pkfm3"]
+[ext_resource type="FontFile" uid="uid://bne8pr35nbpu3" path="res://fonts/SUSEMono-Medium.ttf" id="2_pkfm3"]
+
+[node name="PR_DoorSign" type="Node3D"]
+script = ExtResource("1_pkfm3")
+
+[node name="DoorSign" parent="." instance=ExtResource("1_5lwqg")]
+
+[node name="DoorNumber" type="Label3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+pixel_size = 0.001
+shaded = true
+modulate = Color(0.93140066, 0.85967374, 0, 1)
+text = "01"
+font = ExtResource("2_pkfm3")
+font_size = 482
+outline_size = 0

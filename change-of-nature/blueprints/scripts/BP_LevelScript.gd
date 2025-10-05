@@ -13,6 +13,10 @@ var NextRoomTurn = false
 var NextRoomFinal = false
 var NextRoomIsForced = false
 
+#Turn Checks (so rooms dont clip)
+var LastTurnL = false
+var LastTurnR = false
+
 # Room Weights
 var CurrentTurnRoomWeight = 0
 var CurrentFinalRoomWeight = 0
@@ -21,6 +25,12 @@ var CurrentFinalRoomWeight = 0
 var SpawnMonster = false
 var CurrentMonsterWeight = 0
 
+# Door Numbering
+var current_door_number = 1
+
+func get_current_door_number() -> String:
+	# Format as two-digit string (01, 02, 03, etc.)
+	return "%02d" % current_door_number
 
 func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3D) -> void: 
 	## Check Gen Settings
@@ -58,5 +68,9 @@ func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3
 
 	# Handle forced room logic - you can modify the door's ForceNextRoom here if needed
 	# For example: door_node.ForceNextRoom = "res://some/special/room.tscn"
+	
+	# Increment door number for next room
+	current_door_number += 1
+	print("Door number incremented to: ", current_door_number)
 	
 	print("Door opened: ", door_node.name, " - Room generated: ", room_instance.name)

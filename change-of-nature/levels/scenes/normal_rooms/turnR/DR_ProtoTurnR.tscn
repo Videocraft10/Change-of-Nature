@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnnrol8iroks3"]
+
+[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_28hmv"]
+[ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_lmyic"]
+
+[node name="DR_ProtoTurnR" type="Node3D"]
+
+[node name="ProtoTurnR" type="CSGCombiner3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5097103, 0)
+use_collision = true
+
+[node name="Room" type="CSGBox3D" parent="ProtoTurnR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0429688, 0, 0)
+size = Vector3(22.085938, 7, 14)
+
+[node name="Room2" type="CSGBox3D" parent="ProtoTurnR"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.061523, 0, -7.668638)
+size = Vector3(29, 7, 13.967468)
+
+[node name="RoomCut" type="CSGBox3D" parent="ProtoTurnR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.749817, 0, 0.0025024414)
+operation = 2
+size = Vector3(35, 6, 13.005005)
+
+[node name="RoomCut2" type="CSGBox3D" parent="ProtoTurnR"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.749817, 0, -7.651123)
+operation = 2
+size = Vector3(28.302246, 6, 11)
+
+[node name="DoorCutout" type="CSGBox3D" parent="ProtoTurnR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.937712, -1.5495851, -0.03338623)
+operation = 2
+size = Vector3(1, 2.8947754, 1.8258057)
+
+[node name="DoorCutout2" type="CSGBox3D" parent="ProtoTurnR"]
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, -20.883293, -1.5495851, -21.988234)
+operation = 2
+size = Vector3(2.069336, 2.8947754, 1.8258057)
+
+[node name="DR_Testing_Gen_Door" parent="ProtoTurnR/DoorCutout2" instance=ExtResource("1_28hmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.029644012, -1.4442945, 0.03338623)
+
+[node name="PR_DoorSign" parent="ProtoTurnR/DoorCutout2/DR_Testing_Gen_Door" instance=ExtResource("2_lmyic")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2393322, 2.5379715, -1.6129913)
+
+[node name="RoomConnectionPoint" type="RayCast3D" parent="." groups=["connection_points"]]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 8.996864, 0.5134689, -0.03338623)
