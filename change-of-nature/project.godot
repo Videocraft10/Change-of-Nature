@@ -17,6 +17,8 @@ config/icon="res://icon.svg"
 
 [display]
 
+window/size/viewport_width=1280
+window/size/viewport_height=720
 window/stretch/mode="canvas_items"
 
 [editor_plugins]
@@ -81,3 +83,4 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/default_filters/anisotropic_filtering_level=3
 anti_aliasing/quality/msaa_3d=2
+environment/size/viewport_height=648

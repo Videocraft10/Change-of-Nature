@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmrab7e3fjer8"]
+
+[ext_resource type="PackedScene" uid="uid://o42mec4yynmq" path="res://models/props/raw/Edited_industrial_small_light.tscn" id="1_vvi5h"]
+
+[node name="PR_IndustrialLightSmall" type="Node3D"]
+
+[node name="IndustrialSmallLight" parent="." instance=ExtResource("1_vvi5h")]
+script = null
+
+[node name="OmniLight3D" type="OmniLight3D" parent="IndustrialSmallLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.22310641, 0)
+light_color = Color(0.5587214, 0.003704335, 0.932919, 1)
+light_energy = 2.0
+shadow_enabled = true
+distance_fade_enabled = true
+distance_fade_begin = 100.0
+omni_range = 12.521296

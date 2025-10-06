@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfiygaks5w4bk"]
+
+[ext_resource type="PackedScene" uid="uid://bnba1n66tgoxa" path="res://models/props/raw/Edited_industial_light_large.tscn" id="1_ojklr"]
+
+[node name="PR_IndustialLightLarge" type="Node3D"]
+
+[node name="IndustialLightLarge" parent="." instance=ExtResource("1_ojklr")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5711441, -0.15788698)
+light_color = Color(0.8666667, 0.94509804, 0.7764706, 1)
+light_energy = 2.0
+distance_fade_enabled = true
+distance_fade_begin = 100.0
+omni_range = 28.820415

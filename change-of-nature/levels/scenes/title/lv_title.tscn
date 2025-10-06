@@ -1,104 +1,259 @@
-[gd_scene load_steps=8 format=3 uid="uid://dtqnl3044slad"]
+[gd_scene load_steps=19 format=3 uid="uid://dtqnl3044slad"]
 
 [ext_resource type="Script" uid="uid://ck76j5tkcfd0j" path="res://levels/scenes/title/lv_title.gd" id="1_lansa"]
-[ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_rju8j"]
-[ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="2_lansa"]
-[ext_resource type="Script" uid="uid://dlw5dky7x6qgv" path="res://levels/scenes/title/sub_viewport.gd" id="4_wqdji"]
+[ext_resource type="FontFile" uid="uid://co6004ceglhuk" path="res://fonts/SUSEMono-Bold.ttf" id="2_wqdji"]
+[ext_resource type="FontFile" uid="uid://ct3ar1ejnrqrm" path="res://fonts/SUSEMono-BoldItalic.ttf" id="3_34phx"]
+[ext_resource type="PackedScene" uid="uid://cli3qvtejw4wh" path="res://levels/scenes/worlds/demo_1_world.tscn" id="4_yopk7"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wqdji"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umy53"]
 
-[sub_resource type="Sky" id="Sky_34phx"]
-sky_material = SubResource("ProceduralSkyMaterial_wqdji")
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oq2ne"]
 
-[sub_resource type="Environment" id="Environment_yopk7"]
-background_mode = 2
-sky = SubResource("Sky_34phx")
-tonemap_mode = 2
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wklkh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x67lv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3tsl2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lofn1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5bie"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8t682"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_11xn1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s4xvf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gchbv"]
+
+[sub_resource type="Animation" id="Animation_wqdji"]
+resource_name = "camera_amin"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title Background/SubViewportContainer/SubViewport/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2.02, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(14.856708, 16.153358, 25.431768), Vector3(14.347, 16.153, 25.432), Vector3(14.347, 16.498, 25.432), Vector3(14.857, 16.108, 25.432), Vector3(14.856708, 16.153358, 25.431768)]
+}
+
+[sub_resource type="Animation" id="Animation_34phx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title Background/SubViewportContainer/SubViewport/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(14.856708, 16.153358, 25.431768)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yopk7"]
+_data = {
+&"RESET": SubResource("Animation_34phx"),
+&"camera_amin": SubResource("Animation_wqdji")
+}
 
 [node name="LV_Title" type="CanvasLayer"]
 script = ExtResource("1_lansa")
 
-[node name="LV_Title" type="Node3D" parent="."]
+[node name="Title Background" type="Node3D" parent="."]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="LV_Title"]
-environment = SubResource("Environment_yopk7")
+[node name="Demo 1 World" parent="Title Background" instance=ExtResource("4_yopk7")]
+transform = Transform3D(0.6399924, 0, 0, 0, 0.6399924, 0, 0, 0, 0.6399924, 0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="LV_Title"]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 4.810938, 0)
-shadow_enabled = true
-
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="LV_Title"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5005, -6)
-use_collision = true
-
-[node name="Ground" type="CSGBox3D" parent="LV_Title/CSGCombiner3D"]
-transform = Transform3D(6.22, 0, 0, 0, 1, 0, 0, 0, 6.22, 3.5, -2.0005, 6)
-material_override = ExtResource("1_rju8j")
-use_collision = true
-size = Vector3(50, 1, 50)
-material = ExtResource("2_lansa")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="LV_Title"]
-offset_right = 1024.0
-offset_bottom = 645.0
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="LV_Title/SubViewportContainer"]
-handle_input_locally = false
-size = Vector2i(1024, 645)
-render_target_update_mode = 4
-script = ExtResource("4_wqdji")
-
-[node name="Button_manager" type="Control" parent="LV_Title/SubViewportContainer/SubViewport"]
-layout_mode = 3
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Title Background"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Start" type="Button" parent="LV_Title/SubViewportContainer/SubViewport/Button_manager"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.65500003
-anchor_bottom = 0.65500003
-offset_top = -11.400024
-offset_right = 256.0
-offset_bottom = 52.599976
+[node name="SubViewport" type="SubViewport" parent="Title Background/SubViewportContainer"]
+msaa_3d = 3
+use_debanding = true
+size = Vector2i(1280, 720)
+
+[node name="Camera3D" type="Camera3D" parent="Title Background/SubViewportContainer/SubViewport"]
+transform = Transform3D(0.868069, -0.111067355, 0.48385975, -0.010444127, 0.9703506, 0.24147595, -0.4963337, -0.21467128, 0.8411713, 14.856708, 16.153358, 25.431768)
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.9446937, 1.7770691)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 80
+
+[node name="Main Container" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="GameTitle" type="Label" parent="Control/MarginContainer/Main Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_wqdji")
+theme_override_font_sizes/font_size = 67
+text = "Change of Nature"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Main Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="StartButt" type="Button" parent="Control/MarginContainer/Main Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_hover_color = Color(1, 0.98866665, 0.65999997, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_34phx")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_umy53")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_oq2ne")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wklkh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_x67lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_3tsl2")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_lofn1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_i5bie")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8t682")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_11xn1")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_s4xvf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gchbv")
 text = "Start"
 
-[node name="Settings" type="Button" parent="LV_Title/SubViewportContainer/SubViewport/Button_manager"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.76600003
-anchor_bottom = 0.76600003
-offset_top = 4.7200317
-offset_right = 256.0
-offset_bottom = 68.72009
-grow_vertical = 2
-scale = Vector2(1.9446937, 1.7770691)
-text = "Settings"
+[node name="SettingsButt" type="Button" parent="Control/MarginContainer/Main Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_hover_color = Color(1, 0.98866665, 0.65999997, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_34phx")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_umy53")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_oq2ne")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wklkh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_x67lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_3tsl2")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_lofn1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_i5bie")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8t682")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_11xn1")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_s4xvf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gchbv")
+text = "Settings (wip)"
 
-[node name="Quit" type="Button" parent="LV_Title/SubViewportContainer/SubViewport/Button_manager"]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.87700003
-anchor_bottom = 0.87700003
-offset_top = 20.839966
-offset_right = 256.0
-offset_bottom = 84.839966
-grow_vertical = 2
-scale = Vector2(1.9446937, 1.7770691)
-text = "Quit
-"
+[node name="QuitButt" type="Button" parent="Control/MarginContainer/Main Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_hover_color = Color(1, 0.98866665, 0.65999997, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_34phx")
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxEmpty_umy53")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_oq2ne")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wklkh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_x67lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_3tsl2")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_lofn1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_i5bie")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8t682")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_11xn1")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_s4xvf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gchbv")
+text = "Quit"
 
-[node name="Camera3D" type="Camera3D" parent="LV_Title/SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.241781, 0)
-fov = 73.349304
+[node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Main Container"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
 
-[connection signal="pressed" from="LV_Title/SubViewportContainer/SubViewport/Button_manager/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="LV_Title/SubViewportContainer/SubViewport/Button_manager/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="LV_Title/SubViewportContainer/SubViewport/Button_manager/Quit" to="." method="_on_quit_pressed"]
+[node name="DEMO INFO" type="Button" parent="Control/MarginContainer/Main Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0.355313, 0.35531384, 0.35531324, 1)
+theme_override_colors/font_hover_color = Color(1, 0.98866665, 0.65999997, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_34phx")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_umy53")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_oq2ne")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_wklkh")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_x67lv")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_3tsl2")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_lofn1")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_i5bie")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_8t682")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_11xn1")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_s4xvf")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gchbv")
+text = "DEMO INFO (READ BEFORE PLAYING)"
+
+[node name="Demo Info Container" type="VBoxContainer" parent="Control/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Important info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_wqdji")
+theme_override_font_sizes/font_size = 67
+text = "Important info!"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_wqdji")
+theme_override_font_sizes/font_size = 20
+text = "Hello! Thanks for playing the demo! Here are some known bugs:
+
+1. Lights sometimes load in off, but after a new room is opened they turn on. No idea why.
+
+2. Somtimes game frezzes on room loading, currnty trying to find a soultion. 
+
+If you know any fixes to this, or find more bugs, 
+DM Videocraft on HackClub Slack or @Videocraft on discord."
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+text = "Exit"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_yopk7")
+}
+autoplay = "camera_amin"
+speed_scale = 0.2
+
+[connection signal="pressed" from="Control/MarginContainer/Main Container/StartButt" to="." method="_on_start_butt_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/Main Container/SettingsButt" to="." method="_on_settings_butt_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/Main Container/QuitButt" to="." method="_on_quit_butt_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/Main Container/DEMO INFO" to="." method="_on_demo_info_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/Demo Info Container/Exit Info" to="." method="_on_exit_info_pressed"]
