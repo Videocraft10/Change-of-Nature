@@ -1,0 +1,104 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtqnl3044slad"]
+
+[ext_resource type="Script" uid="uid://ck76j5tkcfd0j" path="res://levels/scenes/title/lv_title.gd" id="1_lansa"]
+[ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_rju8j"]
+[ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="2_lansa"]
+[ext_resource type="Script" uid="uid://dlw5dky7x6qgv" path="res://levels/scenes/title/sub_viewport.gd" id="4_wqdji"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wqdji"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_34phx"]
+sky_material = SubResource("ProceduralSkyMaterial_wqdji")
+
+[sub_resource type="Environment" id="Environment_yopk7"]
+background_mode = 2
+sky = SubResource("Sky_34phx")
+tonemap_mode = 2
+
+[node name="LV_Title" type="CanvasLayer"]
+script = ExtResource("1_lansa")
+
+[node name="LV_Title" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="LV_Title"]
+environment = SubResource("Environment_yopk7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="LV_Title"]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 4.810938, 0)
+shadow_enabled = true
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="LV_Title"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 1.5005, -6)
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="LV_Title/CSGCombiner3D"]
+transform = Transform3D(6.22, 0, 0, 0, 1, 0, 0, 0, 6.22, 3.5, -2.0005, 6)
+material_override = ExtResource("1_rju8j")
+use_collision = true
+size = Vector3(50, 1, 50)
+material = ExtResource("2_lansa")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="LV_Title"]
+offset_right = 1024.0
+offset_bottom = 645.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="LV_Title/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1024, 645)
+render_target_update_mode = 4
+script = ExtResource("4_wqdji")
+
+[node name="Button_manager" type="Control" parent="LV_Title/SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Start" type="Button" parent="LV_Title/SubViewportContainer/SubViewport/Button_manager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.65500003
+anchor_bottom = 0.65500003
+offset_top = -11.400024
+offset_right = 256.0
+offset_bottom = 52.599976
+grow_vertical = 2
+scale = Vector2(1.9446937, 1.7770691)
+text = "Start"
+
+[node name="Settings" type="Button" parent="LV_Title/SubViewportContainer/SubViewport/Button_manager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.76600003
+anchor_bottom = 0.76600003
+offset_top = 4.7200317
+offset_right = 256.0
+offset_bottom = 68.72009
+grow_vertical = 2
+scale = Vector2(1.9446937, 1.7770691)
+text = "Settings"
+
+[node name="Quit" type="Button" parent="LV_Title/SubViewportContainer/SubViewport/Button_manager"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.87700003
+anchor_bottom = 0.87700003
+offset_top = 20.839966
+offset_right = 256.0
+offset_bottom = 84.839966
+grow_vertical = 2
+scale = Vector2(1.9446937, 1.7770691)
+text = "Quit
+"
+
+[node name="Camera3D" type="Camera3D" parent="LV_Title/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.241781, 0)
+fov = 73.349304
+
+[connection signal="pressed" from="LV_Title/SubViewportContainer/SubViewport/Button_manager/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="LV_Title/SubViewportContainer/SubViewport/Button_manager/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="LV_Title/SubViewportContainer/SubViewport/Button_manager/Quit" to="." method="_on_quit_pressed"]
