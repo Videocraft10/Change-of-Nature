@@ -27,6 +27,21 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gchbv"]
 
+[sub_resource type="Animation" id="Animation_34phx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title Background/SubViewportContainer/SubViewport/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(14.856708, 16.153358, 25.431768)]
+}
+
 [sub_resource type="Animation" id="Animation_wqdji"]
 resource_name = "camera_amin"
 length = 4.0
@@ -42,21 +57,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector3(14.856708, 16.153358, 25.431768), Vector3(14.347, 16.153, 25.432), Vector3(14.347, 16.498, 25.432), Vector3(14.857, 16.108, 25.432), Vector3(14.856708, 16.153358, 25.431768)]
-}
-
-[sub_resource type="Animation" id="Animation_34phx"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Title Background/SubViewportContainer/SubViewport/Camera3D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(14.856708, 16.153358, 25.431768)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yopk7"]
@@ -81,9 +81,11 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="Title Background/SubViewportContainer"]
+handle_input_locally = false
 msaa_3d = 3
 use_debanding = true
 size = Vector2i(1280, 720)
+render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Title Background/SubViewportContainer/SubViewport"]
 transform = Transform3D(0.868069, -0.111067355, 0.48385975, -0.010444127, 0.9703506, 0.24147595, -0.4963337, -0.21467128, 0.8411713, 14.856708, 16.153358, 25.431768)
@@ -228,14 +230,17 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("2_wqdji")
 theme_override_font_sizes/font_size = 20
-text = "Hello! Thanks for playing the demo! Here are some known bugs:
+text = "
+Hello! Thanks for playing the demo! Here are some known bugs:
 
-1. Lights sometimes load in off, but after a new room is opened they turn on. No idea why.
+    Lights sometimes load in off, but after a new room is opened they turn on. No idea why.
 
-2. Somtimes game frezzes on room loading, currnty trying to find a soultion. 
+    Sometimes the game freezes on room loading; currently trying to find a solution.
 
-If you know any fixes to this, or find more bugs, 
-DM Videocraft on HackClub Slack or @Videocraft on discord."
+    The current demo is just a walk-through of infinite rooms to test performance; more to come!
+
+If you know any fixes to this or find more bugs, 
+DM Videocraft on Hack Club Slack or @Videocraft on Discord."
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
 custom_minimum_size = Vector2(0, 50)
