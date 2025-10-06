@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://brvi0bgxs3esb"]
+[gd_scene load_steps=3 format=3 uid="uid://brvi0bgxs3esb"]
 
 [ext_resource type="PackedScene" uid="uid://54hd13cbgiap" path="res://models/props/PR_FloodLight.tscn" id="1_if2vo"]
+[ext_resource type="Script" uid="uid://ci8gev4ujq8e7" path="res://models/props/pr_prf_flood_light.gd" id="2_q5l84"]
 
 [node name="PR_FloodLight" instance=ExtResource("1_if2vo")]
+script = ExtResource("2_q5l84")
 
 [node name="SpotLight3D" parent="FloodLight2" index="1"]
 light_energy = 0.0

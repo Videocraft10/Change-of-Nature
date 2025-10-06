@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmke5fo6q0j67"]
+[gd_scene load_steps=4 format=3 uid="uid://cmke5fo6q0j67"]
 
 [ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_rjh4o"]
 [ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_54y1s"]
+[ext_resource type="PackedScene" uid="uid://brvi0bgxs3esb" path="res://models/props/PR_PRFflood_light.tscn" id="3_54y1s"]
 
 [node name="DR_protoCorridor" type="Node3D"]
 
@@ -31,3 +32,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36075687, 2.4873028, -1.649
 
 [node name="RoomConnectionPoint" type="RayCast3D" parent="." groups=["connection_points"]]
 transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 8.996864, 0.5134689, -0.03338623)
+
+[node name="RoomFloodLights" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.6304617, 0)
+
+[node name="PR_FloodLight" parent="RoomFloodLights" instance=ExtResource("3_54y1s")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.606877, 4.9301605, 10.436335)
+
+[node name="PR_FloodLight2" parent="RoomFloodLights" instance=ExtResource("3_54y1s")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.782897, 4.9301605, 10.436335)
+
+[node name="PR_FloodLight3" parent="RoomFloodLights" instance=ExtResource("3_54y1s")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.782897, 4.9301605, -10.50725)
+
+[node name="PR_FloodLight4" parent="RoomFloodLights" instance=ExtResource("3_54y1s")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -15.795766, 4.9301605, -10.50725)
