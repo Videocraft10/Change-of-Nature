@@ -21,6 +21,7 @@ shape = SubResource("BoxShape3D_o70se")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Small_Door_Activation_collison"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.014892578, 0.0027770996, -0.004699707)
+visible = false
 size = Vector3(8, 2.9126587, 1.8548584)
 material = ExtResource("3_32evo")
 
