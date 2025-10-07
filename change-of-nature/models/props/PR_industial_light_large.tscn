@@ -11,5 +11,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5711441, -0.15788698)
 light_color = Color(0.8666667, 0.94509804, 0.7764706, 1)
 light_energy = 2.0
 distance_fade_enabled = true
-distance_fade_begin = 100.0
+distance_fade_begin = 50.0
+distance_fade_shadow = 20.0
 omni_range = 28.820415

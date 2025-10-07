@@ -52,8 +52,9 @@ func _process(_delta: float) -> void:
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_noio5"]
 albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
 emission = Color(0.8506773, 0.22682545, 1, 1)
-emission_energy_multiplier = 3.0
+emission_energy_multiplier = 0.0
 
 [node name="IndustrialSmallLight" instance=ExtResource("1_dchy5")]
 script = SubResource("GDScript_dchy5")

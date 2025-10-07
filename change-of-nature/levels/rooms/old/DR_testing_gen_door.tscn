@@ -5,7 +5,7 @@
 
 [node name="DR_Testing_Gen_Door" type="Node3D"]
 script = ExtResource("1_i3rc6")
-room_scene_paths = Array[String](["res://levels/rooms/old/dr_test_basic_room2.tscn", "res://levels/rooms/old/dr_test_basic_room.tscn", "res://levels/scenes/normal_rooms/room/DR_ProtoCorridor.tscn"])
+room_scene_paths = Array[String](["res://levels/scenes/normal_rooms/room/DR_ProtoCorridor.tscn"])
 TurnRoomL = Array[String](["res://levels/scenes/normal_rooms/turnL/DR_ProtoTurnL.tscn"])
 TurnRoomR = Array[String](["res://levels/scenes/normal_rooms/turnR/DR_ProtoTurnR.tscn"])
 
