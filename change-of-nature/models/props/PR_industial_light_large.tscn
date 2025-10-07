@@ -1,16 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://bfiygaks5w4bk"]
+[gd_scene load_steps=4 format=3 uid="uid://bfiygaks5w4bk"]
 
-[ext_resource type="PackedScene" uid="uid://bnba1n66tgoxa" path="res://models/props/raw/Edited_industial_light_large.tscn" id="1_ojklr"]
+[ext_resource type="PackedScene" uid="uid://bi2esii2lbgq1" path="res://models/props/raw/IndustialLightLarge.blend" id="1_g0ntx"]
+[ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="2_oqwfm"]
 
-[node name="PR_IndustialLightLarge" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uur0t"]
+albedo_color = Color(0.5330367, 0.5330367, 0.5330367, 1)
+metallic = 1.0
+roughness = 0.5
+disable_receive_shadows = true
 
-[node name="IndustialLightLarge" parent="." instance=ExtResource("1_ojklr")]
+[node name="IndustialLightLarge" instance=ExtResource("1_g0ntx")]
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5711441, -0.15788698)
-light_color = Color(0.8666667, 0.94509804, 0.7764706, 1)
-light_energy = 2.0
-distance_fade_enabled = true
-distance_fade_begin = 50.0
-distance_fade_shadow = 20.0
-omni_range = 28.820415
+[node name="Cube" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_uur0t")
+surface_material_override/2 = ExtResource("2_oqwfm")
