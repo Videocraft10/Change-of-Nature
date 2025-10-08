@@ -233,9 +233,9 @@ theme_override_font_sizes/font_size = 20
 text = "
 Hello! Thanks for playing the demo! Here are some known bugs:
 
-    Lights sometimes load in off, but after a new room is opened they turn on. No idea why.
+    Lights sometimes load in off, but after a new room is opened they turn on. (SHOULD BE FIXED)
 
-    Sometimes the game freezes on room loading; currently trying to find a solution.
+    Sometimes the game freezes on room loading; currently trying to find a solution. (MAYBE FIXED?)
 
     The current demo is just a walk-through of infinite rooms to test performance; more to come!
 
