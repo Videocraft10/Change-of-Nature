@@ -18,7 +18,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_noio5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.24655133, 0)
 visible = false
 light_color = Color(0.8509804, 0.22745098, 1, 1)
-light_energy = 3.0
 shadow_enabled = true
 distance_fade_enabled = true
 omni_range = 30.0

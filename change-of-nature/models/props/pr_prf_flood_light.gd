@@ -1,5 +1,7 @@
 extends Node3D
 
+var LightBroken = false
+
 func _ready():
 	# Create a unique material instance for this light
 	var mesh_instance = $FloodLight
@@ -13,15 +15,19 @@ func _ready():
 	
 
 func light_out():
-	# Toggle the emission of this instance's unique material
-	var mesh_instance = $FloodLight
-	if mesh_instance and mesh_instance is MeshInstance3D:
-		var material = mesh_instance.get_surface_override_material(1)
-		if material and material is StandardMaterial3D:
-			# Toggle emission enabled on this instance's unique material
-			material.emission_enabled = !material.emission_enabled
-			print("Light ", name, " emission: ", material.emission_enabled)
+	if not LightBroken:
+		# Toggle the emission of this instance's unique material
+		var mesh_instance = $FloodLight
+		if mesh_instance and mesh_instance is MeshInstance3D:
+			var material = mesh_instance.get_surface_override_material(1)
+			if material and material is StandardMaterial3D:
+				# Toggle emission enabled on this instance's unique material
+				material.emission_enabled = !material.emission_enabled
+				print("Light ", name, " emission: ", material.emission_enabled)
+				LightBroken = true
 
 func _input(event):
+	if LightBroken:
+		LightBroken = !LightBroken
 	if event.is_action_pressed("debug"):
 		light_out()

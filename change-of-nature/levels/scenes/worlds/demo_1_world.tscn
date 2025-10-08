@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cli3qvtejw4wh"]
+[gd_scene load_steps=10 format=3 uid="uid://cli3qvtejw4wh"]
 
 [ext_resource type="Script" uid="uid://da3hfg8a1cx0f" path="res://blueprints/scripts/BP_LevelScript.gd" id="1_as2pj"]
 [ext_resource type="PackedScene" uid="uid://cjsgxu6nmjnrp" path="res://levels/scenes/LV_StartingRoom.tscn" id="1_v0qst"]
+[ext_resource type="PackedScene" uid="uid://boo88e6iakdwy" path="res://models/props/PR_LEVindustrial_small_light.tscn" id="3_00k7w"]
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="3_tt00c"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_as2pj"]
@@ -52,6 +53,9 @@ light_energy = 16.0
 
 [node name="DR_StartingDock#1" parent="." instance=ExtResource("1_v0qst")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031661987, -0.11221504, -0.007083893)
+
+[node name="IndustrialSmallLight" parent="DR_StartingDock#1" instance=ExtResource("3_00k7w")]
+transform = Transform3D(0.42522645, -0.905087, 0, 0.905087, 0.42522645, 0, 0, 0, 1, 0.365, 5.273, 0)
 
 [node name="ProtoController" parent="." instance=ExtResource("3_tt00c")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 4.385787, 0, -30.266476)

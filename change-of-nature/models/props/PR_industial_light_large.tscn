@@ -15,5 +15,6 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("2_34bfv")
 
 [node name="Cube" parent="." index="0"]
+cast_shadow = 0
 surface_material_override/0 = SubResource("StandardMaterial3D_uur0t")
 surface_material_override/2 = ExtResource("2_oqwfm")

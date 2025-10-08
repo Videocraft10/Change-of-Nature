@@ -1,4 +1,7 @@
 extends Node3D
+var RoomLightBroken = false
+var DebugTrig = false
+var light_is_on = true  # Track current light state
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,17 +24,78 @@ func _ready() -> void:
 	#pass
 
 func light_out():
-	# Toggle the emission of this instance's unique material and the visibility of the SmallOmniLight
+	if not RoomLightBroken:
+		# Toggle the light state
+		if light_is_on:
+			# Turn light OFF
+			_turn_light_off()
+		else:
+			# Turn light ON (with delay unless debug)
+			_start_turn_on_sequence()
+
+func _turn_light_off():
+	light_is_on = false
 	var mesh_instance = $IndustiralLightSmall
 	if mesh_instance and mesh_instance is MeshInstance3D:
 		var material = mesh_instance.get_surface_override_material(0)
 		if material and material is StandardMaterial3D:
-			# Toggle emission enabled on this instance's unique material
-			material.emission_enabled = !material.emission_enabled
-			# Toggle visibility of the SmallOmniLight
-			$SmallOmniLight.visible = !$SmallOmniLight.visible
-			print("Light ", name, " emission: ", material.emission_enabled, ", SmallOmniLight visibility: ", $SmallOmniLight.visible)
+			# Turn off the light immediately
+			material.emission_enabled = false
+			material.emission_energy = 0.0
+			$SmallOmniLight.visible = false
+			$SmallOmniLight.light_energy = 0.0
+			print("Light ", name, " turned off")
+
+func _start_turn_on_sequence():
+	# Start the delay timer (skip if debug)
+	if DebugTrig:
+		_turn_light_on()
+	else:
+		# Create a timer for the delay
+		var delay_timer = Timer.new()
+		add_child(delay_timer)
+		delay_timer.wait_time = 2.0  # 2 second delay
+		delay_timer.one_shot = true
+		delay_timer.timeout.connect(_turn_light_on)
+		delay_timer.start()
+
+func _turn_light_on():
+	light_is_on = true  # Update state to ON
+	var mesh_instance = $IndustiralLightSmall
+	if mesh_instance and mesh_instance is MeshInstance3D:
+		var material = mesh_instance.get_surface_override_material(0)
+		if material and material is StandardMaterial3D:
+			
+			# Enable emission and make light visible
+			material.emission_enabled = true
+			$SmallOmniLight.visible = true
+			
+			# Create tween for smooth interpolation
+			var tween = create_tween()
+			tween.set_parallel(true)  # Allow multiple tweens to run simultaneously
+			
+			# Interpolate material emission power from 0 to 3
+			tween.tween_method(_set_emission_energy, 0.0, 3.0, 1.0)
+			
+			# Interpolate light energy from 0 to 1
+			tween.tween_method(_set_light_energy, 0.0, 1.0, 1.0)
+			
+			print("Light ", name, " turning on with interpolation")
+
+func _set_emission_energy(value: float):
+	var mesh_instance = $IndustiralLightSmall
+	if mesh_instance and mesh_instance is MeshInstance3D:
+		var material = mesh_instance.get_surface_override_material(0)
+		if material and material is StandardMaterial3D:
+			material.emission_energy = value
+
+func _set_light_energy(value: float):
+	$SmallOmniLight.light_energy = value
 
 func _input(event):
+	if RoomLightBroken:
+		RoomLightBroken = !RoomLightBroken
 	if event.is_action_pressed("debug"):
+		DebugTrig = false
 		light_out()
+### first time tiggerd the lights dont turn on for some reason

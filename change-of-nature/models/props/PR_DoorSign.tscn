@@ -12,7 +12,7 @@ script = ExtResource("1_pkfm3")
 [node name="DoorNumber" type="Label3D" parent="."]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
 pixel_size = 0.001
-modulate = Color(0.93140066, 0.85967374, 0, 1)
+modulate = Color(0.23803061, 1, 0.47063094, 1)
 text = "00"
 font = ExtResource("2_pkfm3")
 font_size = 482

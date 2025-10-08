@@ -1,4 +1,5 @@
 extends Node3D
+var LightBroken = false
 
 @onready var DoorNumber = $DoorNumber
 
@@ -35,6 +36,18 @@ func find_level_script() -> Node:
 			nodes_to_check.append(child)
 	
 	return null
+
+func light_out():
+	if not LightBroken:
+		$DoorNumber.shaded = !$DoorNumber.shaded
+		LightBroken = true
+	
+
+func _input(event):
+	if LightBroken:
+		LightBroken = !LightBroken
+	if event.is_action_pressed("debug"):
+		light_out()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

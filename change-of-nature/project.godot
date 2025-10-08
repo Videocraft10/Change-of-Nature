@@ -82,6 +82,10 @@ debug={
 ]
 }
 
+[layer_names]
+
+3d_render/layer_1="player"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=2
