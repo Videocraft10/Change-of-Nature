@@ -81,3 +81,24 @@ func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3
 	# For example: door_node.ForceNextRoom = "res://some/special/room.tscn"
 	
 	print("Door opened: ", door_node.name, " - Room generated: ", room_instance.name)
+
+var FogDelay = false
+
+func _on_fog_off_collider_area_entered(_area: Area3D) -> void:
+	if _area.is_in_group("player"):
+		if FogDelay:
+			pass
+		else:
+			$WorldEnvironment.environment.fog_enabled = !$WorldEnvironment.environment.fog_enabled
+			FogDelay = true
+			print("Fog Toggled")
+
+
+func _on_fog_on_collider_area_entered(_area: Area3D) -> void:
+	if _area.is_in_group("player"):
+		if not FogDelay:
+			pass
+		else:
+			$WorldEnvironment.environment.fog_enabled = !$WorldEnvironment.environment.fog_enabled
+			FogDelay = false
+			print("Fog Toggled")

@@ -3,5 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://ccb8upmtcukyd" path="res://models/props/raw/Edited_flood_light.tscn" id="1_if2vo"]
 [ext_resource type="Script" uid="uid://ci8gev4ujq8e7" path="res://models/props/pr_prf_flood_light.gd" id="2_q5l84"]
 
-[node name="FloodLight2" instance=ExtResource("1_if2vo")]
+[node name="PR_PrfFloodLight" instance=ExtResource("1_if2vo")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("2_q5l84")

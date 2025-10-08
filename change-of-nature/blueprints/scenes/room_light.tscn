@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdayxyg7yeydm"]
+
+[ext_resource type="Script" uid="uid://dvpvnb1jcbfw0" path="res://blueprints/scripts/room_light.gd" id="1_lf7rl"]
+
+[node name="RoomLight" type="OmniLight3D"]
+light_color = Color(0.8666667, 0.94509804, 0.7764706, 1)
+light_energy = 8.0
+distance_fade_enabled = true
+omni_range = 14.394354
+script = ExtResource("1_lf7rl")

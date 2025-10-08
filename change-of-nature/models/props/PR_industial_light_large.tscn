@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfiygaks5w4bk"]
+[gd_scene load_steps=5 format=3 uid="uid://bfiygaks5w4bk"]
 
 [ext_resource type="PackedScene" uid="uid://bi2esii2lbgq1" path="res://models/props/raw/IndustialLightLarge.blend" id="1_g0ntx"]
+[ext_resource type="Script" uid="uid://dl6civy4pb7hu" path="res://models/props/pr_industial_light_large.gd" id="2_34bfv"]
 [ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="2_oqwfm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uur0t"]
@@ -10,6 +11,8 @@ roughness = 0.5
 disable_receive_shadows = true
 
 [node name="IndustialLightLarge" instance=ExtResource("1_g0ntx")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("2_34bfv")
 
 [node name="Cube" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_uur0t")

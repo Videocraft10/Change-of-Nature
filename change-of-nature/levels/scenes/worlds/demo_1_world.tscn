@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cli3qvtejw4wh"]
+[gd_scene load_steps=9 format=3 uid="uid://cli3qvtejw4wh"]
 
 [ext_resource type="Script" uid="uid://da3hfg8a1cx0f" path="res://blueprints/scripts/BP_LevelScript.gd" id="1_as2pj"]
 [ext_resource type="PackedScene" uid="uid://cjsgxu6nmjnrp" path="res://levels/scenes/LV_StartingRoom.tscn" id="1_v0qst"]
@@ -29,6 +29,9 @@ fog_sky_affect = 0.095
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_00k7w"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_tt00c"]
+size = Vector3(0.6065674, 3.4064941, 52)
+
 [node name="Demo 1 World" type="Node3D" groups=["Level"]]
 script = ExtResource("1_as2pj")
 
@@ -56,3 +59,20 @@ can_sprint = true
 can_freefly = true
 trauma_reduction_rate = 1.0
 noise = SubResource("FastNoiseLite_00k7w")
+
+[node name="FogOnCollider" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="FogCollisionShape3D" type="CollisionShape3D" parent="FogOnCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1967163, 1.2032471, 0.04460144)
+shape = SubResource("BoxShape3D_tt00c")
+
+[node name="FogOffCollider" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 0)
+
+[node name="FogCollisionShape3D" type="CollisionShape3D" parent="FogOffCollider"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1967163, 1.2032471, 0.04460144)
+shape = SubResource("BoxShape3D_tt00c")
+
+[connection signal="area_entered" from="FogOnCollider" to="." method="_on_fog_on_collider_area_entered"]
+[connection signal="area_entered" from="FogOffCollider" to="." method="_on_fog_off_collider_area_entered"]
