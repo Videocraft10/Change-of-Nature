@@ -1,14 +1,14 @@
 [gd_scene load_steps=6 format=3 uid="uid://cslgeocb65cwj"]
 
 [ext_resource type="Texture2D" uid="uid://dfudfj6ceynqf" path="res://textures/entities/TX_MeanGuyAngler.png" id="1_7rtyf"]
-[ext_resource type="Script" uid="uid://vqxdp06v1hiv" path="res://blueprints/scripts/test_angler.gd" id="1_vg8qn"]
+[ext_resource type="Script" uid="uid://wvnbwjtxfe60" path="res://blueprints/scripts/EnemyWaypointController.gd" id="1_gavsr"]
 [ext_resource type="PackedScene" uid="uid://dkbhtspnbje5c" path="res://blueprints/scenes/BP_trauma_causer.tscn" id="2_nopmt"]
 [ext_resource type="Material" uid="uid://cuopoxt5b0s3a" path="res://materials/prototype/M_CollisonDebugMat.tres" id="3_bllg2"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_bllg2"]
 
 [node name="Test_Angler" type="Node3D"]
-script = ExtResource("1_vg8qn")
+script = ExtResource("1_gavsr")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.407425, 0, 0, 0, 0.407425, 0, 0, 0, 0.407425, 0, 0, 0)

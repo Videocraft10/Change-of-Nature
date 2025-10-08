@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bfiygaks5w4bk" path="res://models/props/PR_industial_light_large.tscn" id="3_bi8me"]
 [ext_resource type="PackedScene" uid="uid://cdayxyg7yeydm" path="res://blueprints/scenes/room_light.tscn" id="6_sloqj"]
 
-[node name="DR_protoCorridor" type="Node3D"]
+[node name="DR_protoCorridor" type="Node3D" groups=["rooms"]]
 
 [node name="protoCorridor" type="CSGCombiner3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5097103, 0)
