@@ -83,6 +83,8 @@ func is_it(what):
 	return "Player" == what
 
 func _ready() -> void:
+	# Add player to the "player" group for enemy detection
+	add_to_group("player")
 	check_input_mappings()
 	inital_rotation = camera.rotation
 	look_rotation.y = rotation.y

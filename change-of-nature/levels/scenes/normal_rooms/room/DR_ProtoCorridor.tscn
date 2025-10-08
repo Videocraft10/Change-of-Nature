@@ -76,3 +76,11 @@ omni_range = 21.359243
 [node name="RoomLight3" parent="." instance=ExtResource("6_sloqj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5095632, 3.8064728, 0.047781825)
 omni_range = 22.066933
+
+[node name="Waypoints" type="Node3D" parent="."]
+
+[node name="AngWaypoint1" type="Node3D" parent="Waypoints" groups=["enemy_waypoints"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 0, 0)
+
+[node name="AngWaypoint2" type="Node3D" parent="Waypoints" groups=["enemy_waypoints"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.254489, 0, 0)

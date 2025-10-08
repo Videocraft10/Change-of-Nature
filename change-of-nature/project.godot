@@ -39,6 +39,9 @@ folder_colors={
 
 Level=""
 rooms=""
+enemy_waypoints=""
+light=""
+e_angler=""
 
 [input]
 

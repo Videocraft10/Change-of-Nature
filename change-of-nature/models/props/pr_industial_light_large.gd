@@ -1,5 +1,7 @@
 extends Node3D
 
+var LightBroken = false
+
 func _ready():
 	# Create a unique material instance for this light
 	var mesh_instance = $Cube
@@ -13,15 +15,33 @@ func _ready():
 	
 
 func light_out():
-	# Toggle the emission of this instance's unique material
-	var mesh_instance = $Cube
-	if mesh_instance and mesh_instance is MeshInstance3D:
-		var material = mesh_instance.get_surface_override_material(2)
-		if material and material is StandardMaterial3D:
-			# Toggle emission enabled on this instance's unique material
-			material.emission_enabled = !material.emission_enabled
-			print("Light ", name, " emission: ", material.emission_enabled)
+	if not LightBroken:
+		# Toggle the emission of this instance's unique material
+		var mesh_instance = $Cube
+		if mesh_instance and mesh_instance is MeshInstance3D:
+			var material = mesh_instance.get_surface_override_material(2)
+			if material and material is StandardMaterial3D:
+				# Toggle emission enabled on this instance's unique material
+				material.emission_enabled = !material.emission_enabled
+				print("Light ", name, " emission: ", material.emission_enabled)
 
 func _input(event):
+	if LightBroken:
+		LightBroken = !LightBroken
 	if event.is_action_pressed("debug"):
 		light_out()
+
+
+func _on_large_light_area_3d_area_entered(_area: Area3D) -> void:
+	# Check if the area belongs to a test angler enemy
+	var parent_node = _area.get_parent()
+	if parent_node and parent_node.is_in_group("e_angler"):
+		print("Test angler detected by industrial large light - turning OFF")
+		# Set light to broken state so it can't be toggled again (except debug)
+		LightBroken = true
+		# Turn the light off by calling light_out
+		light_out()
+
+# Node references:
+# $LargeLightArea3D
+# $LargeLightArea3D/LargeLightCollision3D

@@ -18,3 +18,18 @@ func _input(event):
 		LightBroken = !LightBroken
 	if event.is_action_pressed("debug"):
 		light_out()
+
+
+func _on_room_light_area_3d_area_entered(_area: Area3D) -> void:
+	# Check if the area belongs to a test angler enemy
+	var parent_node = _area.get_parent()
+	if parent_node and parent_node.is_in_group("e_angler"):
+		print("Test angler detected by room light - turning OFF")
+		# Set light to broken state so it can't be toggled again (except debug)
+		LightBroken = true
+		# Turn the light off by calling light_out
+		light_out()
+
+# Node references:
+# $RoomLightArea3D
+# $RoomLightArea3D/RoomLightCollision3D

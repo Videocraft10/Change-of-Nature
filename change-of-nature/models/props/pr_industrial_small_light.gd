@@ -1,7 +1,7 @@
 extends Node3D
 var RoomLightBroken = false
 var DebugTrig = false
-var light_is_on = true  # Track current light state
+var light_is_on = false  # Track current light state - starts OFF
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -30,7 +30,7 @@ func light_out():
 			# Turn light OFF
 			_turn_light_off()
 		else:
-			# Turn light ON (with delay unless debug)
+			# Turn light ON (with delay unless debug) 
 			_start_turn_on_sequence()
 
 func _turn_light_off():
@@ -50,14 +50,22 @@ func _start_turn_on_sequence():
 	# Start the delay timer (skip if debug)
 	if DebugTrig:
 		_turn_light_on()
+		DebugTrig = false  # Reset debug flag after use
 	else:
 		# Create a timer for the delay
 		var delay_timer = Timer.new()
 		add_child(delay_timer)
 		delay_timer.wait_time = 2.0  # 2 second delay
 		delay_timer.one_shot = true
-		delay_timer.timeout.connect(_turn_light_on)
+		delay_timer.timeout.connect(_on_timer_timeout)
 		delay_timer.start()
+
+func _on_timer_timeout():
+	_turn_light_on()
+	# Clean up the timer
+	for child in get_children():
+		if child is Timer:
+			child.queue_free()
 
 func _turn_light_on():
 	light_is_on = true  # Update state to ON
@@ -96,6 +104,23 @@ func _input(event):
 	if RoomLightBroken:
 		RoomLightBroken = !RoomLightBroken
 	if event.is_action_pressed("debug"):
-		DebugTrig = false
+		DebugTrig = true  # Set to true for debug mode
 		light_out()
 ### first time tiggerd the lights dont turn on for some reason
+
+
+
+func _on_small_light_area_3d_area_entered(_area: Area3D) -> void:
+	# Check if the area belongs to a test angler enemy
+	var parent_node = _area.get_parent()
+	if parent_node and parent_node.is_in_group("e_angler"):
+		print("Test angler detected by industrial small light - turning ON")
+		# Set light to broken state so it can't be toggled again (except debug)
+		RoomLightBroken = true
+		# Force the light to turn on if it's currently off
+		if not light_is_on:
+			_turn_light_on()
+
+# Node references:
+# $SmallLightArea3D
+# $SmallLightArea3D/SmallLightCollision3D

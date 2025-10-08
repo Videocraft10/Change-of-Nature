@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://brvi0bgxs3esb"]
+[gd_scene load_steps=4 format=3 uid="uid://brvi0bgxs3esb"]
 
 [ext_resource type="PackedScene" uid="uid://ccb8upmtcukyd" path="res://models/props/raw/Edited_flood_light.tscn" id="1_if2vo"]
 [ext_resource type="Script" uid="uid://ci8gev4ujq8e7" path="res://models/props/pr_prf_flood_light.gd" id="2_q5l84"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q5l84"]
 
 [node name="PR_PrfFloodLight" instance=ExtResource("1_if2vo")]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
@@ -9,3 +11,10 @@ script = ExtResource("2_q5l84")
 
 [node name="FloodLight" parent="." index="0"]
 cast_shadow = 0
+
+[node name="FloodLightArea3D" type="Area3D" parent="." index="1" groups=["light"]]
+
+[node name="FloodLightCollision3D" type="CollisionShape3D" parent="FloodLightArea3D" index="0"]
+shape = SubResource("SphereShape3D_q5l84")
+
+[connection signal="area_entered" from="FloodLightArea3D" to="." method="_on_flood_light_area_3d_area_entered"]

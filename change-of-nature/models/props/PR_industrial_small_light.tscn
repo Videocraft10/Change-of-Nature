@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://o42mec4yynmq"]
+[gd_scene load_steps=5 format=3 uid="uid://o42mec4yynmq"]
 
 [ext_resource type="PackedScene" uid="uid://dutxi7w8onure" path="res://models/props/raw/IndustrialSmallLight.blend" id="1_l2p5n"]
 [ext_resource type="Script" uid="uid://g5ckd324v51j" path="res://models/props/pr_industrial_small_light.gd" id="2_qk86t"]
@@ -7,6 +7,8 @@
 albedo_color = Color(0, 0, 0, 1)
 emission = Color(0.8506773, 0.22682545, 1, 1)
 emission_energy_multiplier = 3.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qk86t"]
 
 [node name="IndustrialSmallLight" instance=ExtResource("1_l2p5n")]
 script = ExtResource("2_qk86t")
@@ -22,3 +24,10 @@ shadow_enabled = true
 distance_fade_enabled = true
 omni_range = 30.0
 omni_attenuation = 2.0
+
+[node name="SmallLightArea3D" type="Area3D" parent="." index="2" groups=["light"]]
+
+[node name="SmallLightCollision3D" type="CollisionShape3D" parent="SmallLightArea3D" index="0"]
+shape = SubResource("SphereShape3D_qk86t")
+
+[connection signal="area_entered" from="SmallLightArea3D" to="." method="_on_small_light_area_3d_area_entered"]
