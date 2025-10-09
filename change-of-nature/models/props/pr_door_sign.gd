@@ -53,3 +53,12 @@ func _input(event):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+
+func _on_door_light_area_3d_area_entered(area: Area3D) -> void:
+	# Check if the area is the kill area (not trauma area)
+	if area.is_in_group("kill_area"):
+		#print("Test angler kill area detected by door sign - turning OFF")
+		# Only trigger if not already broken
+		if not LightBroken:
+			light_out()

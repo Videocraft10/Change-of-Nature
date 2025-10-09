@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp12k3nhbg735"]
+[gd_scene load_steps=5 format=3 uid="uid://dp12k3nhbg735"]
 
 [ext_resource type="PackedScene" uid="uid://cl1ual45ocpnv" path="res://models/props/raw/Edited_door_sign.tscn" id="1_5lwqg"]
 [ext_resource type="Script" uid="uid://bncsbapwahtrj" path="res://models/props/pr_door_sign.gd" id="1_pkfm3"]
 [ext_resource type="FontFile" uid="uid://bne8pr35nbpu3" path="res://fonts/SUSEMono-Medium.ttf" id="2_pkfm3"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pkfm3"]
 
 [node name="PR_DoorSign" type="Node3D"]
 script = ExtResource("1_pkfm3")
@@ -17,3 +19,10 @@ text = "00"
 font = ExtResource("2_pkfm3")
 font_size = 482
 outline_size = 0
+
+[node name="DoorLightArea3D" type="Area3D" parent="." groups=["light"]]
+
+[node name="DoorLightCollision3D" type="CollisionShape3D" parent="DoorLightArea3D"]
+shape = SubResource("SphereShape3D_pkfm3")
+
+[connection signal="area_entered" from="DoorLightArea3D" to="." method="_on_door_light_area_3d_area_entered"]

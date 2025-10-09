@@ -129,6 +129,7 @@ func _on_fog_off_collider_area_entered(_area: Area3D) -> void:
 			pass
 		else:
 			$WorldEnvironment.environment.fog_enabled = !$WorldEnvironment.environment.fog_enabled
+			$DirectionalLight3D.visible = !$DirectionalLight3D.visible
 			FogDelay = true
 			print("Fog Toggled")
 
@@ -139,5 +140,6 @@ func _on_fog_on_collider_area_entered(_area: Area3D) -> void:
 			pass
 		else:
 			$WorldEnvironment.environment.fog_enabled = !$WorldEnvironment.environment.fog_enabled
+			$DirectionalLight3D.visible = !$DirectionalLight3D.visible
 			FogDelay = false
 			print("Fog Toggled")

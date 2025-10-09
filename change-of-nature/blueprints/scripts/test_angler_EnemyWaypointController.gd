@@ -4,6 +4,7 @@ class_name TestAnglerEnemyWaypointController
 @export var move_speed: float = 2.0
 @export var rotation_speed: float = 5.0
 @export var waypoint_reach_distance: float = 1.0
+@export var speed_per_waypoint: float = 0.1  # Speed increase per waypoint (10% by default)
 
 var sorted_waypoints: Array[Vector3] = []
 var current_waypoint_index: int = 0
@@ -13,16 +14,15 @@ var extra_movement_duration: float = 5.0
 var movement_direction: Vector3
 
 func _ready():
-	# Find spawn position 15 rooms behind the player
-	var spawn_position = find_spawn_position_behind_player()
-	global_position = spawn_position
-	print("Test angler spawned at: ", spawn_position)
-	
-	# Adjust speed based on number of generated rooms
-	adjust_speed_based_on_rooms()
+	# Always spawn at world origin
+	global_position = Vector3.ZERO
+	print("Test angler spawned at world origin.")
 	
 	# Find and sort all waypoints in the scene
-	find_and_sort_waypoints_from_position(spawn_position)
+	find_and_sort_waypoints_from_position(global_position)
+	
+	# Scale speed based on total waypoints
+	update_speed_based_on_waypoints()
 
 func _process(delta):
 	# Trauma causer functionality from test_angler.gd
@@ -77,8 +77,8 @@ func check_for_new_waypoints():
 		# Add new waypoints using nearest neighbor from current position
 		if not new_waypoints.is_empty():
 			add_new_waypoints_to_path(new_waypoints)
-			# Update speed based on new room count
-			adjust_speed_based_on_rooms()
+			# Update speed based on new waypoint count
+			update_speed_based_on_waypoints()
 
 func add_new_waypoints_to_path(new_waypoints: Array):
 	"""Add new waypoints to the existing path using nearest neighbor"""
@@ -116,63 +116,7 @@ func create_fallback_waypoints():
 	]
 	print("Created fallback waypoints")
 
-func find_spawn_position_behind_player() -> Vector3:
-	"""Find a spawn position approximately 15 rooms behind the player's current room"""
-	var player = get_tree().get_first_node_in_group("player")
-	if not player:
-		print("No player found, spawning at world origin")
-		return Vector3.ZERO
-	
-	var player_position = player.global_position
-	print("Player found at: ", player_position)
-	
-	# Get all room nodes
-	var rooms = get_tree().get_nodes_in_group("rooms")
-	if rooms.is_empty():
-		print("No rooms found, spawning at world origin")
-		return Vector3.ZERO
-	
-	# Find the room closest to the player (current room)
-	var closest_room = null
-	var closest_distance = INF
-	for room in rooms:
-		if room is Node3D:
-			var distance = player_position.distance_to(room.global_position)
-			if distance < closest_distance:
-				closest_distance = distance
-				closest_room = room
-	
-	if not closest_room:
-		print("No valid rooms found, spawning at world origin")
-		return Vector3.ZERO
-	
-	print("Player's current room: ", closest_room.name, " at ", closest_room.global_position)
-	
-	# Sort rooms by distance from current room
-	var sorted_rooms = []
-	for room in rooms:
-		if room is Node3D and room != closest_room:
-			var distance = closest_room.global_position.distance_to(room.global_position)
-			sorted_rooms.append({
-				"room": room,
-				"distance": distance
-			})
-	
-	# Sort by distance (closest to furthest from player's room)
-	sorted_rooms.sort_custom(func(a, b): return a.distance < b.distance)
-	
-	# Try to find a room 15 positions back, or use the furthest room available
-	var target_room_index = min(14, sorted_rooms.size() - 1)  # 15 rooms back (0-indexed)
-	
-	if target_room_index >= 0 and target_room_index < sorted_rooms.size():
-		var spawn_room = sorted_rooms[target_room_index].room
-		print("Spawning in room: ", spawn_room.name, " (", target_room_index + 1, " rooms behind player)")
-		return spawn_room.global_position
-	else:
-		print("Not enough rooms found, spawning at furthest available room or origin")
-		if sorted_rooms.size() > 0:
-			return sorted_rooms[-1].room.global_position
-		return Vector3.ZERO
+
 
 func find_and_sort_waypoints_from_position(start_position: Vector3):
 	"""Find all nodes with 'enemy_waypoints' group and create path from given position"""
@@ -229,40 +173,18 @@ func build_nearest_neighbor_path_from_position(all_waypoints: Array, start_pos: 
 		remaining_waypoints.remove_at(closest_index)
 		print("Next waypoint: ", next_waypoint.node.name, " at ", next_waypoint.position, " (distance: ", closest_distance, ")")
 
-func adjust_speed_based_on_rooms():
-	"""Adjust movement speed based on the number of rooms currently in the scene"""
-	# Count rooms in the scene (assuming they're in a 'rooms' group or have 'room' in their name)
-	var room_count = 0
-	
-	# Method 1: Try to find rooms by group
-	var rooms_by_group = get_tree().get_nodes_in_group("rooms")
-	if not rooms_by_group.is_empty():
-		room_count = rooms_by_group.size()
+func update_speed_based_on_waypoints():
+	"""Update movement speed based on current number of waypoints"""
+	if sorted_waypoints.size() > 0:
+		var base_speed = 2.0
+		var speed_multiplier = 1.0 + (sorted_waypoints.size() - 1) * speed_per_waypoint
+		move_speed = base_speed * speed_multiplier
+		print("Total waypoints: ", sorted_waypoints.size(), " - Adjusted speed: ", move_speed, " (multiplier: ", speed_multiplier, ", per waypoint: ", speed_per_waypoint, ")")
 	else:
-		# Method 2: Count nodes with "room" in their name as fallback
-		var current_scene = get_tree().current_scene
-		room_count = count_room_nodes(current_scene)
-	
-	# Calculate speed multiplier (starts at base speed, increases by 0.5 per room)
-	var base_speed = 2.0  # Original move_speed
-	var speed_multiplier = 1.0 + (room_count - 1) * 0.5  # Each additional room adds 50% speed
-	move_speed = base_speed * speed_multiplier
-	
-	print("Found ", room_count, " rooms. Adjusted speed to: ", move_speed, " (multiplier: ", speed_multiplier, ")")
+		move_speed = 2.0
+		print("No waypoints found, using base speed.")
 
-func count_room_nodes(node: Node) -> int:
-	# Recursively count nodes that appear to be rooms
-	var count = 0
-	
-	# Check if this node looks like a room (has "room" in name or is tagged as room)
-	if "room" in node.name.to_lower() or "dr_" in node.name.to_lower():
-		count += 1
-	
-	# Recursively check children
-	for child in node.get_children():
-		count += count_room_nodes(child)
-	
-	return count
+
 
 func move_through_waypoints(delta):
 	if sorted_waypoints.is_empty():
@@ -335,4 +257,3 @@ func _on_kill_area_area_entered(area: Area3D) -> void:
 			# Reset player velocity if it's a CharacterBody3D
 			#if target_node is CharacterBody3D:
 				#target_node.velocity = Vector3.ZERO
-	

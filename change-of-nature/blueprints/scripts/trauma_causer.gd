@@ -18,7 +18,7 @@ func cause_trauma():
 				# Calculate distance from area to this object's origin
 				var distance = global_transform.origin.distance_to(area.global_transform.origin)
 				# Invert and scale trauma, closer = more trauma, farther = less
-				var max_distance = 10.0 
+				var max_distance = 40 
 				var scaled_trauma = set_trauma_amount * (1.0 - clamp(distance / max_distance, 0.0, 1.0))
 				area.add_trauma_transmit(scaled_trauma)
 				print("Caused trauma(distance): ", scaled_trauma)

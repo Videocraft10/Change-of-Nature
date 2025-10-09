@@ -68,7 +68,8 @@ func _on_timer_timeout():
 			child.queue_free()
 
 func _turn_light_on():
-	light_is_on = true  # Update state to ON
+	light_is_on = true # Update state to ON
+	await get_tree().create_timer(10.0).timeout
 	var mesh_instance = $IndustiralLightSmall
 	if mesh_instance and mesh_instance is MeshInstance3D:
 		var material = mesh_instance.get_surface_override_material(0)
@@ -111,10 +112,9 @@ func _input(event):
 
 
 func _on_small_light_area_3d_area_entered(_area: Area3D) -> void:
-	# Check if the area belongs to a test angler enemy
-	var parent_node = _area.get_parent()
-	if parent_node and parent_node.is_in_group("e_angler"):
-		#print("Test angler detected by industrial small light - turning ON")
+	# Check if the area is the kill area (not trauma area)
+	if _area.is_in_group("kill_area"):
+		#print("Test angler kill area detected by industrial small light - turning ON")
 		# Only trigger if not already broken
 		if not RoomLightBroken:
 			# Force the light to turn on if it's currently off

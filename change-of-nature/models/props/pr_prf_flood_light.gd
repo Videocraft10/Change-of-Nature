@@ -24,8 +24,9 @@ func light_out():
 				# Toggle emission enabled on this instance's unique material
 				material.emission_enabled = !material.emission_enabled
 				print("Light ", name, " emission: ", material.emission_enabled)
+				$FloodLightArea3D.queue_free()
 				LightBroken = true
-
+				
 func _input(event):
 	if LightBroken:
 		LightBroken = !LightBroken
@@ -34,10 +35,9 @@ func _input(event):
 
 
 func _on_flood_light_area_3d_area_entered(_area: Area3D) -> void:
-	# Check if the area belongs to a test angler enemy
-	var parent_node = _area.get_parent()
-	if parent_node and parent_node.is_in_group("e_angler"):
-		#print("Test angler detected by flood light - turning OFF")
+	# Check if the area is the kill area (not trauma area)
+	if _area.is_in_group("kill_area"):
+		#print("Test angler kill area detected by flood light - turning OFF")
 		# Only trigger if not already broken
 		if not LightBroken:
 			light_out()

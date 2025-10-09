@@ -11,6 +11,7 @@
 [node name="Test_Angler" type="Node3D" groups=["e_angler"]]
 script = ExtResource("1_gavsr")
 move_speed = 30.0
+speed_per_waypoint = 0.2
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.407425, 0, 0, 0, 0.407425, 0, 0, 0, 0.407425, 0, 2, 0)
@@ -19,14 +20,14 @@ texture = ExtResource("1_7rtyf")
 
 [node name="trauma_causer" parent="." instance=ExtResource("2_nopmt")]
 set_trauma_amount = 0.2
-max_trauma = 0.2
+max_trauma = 0.4
 is_distance_based = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="trauma_causer"]
-transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
+transform = Transform3D(80, 0, 0, 0, 80, 0, 0, 0, 80, 0, 0, 0)
 shape = SubResource("SphereShape3D_bllg2")
 
-[node name="KillArea" type="Area3D" parent="."]
+[node name="KillArea" type="Area3D" parent="." groups=["kill_area"]]
 
 [node name="KillCollision" type="CollisionShape3D" parent="KillArea"]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
