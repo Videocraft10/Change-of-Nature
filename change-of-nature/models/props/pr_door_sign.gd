@@ -39,9 +39,9 @@ func find_level_script() -> Node:
 
 func light_out():
 	if not LightBroken:
-		$DoorNumber.shaded = !$DoorNumber.shaded
 		LightBroken = true
-	
+		$DoorNumber.shaded = !$DoorNumber.shaded
+		$DoorLightArea3D.queue_free()
 
 func _input(event):
 	if LightBroken:

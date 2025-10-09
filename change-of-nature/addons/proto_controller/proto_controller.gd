@@ -43,6 +43,11 @@ extends CharacterBody3D
 @export var max_y := 10.0
 @export var max_z := 5.0
 
+@export_group("Exposure Strobe")
+@export var strobe_frequency := 50.0
+@export var strobe_min_exposure := 0.5
+@export var strobe_max_exposure := 1.0
+
 @export_group("Input Actions")
 ## Name of Input Action to move Left.
 @export var input_left : String = "ui_left"
@@ -69,6 +74,8 @@ var is_falling_after_jump : bool = false
 var trauma := 0.0
 var time := 0.0
 var max_trauma := 1.0
+var was_at_max_trauma := false
+var strobe_timer := 0.0
 #endregion
 
 ## IMPORTANT REFERENCES
@@ -112,7 +119,11 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _process(_delta):
 	time += _delta
+	strobe_timer += _delta
 	trauma = max(trauma - _delta * trauma_reduction_rate, 0.0)
+	
+	# Handle exposure strobe effect
+	handle_exposure_strobe()
 	
 	camera.rotation_degrees.x = inital_rotation.x + max_x * get_shake_intensity() * get_noise_from_seed(0)
 	camera.rotation_degrees.y = inital_rotation.y + max_y * get_shake_intensity() * get_noise_from_seed(1)
@@ -201,6 +212,42 @@ func get_shake_intensity() -> float:
 func get_noise_from_seed(_seed : int) -> float:
 	noise.seed = _seed
 	return noise.get_noise_1d(time * noise_speed)
+
+func handle_exposure_strobe():
+	# Check if we're at max trauma
+	var at_max_trauma = (trauma >= max_trauma)
+	
+	if at_max_trauma:
+		# Start strobing if we just reached max trauma
+		if not was_at_max_trauma:
+			was_at_max_trauma = true
+			print("Max trauma reached - starting exposure strobe")
+		
+		# Create strobe effect - oscillate between min and max exposure with noise
+		var world_env = get_viewport().get_world_3d().environment
+		if world_env:
+			# Use sin wave for smooth strobe, frequency based on export variable
+			var strobe_value = sin(strobe_timer * strobe_frequency)
+			# Add noise to make the strobe more chaotic and unpredictable
+			var noise_offset = get_noise_from_seed(3) * 0.3  # Use seed 3 to avoid conflicts with camera shake
+			strobe_value += noise_offset
+			# Clamp to keep it in reasonable range
+			strobe_value = clamp(strobe_value, -1.0, 1.0)
+			# Map sin wave (-1 to 1) to exposure range (min to max)
+			var exposure = strobe_min_exposure + (strobe_value + 1.0) * 0.5 * (strobe_max_exposure - strobe_min_exposure)
+			world_env.tonemap_exposure = exposure
+	
+	elif was_at_max_trauma:
+		# Gradually return exposure to 1.0 when trauma drops below max
+		was_at_max_trauma = false
+		print("Trauma dropped below max - gradually returning exposure to 1.0")
+	
+	# If we were strobing but no longer at max trauma, gradually return to normal exposure
+	if not at_max_trauma:
+		var world_env = get_viewport().get_world_3d().environment
+		if world_env:
+			# Lerp exposure back to 1.0 over time (using trauma reduction rate as speed)
+			world_env.tonemap_exposure = move_toward(world_env.tonemap_exposure, 1.0, trauma_reduction_rate * get_process_delta_time())
 
 ## Checks if a player has fallen enough to be reset
 func check_fall():

@@ -76,6 +76,9 @@ can_sprint = true
 can_freefly = true
 trauma_reduction_rate = 1.0
 noise = SubResource("FastNoiseLite_r4e4k")
+strobe_frequency = 50.0
+strobe_min_exposure = 0.5
+strobe_max_exposure = 1.0
 
 [node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8076, 1.41532, 3.00025)
