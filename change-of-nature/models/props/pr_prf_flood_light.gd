@@ -37,11 +37,10 @@ func _on_flood_light_area_3d_area_entered(_area: Area3D) -> void:
 	# Check if the area belongs to a test angler enemy
 	var parent_node = _area.get_parent()
 	if parent_node and parent_node.is_in_group("e_angler"):
-		print("Test angler detected by flood light - turning OFF")
-		# Set light to broken state so it can't be toggled again (except debug)
-		LightBroken = true
-		# Turn the light off by calling light_out
-		light_out()
+		#print("Test angler detected by flood light - turning OFF")
+		# Only trigger if not already broken
+		if not LightBroken:
+			light_out()
 
 # Node references:
 # $FloodLightArea3D

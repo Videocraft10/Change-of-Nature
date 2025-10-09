@@ -114,12 +114,14 @@ func _on_small_light_area_3d_area_entered(_area: Area3D) -> void:
 	# Check if the area belongs to a test angler enemy
 	var parent_node = _area.get_parent()
 	if parent_node and parent_node.is_in_group("e_angler"):
-		print("Test angler detected by industrial small light - turning ON")
-		# Set light to broken state so it can't be toggled again (except debug)
-		RoomLightBroken = true
-		# Force the light to turn on if it's currently off
-		if not light_is_on:
-			_turn_light_on()
+		#print("Test angler detected by industrial small light - turning ON")
+		# Only trigger if not already broken
+		if not RoomLightBroken:
+			# Force the light to turn on if it's currently off
+			if not light_is_on:
+				_turn_light_on()
+			# Set light to broken state so it can't be toggled again (except debug)
+			RoomLightBroken = true
 
 # Node references:
 # $SmallLightArea3D

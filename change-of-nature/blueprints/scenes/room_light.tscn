@@ -16,6 +16,7 @@ script = ExtResource("1_lf7rl")
 [node name="RoomLightArea3D" type="Area3D" parent="." groups=["light"]]
 
 [node name="RoomLightCollision3D" type="CollisionShape3D" parent="RoomLightArea3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 shape = SubResource("SphereShape3D_lf7rl")
 
 [connection signal="area_entered" from="RoomLightArea3D" to="." method="_on_room_light_area_3d_area_entered"]
