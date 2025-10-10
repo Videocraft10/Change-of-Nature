@@ -76,12 +76,14 @@ var time := 0.0
 var max_trauma := 1.0
 var was_at_max_trauma := false
 var strobe_timer := 0.0
+var current_locker_target = null  # Track what locker we're looking at
 #endregion
 
 ## IMPORTANT REFERENCES
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera := $Head/Camera3D as Camera3D
+@onready var see_cast: RayCast3D = $Head/Camera3D/SeeCast if has_node("SeeCast") else null
 var inital_rotation : Vector3
 
 
@@ -148,10 +150,8 @@ func _process(_delta):
 		
 		
 func _physics_process(delta: float) -> void:
-	# Check what the raycast is looking at
-	if $Head/Camera3D/SeeCast and $Head/Camera3D/SeeCast.is_colliding():
-		var target = $Head/Camera3D/SeeCast.get_collider()
-		print(target)
+	# Removed locker raycast logic for now
+	current_locker_target = null
 	
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
