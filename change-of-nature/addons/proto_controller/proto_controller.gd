@@ -148,6 +148,11 @@ func _process(_delta):
 		
 		
 func _physics_process(delta: float) -> void:
+	# Check what the raycast is looking at
+	if $Head/Camera3D/SeeCast and $Head/Camera3D/SeeCast.is_colliding():
+		var target = $Head/Camera3D/SeeCast.get_collider()
+		print(target)
+	
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
 		var input_dir := Input.get_vector(input_left, input_right, input_forward, input_back)
