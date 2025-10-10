@@ -7,11 +7,15 @@ var LightBroken = false
 func _ready() -> void:
 	# Find the level script and get the current door number
 	var level_script = find_level_script()
-	if level_script and level_script.has_method("get_current_door_number"):
-		DoorNumber.text = level_script.get_current_door_number()
-		print("Next Door sign set to: ", DoorNumber.text)
+	if level_script:
+		if level_script.has_method("get_current_door_number"):
+			DoorNumber.text = level_script.get_current_door_number()
+			print("Next Door sign set to: ", DoorNumber.text)
+		else:
+			print("Warning: Could not find get_current_door_number method")
+			DoorNumber.text = "??"
 	else:
-		print("Warning: Could not find BP_LevelScript or get_current_door_number method")
+		print("Warning: Could not find BP_LevelScript")
 		DoorNumber.text = "??"
 		
 

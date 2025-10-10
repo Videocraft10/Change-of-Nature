@@ -29,6 +29,9 @@ var spawn_fail_multiplier = 1  # Doubles each time spawn fails
 # Door Numbering
 var current_door_number = 0
 
+# Signal for when enemy spawns - lights can connect to this
+signal enemy_spawned
+
 func _ready() -> void:
 	# Wait for the scene to be fully loaded, then increment door number
 	# This ensures the first preplaced door gets 00, and generated doors start at 01
@@ -110,6 +113,9 @@ func try_spawn_enemy_after_door():
 				
 				# THEN set position after it's in the tree
 				enemy_instance.global_position = Vector3.ZERO
+				
+				# Emit signal to make all lights flicker
+				enemy_spawned.emit()
 				
 				print("Enemy spawned at world origin - multiplier reset to 1")
 			else:
