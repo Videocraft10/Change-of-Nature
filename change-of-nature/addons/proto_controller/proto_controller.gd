@@ -77,6 +77,7 @@ var max_trauma := 1.0
 var was_at_max_trauma := false
 var strobe_timer := 0.0
 var current_locker_target = null  # Track what locker we're looking at
+var safe : bool = false  # Track if player is in safe area
 #endregion
 
 ## IMPORTANT REFERENCES

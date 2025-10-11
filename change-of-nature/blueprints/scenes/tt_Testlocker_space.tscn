@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dgekf03vksfa8"]
+[gd_scene load_steps=7 format=3 uid="uid://dgekf03vksfa8"]
 
 [ext_resource type="FontFile" uid="uid://co6004ceglhuk" path="res://fonts/SUSEMono-Bold.ttf" id="1_cp14s"]
 [ext_resource type="Script" uid="uid://dftt7fxrt8qgy" path="res://blueprints/scripts/tt_testlocker_space.gd" id="1_taa06"]
@@ -10,6 +10,12 @@ roughness = 0.5
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3s1gc"]
 size = Vector3(2, 3, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_taa06"]
+size = Vector3(0.061645508, 3.050293, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fjbth"]
+size = Vector3(2.0214844, 3.0535583, 0.039001465)
 
 [node name="TT_TestLockerSpace" type="Node3D" groups=["locker"]]
 script = ExtResource("1_taa06")
@@ -28,7 +34,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51004434, 0)
 
 [node name="Locker" type="CSGBox3D" parent="LockerSafeSpaceArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-use_collision = true
 size = Vector3(2, 3, 1)
 material = SubResource("StandardMaterial3D_so2od")
 
@@ -47,6 +52,7 @@ shape = SubResource("BoxShape3D_3s1gc")
 
 [node name="Temp Label3D" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0.50037897)
+shaded = true
 text = "WIP Locker"
 font = ExtResource("1_cp14s")
 
@@ -55,3 +61,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32642585, 0)
 
 [node name="PlayerTPLocOUT" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32642585, 1.3857898)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008239746, 1.5063477, 0)
+shape = SubResource("BoxShape3D_taa06")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.9895115, 1.5063477, 0)
+shape = SubResource("BoxShape3D_taa06")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.99137473, 1.510025, -0.49398053)
+shape = SubResource("BoxShape3D_fjbth")
+
+[connection signal="area_entered" from="LockerSafeSpaceArea" to="." method="_on_locker_safe_space_area_area_entered"]
+[connection signal="area_exited" from="LockerSafeSpaceArea" to="." method="_on_locker_safe_space_area_area_exited"]
+[connection signal="body_entered" from="LockerSafeSpaceArea" to="." method="_on_locker_safe_space_area_body_entered"]
+[connection signal="body_exited" from="LockerSafeSpaceArea" to="." method="_on_locker_safe_space_area_body_exited"]

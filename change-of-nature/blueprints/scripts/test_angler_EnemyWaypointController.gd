@@ -245,15 +245,17 @@ func move_towards_position(target_pos: Vector3, speed: float, delta):
 
 
 func _on_kill_area_area_entered(area: Area3D) -> void:
-	print("Kill area triggered by: ", area.name, " from parent: ", area.get_parent().name)
+	#print("Kill area triggered by: ", area.name, " from parent: ", area.get_parent().name)
+	pass
 	
-	# Check if the area belongs to player or if the parent is the player
-	var target_node = area.get_parent()
-	if area.is_in_group("player") or (target_node and target_node.is_in_group("player")):
-		print("Player detected! (Teleporting disabled for now)")
-		# Teleporting temporarily disabled
-		#if target_node:
-			#target_node.global_position = Vector3.ZERO
-			# Reset player velocity if it's a CharacterBody3D
-			#if target_node is CharacterBody3D:
-				#target_node.velocity = Vector3.ZERO
+func _on_kill_area_body_entered(body: Node3D) -> void: # For Player detection
+	#print("Kill area triggered by body: ", body.name)
+	
+	# Check if the body is the player
+	if body.is_in_group("player"):
+		# Only execute death logic if player is NOT safe
+		if not body.safe:
+			print("dead")
+			get_tree().change_scene_to_file("res://temp/lv_dead_title.tscn")
+		else:
+			print("Player is safe - no damage taken")

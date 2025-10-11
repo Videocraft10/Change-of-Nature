@@ -1,0 +1,61 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2k2roh4q0rga"]
+
+[ext_resource type="Script" uid="uid://bvm66kcjwu3mi" path="res://intro/cv_demo_intro.gd" id="1_m01s3"]
+[ext_resource type="FontFile" uid="uid://co6004ceglhuk" path="res://fonts/SUSEMono-Bold.ttf" id="2_tecpl"]
+
+[node name="CV_DemoIntro" type="CanvasLayer"]
+script = ExtResource("1_m01s3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 80
+
+[node name="Demo Info Container" type="VBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Important info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_tecpl")
+theme_override_font_sizes/font_size = 67
+text = "Important info!"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_tecpl")
+theme_override_font_sizes/font_size = 20
+text = "
+Epilepsy warning!!!: There are flashing lights that feture strobing effects! Do not play
+if you suffer with epilepsy!"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+text = "Exit"
+
+[connection signal="pressed" from="Control/MarginContainer/Demo Info Container/Exit Info" to="." method="_on_exit_info_pressed"]

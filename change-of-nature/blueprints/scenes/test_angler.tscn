@@ -34,3 +34,4 @@ transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 shape = SubResource("SphereShape3D_gavsr")
 
 [connection signal="area_entered" from="KillArea" to="." method="_on_kill_area_area_entered"]
+[connection signal="body_entered" from="KillArea" to="." method="_on_kill_area_body_entered"]
