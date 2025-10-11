@@ -95,6 +95,7 @@ interact={
 [layer_names]
 
 3d_render/layer_1="player"
+3d_physics/layer_2="interactions"
 
 [rendering]
 

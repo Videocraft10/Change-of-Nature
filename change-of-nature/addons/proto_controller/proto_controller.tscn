@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bs72ogkvdd7d6"]
+[gd_scene load_steps=9 format=3 uid="uid://bs72ogkvdd7d6"]
 
 [ext_resource type="Script" uid="uid://cr2a33cn8wsqp" path="res://addons/proto_controller/proto_controller.gd" id="1_ucva2"]
 [ext_resource type="Script" uid="uid://dc2iavqoaof1l" path="res://addons/proto_controller/area_3d.gd" id="2_wr06p"]
+[ext_resource type="PackedScene" uid="uid://btahw7dqfc1c6" path="res://blueprints/Interactions/lockers/interacting_componet.tscn" id="3_5hfox"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_g2uji"]
 
@@ -53,9 +54,8 @@ shape = SubResource("CapsuleShape3D_wr06p")
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
 
-[node name="SeeCast" type="RayCast3D" parent="Head/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
-target_position = Vector3(0, 2, 0)
+[node name="InteractingComponet" parent="Head/Camera3D" instance=ExtResource("3_5hfox")]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0.00037574768, 0)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

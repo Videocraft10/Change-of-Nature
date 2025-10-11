@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bfiygaks5w4bk" path="res://models/props/PR_industial_light_large.tscn" id="3_bi8me"]
 [ext_resource type="PackedScene" uid="uid://cdayxyg7yeydm" path="res://blueprints/scenes/room_light.tscn" id="6_sloqj"]
 [ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="7_uk1s6"]
-[ext_resource type="PackedScene" uid="uid://dgekf03vksfa8" path="res://blueprints/scenes/tt_Testlocker_space.tscn" id="8_v6m0p"]
+[ext_resource type="PackedScene" uid="uid://c6eoa875k0hg4" path="res://models/props/PR_locker.tscn" id="8_v6m0p"]
 
 [node name="DR_protoCorridor" type="Node3D" groups=["rooms"]]
 
@@ -93,11 +93,8 @@ material = ExtResource("7_uk1s6")
 
 [node name="Lockers" type="Node3D" parent="."]
 
-[node name="TT_LockerSpace" parent="Lockers" instance=ExtResource("8_v6m0p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.2926235, 0.5097101, -5.0069423)
+[node name="PR_Locker" parent="Lockers" instance=ExtResource("8_v6m0p")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.0633764, 0.57705545, -4.9737935)
 
-[node name="TT_LockerSpace3" parent="Lockers" instance=ExtResource("8_v6m0p")]
-transform = Transform3D(2.9802322e-08, 0, 1.0000001, 0, 1, 0, -1.0000001, 0, 2.9802322e-08, -12.256644, 0.5097101, 3.3502312)
-
-[node name="TT_LockerSpace2" parent="Lockers" instance=ExtResource("8_v6m0p")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51093817, 0.5097101, -5.0069423)
+[node name="PR_Locker2" parent="Lockers" instance=ExtResource("8_v6m0p")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.06337643, 0.57705545, -4.9737935)

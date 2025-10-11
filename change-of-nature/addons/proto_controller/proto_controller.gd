@@ -84,7 +84,6 @@ var safe : bool = false  # Track if player is in safe area
 @onready var head: Node3D = $Head
 @onready var collider: CollisionShape3D = $Collider
 @onready var camera := $Head/Camera3D as Camera3D
-@onready var see_cast: RayCast3D = $Head/Camera3D/SeeCast if has_node("SeeCast") else null
 var inital_rotation : Vector3
 
 
@@ -151,8 +150,6 @@ func _process(_delta):
 		
 		
 func _physics_process(delta: float) -> void:
-	# Removed locker raycast logic for now
-	current_locker_target = null
 	
 	# If freeflying, handle freefly and nothing else
 	if can_freefly and freeflying:
