@@ -244,7 +244,7 @@ func move_towards_position(target_pos: Vector3, speed: float, delta):
 		transform = transform.interpolate_with(target_transform, rotation_speed * delta)
 
 
-func _on_kill_area_area_entered(area: Area3D) -> void:
+func _on_kill_area_area_entered(_area: Area3D) -> void:
 	#print("Kill area triggered by: ", area.name, " from parent: ", area.get_parent().name)
 	pass
 	
