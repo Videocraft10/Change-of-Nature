@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6oeuxlxc87cm"]
+[gd_scene load_steps=9 format=3 uid="uid://b6oeuxlxc87cm"]
 
 [ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_1b3l1"]
 [ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_cxvd2"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cdayxyg7yeydm" path="res://blueprints/scenes/room_light.tscn" id="5_2lx0n"]
 [ext_resource type="PackedScene" uid="uid://o42mec4yynmq" path="res://models/props/PR_industrial_small_light.tscn" id="5_ow464"]
 [ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="7_6xnct"]
+[ext_resource type="PackedScene" uid="uid://c6eoa875k0hg4" path="res://models/props/PR_locker.tscn" id="8_wsu71"]
 
 [node name="DR_ProtoTurnL" type="Node3D" groups=["rooms"]]
 
@@ -148,3 +149,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.25449, 0, 21)
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
 material = ExtResource("7_6xnct")
+
+[node name="Lockers" type="Node3D" parent="."]
+
+[node name="PR_Locker" parent="Lockers" instance=ExtResource("8_wsu71")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.0633764, 0.57705545, -5.9737935)
+
+[node name="PR_Locker2" parent="Lockers" instance=ExtResource("8_wsu71")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.9366236, 0.57705545, -5.9737935)
+
+[node name="PR_Locker3" parent="Lockers" instance=ExtResource("8_wsu71")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.72605, 0.57705545, 9.026207)
+
+[node name="PR_Locker4" parent="Lockers" instance=ExtResource("8_wsu71")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25.72605, 0.57705545, 17.026207)

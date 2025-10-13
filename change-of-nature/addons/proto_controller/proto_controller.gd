@@ -78,12 +78,14 @@ var was_at_max_trauma := false
 var strobe_timer := 0.0
 var current_locker_target = null  # Track what locker we're looking at
 var safe : bool = false  # Track if player is in safe area
+var in_locker : bool = false
+var locker_interaction_triggered : bool = false  # Track if locker interaction was triggered
 #endregion
 
 ## IMPORTANT REFERENCES
-@onready var head: Node3D = $Head
+@onready var head: Node3D = $Root/Head
 @onready var collider: CollisionShape3D = $Collider
-@onready var camera := $Head/Camera3D as Camera3D
+@onready var camera := $Root/Head/Camera3D as Camera3D
 var inital_rotation : Vector3
 
 
@@ -315,4 +317,22 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
+		
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") and locker_interaction_triggered:
+		if not in_locker:
+			$AnimationPlayer.play("locker_in")
+			in_locker = true
+			can_move = false  # Lock movement when entering locker
+			await $AnimationPlayer.animation_finished
+			$AnimationPlayer.play("locker_idle")
+		else:
+			$AnimationPlayer.play("locker_out")
+			in_locker = false
+			await $AnimationPlayer.animation_finished
+			can_move = true  # Unlock movement when exiting locker
+			$AnimationPlayer.play("reset")
+		
+		# Reset the flag after processing locker interaction
+		locker_interaction_triggered = false
 #endregion

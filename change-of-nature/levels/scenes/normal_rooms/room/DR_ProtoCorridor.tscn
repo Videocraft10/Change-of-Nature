@@ -94,7 +94,7 @@ material = ExtResource("7_uk1s6")
 [node name="Lockers" type="Node3D" parent="."]
 
 [node name="PR_Locker" parent="Lockers" instance=ExtResource("8_v6m0p")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 4.0633764, 0.57705545, -4.9737935)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.0633764, 0.57705545, -4.9737935)
 
 [node name="PR_Locker2" parent="Lockers" instance=ExtResource("8_v6m0p")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.06337643, 0.57705545, -4.9737935)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.9366236, 0.57705545, -4.9737935)

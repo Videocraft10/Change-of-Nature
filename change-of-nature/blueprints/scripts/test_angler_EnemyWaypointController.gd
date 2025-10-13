@@ -253,9 +253,18 @@ func _on_kill_area_body_entered(body: Node3D) -> void: # For Player detection
 	
 	# Check if the body is the player
 	if body.is_in_group("player"):
-		# Only execute death logic if player is NOT safe
-		if not body.safe:
+		# Check if player is in locker or safe area
+		var is_in_locker = "in_locker" in body and body.in_locker
+		var is_safe = "safe" in body and body.safe
+		
+		# Only execute death logic if player is NOT safe and NOT in locker
+		if not is_safe and not is_in_locker:
 			print("dead")
 			get_tree().change_scene_to_file("res://temp/lv_dead_title.tscn")
 		else:
-			print("Player is safe - no damage taken")
+			if is_in_locker:
+				print("Player is in locker - protected from angler")
+			elif is_safe:
+				print("Player is in safe area - no damage taken")
+			else:
+				print("Player is protected - no damage taken")
