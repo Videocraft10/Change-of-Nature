@@ -11,6 +11,13 @@ var stored_enter_rotation: Vector3  # Store the rotation when player enters
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# 75% chance to delete the locker (only 25% chance to appear)
+	if randf() < 0.50:
+		print("Locker deleted - random spawn chance")
+		queue_free()
+		return
+	
+	print("Locker spawned - survived random chance")
 	interactable.interact = _on_interact
 
 

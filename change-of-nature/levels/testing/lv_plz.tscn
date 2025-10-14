@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckgwwhsq47mxf"]
+
+[ext_resource type="Script" uid="uid://dls4oi0eqdmhq" path="res://levels/testing/lv_plz.gd" id="1_gjf1s"]
+
+[node name="LV_PLZ" type="Node3D"]
+script = ExtResource("1_gjf1s")

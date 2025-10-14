@@ -5,9 +5,9 @@
 
 [node name="DR_Testing_Gen_Door" type="Node3D"]
 script = ExtResource("1_i3rc6")
-room_scene_paths = Array[String](["res://levels/scenes/normal_rooms/room/DR_ProtoCorridor.tscn"])
-TurnRoomL = Array[String](["res://levels/scenes/normal_rooms/turnL/DR_ProtoTurnL.tscn"])
-TurnRoomR = Array[String](["res://levels/scenes/normal_rooms/turnR/DR_ProtoTurnR.tscn"])
+room_scene_paths = Array[String](["res://levels/scenes/normal_rooms/room/DR_ProtoCorridor.tscn", "res://levels/scenes/normal_rooms/room/DR_ProtoAngLCorridor.tscn", "res://levels/scenes/normal_rooms/room/DR_ProtoAngRCorridor.tscn", "res://levels/scenes/normal_rooms/room/DR_ProtoStrightTurnL.tscn", "res://levels/scenes/normal_rooms/room/DR_ProtoStrightTurnR.tscn"])
+TurnRoomL = Array[String](["res://levels/scenes/normal_rooms/turnL/DR_ProtoTurnL.tscn", "res://levels/scenes/normal_rooms/turnL/DR_ProtoSmallTurnL.tscn"])
+TurnRoomR = Array[String](["res://levels/scenes/normal_rooms/turnR/DR_ProtoTurnR.tscn", "res://levels/scenes/normal_rooms/turnR/DR_ProtoSmallTurnR.tscn"])
 
 [node name="BP_SmallDoor" parent="." instance=ExtResource("1_4ycub")]
 

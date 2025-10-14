@@ -25,10 +25,18 @@ func _ready():
 	update_speed_based_on_waypoints()
 
 func _process(delta):
-	# Trauma causer functionality from test_angler.gd
+	# Trauma causer functionality from test_angler.gd - only if player is not in freefly
 	if has_node("trauma_causer"):
-		$trauma_causer.cause_trauma()
-		$trauma_causer.trauma_reduction_rate()
+		var player = get_tree().get_first_node_in_group("player")
+		var player_freeflying = player and "freeflying" in player and player.freeflying
+		
+		# Only cause trauma if player is not in freefly mode
+		if not player_freeflying:
+			$trauma_causer.cause_trauma()
+			$trauma_causer.trauma_reduction_rate()
+		else:
+			# Still call trauma reduction to allow trauma to decrease while in freefly
+			$trauma_causer.trauma_reduction_rate()
 	
 	if has_finished_waypoints:
 		# Move straight for 5 seconds then despawn
@@ -253,16 +261,19 @@ func _on_kill_area_body_entered(body: Node3D) -> void: # For Player detection
 	
 	# Check if the body is the player
 	if body.is_in_group("player"):
-		# Check if player is in locker or safe area
+		# Check if player is in locker, safe area, or freefly mode
 		var is_in_locker = "in_locker" in body and body.in_locker
 		var is_safe = "safe" in body and body.safe
+		var is_freeflying = "freeflying" in body and body.freeflying
 		
-		# Only execute death logic if player is NOT safe and NOT in locker
-		if not is_safe and not is_in_locker:
+		# Only execute death logic if player is NOT safe, NOT in locker, and NOT freeflying
+		if not is_safe and not is_in_locker and not is_freeflying:
 			print("dead")
 			get_tree().change_scene_to_file("res://temp/lv_dead_title.tscn")
 		else:
-			if is_in_locker:
+			if is_freeflying:
+				print("Player is in freefly mode - protected from angler")
+			elif is_in_locker:
 				print("Player is in locker - protected from angler")
 			elif is_safe:
 				print("Player is in safe area - no damage taken")
