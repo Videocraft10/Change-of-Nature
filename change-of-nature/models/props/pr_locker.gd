@@ -8,10 +8,11 @@ extends Node3D
 var player_ref = null
 var is_transitioning = false
 var stored_enter_rotation: Vector3  # Store the rotation when player enters
+var animation_cooldown = false  # Prevent interactions during animation
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# 75% chance to delete the locker (only 25% chance to appear)
+	# 50% chance to delete the locker (only 50% chance to appear)
 	if randf() < 0.50:
 		print("Locker deleted - random spawn chance")
 		queue_free()
@@ -26,8 +27,8 @@ func _process(_delta: float) -> void:
 	pass
 
 func _on_interact():
-	if is_transitioning:
-		return  # Prevent multiple interactions during transition
+	if is_transitioning or animation_cooldown:
+		return  # Prevent multiple interactions during transition or animation cooldown
 	
 	print("locker interacted")
 	
@@ -44,6 +45,7 @@ func _on_interact():
 	else:
 		# Player wants to enter locker
 		print("Player entering locker")
+		animation_cooldown = true  # Start cooldown
 		$Locker2.locker_open()
 		interactable.is_interactable = false
 		
@@ -51,7 +53,16 @@ func _on_interact():
 		if "locker_interaction_triggered" in player_ref:
 			player_ref.locker_interaction_triggered = true
 		
+		# Start cooldown timer in parallel (don't await here)
+		start_cooldown_timer()
+		
 		teleport_and_move_player()
+
+func start_cooldown_timer():
+	# Start cooldown timer without blocking (runs in parallel)
+	await get_tree().create_timer(1.5).timeout
+	print("Locker animation cooldown finished")
+	animation_cooldown = false
 
 func teleport_and_move_player():
 	if not player_ref or not enter_loc or not exit_loc:
@@ -98,6 +109,7 @@ func handle_locker_exit():
 		return
 	
 	is_transitioning = true
+	animation_cooldown = true  # Start cooldown for exit
 	
 	# Play the locker animation when exiting
 	$Locker2.locker_open()
@@ -105,6 +117,9 @@ func handle_locker_exit():
 	# Set flag to trigger locker_out animation in player controller
 	if "locker_interaction_triggered" in player_ref:
 		player_ref.locker_interaction_triggered = true
+	
+	# Start cooldown timer in parallel (don't await here)
+	start_cooldown_timer()
 	
 	# Wait a moment for the locker_out animation to start, then teleport to enter position
 	await get_tree().create_timer(0.1).timeout
