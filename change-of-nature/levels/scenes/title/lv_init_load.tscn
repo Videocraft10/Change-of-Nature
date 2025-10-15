@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl0gxxjry1vkt"]
+
+[ext_resource type="VideoStream" uid="uid://c5dmt5b6exov2" path="res://media/Intro NO MUSIC v2.ogv" id="1_13814"]
+[ext_resource type="FontFile" uid="uid://co6004ceglhuk" path="res://fonts/SUSEMono-Bold.ttf" id="2_nuhuu"]
+
+[node name="LV_InitLoad" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.0
+offset_top = -80.0
+offset_right = 64.0
+offset_bottom = 80.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 80
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control/MarginContainer"]
+layout_mode = 2
+stream = ExtResource("1_13814")
+autoplay = true
+
+[node name="Demo Info Container" type="VBoxContainer" parent="Control/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Important info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_nuhuu")
+theme_override_font_sizes/font_size = 67
+text = "Important info!"
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("2_nuhuu")
+theme_override_font_sizes/font_size = 20
+text = "
+Hello! Thanks for playing the demo! Here are some known bugs:
+
+    Lights sometimes load in off, but after a new room is opened they turn on. (SHOULD BE FIXED)
+
+    Sometimes the game freezes on room loading; currently trying to find a solution. (MAYBE FIXED?)
+
+    The current demo is just a walk-through of infinite rooms to test performance; more to come!
+
+If you know any fixes to this or find more bugs, 
+DM Videocraft on Hack Club Slack or @Videocraft on Discord."
+
+[node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
+layout_mode = 2
+text = "Exit"
