@@ -80,6 +80,7 @@ var current_locker_target = null  # Track what locker we're looking at
 var safe : bool = false  # Track if player is in safe area
 var in_locker : bool = false
 var locker_interaction_triggered : bool = false  # Track if locker interaction was triggered
+var locker_animation_cooldown : bool = false  # Prevent animation spam
 #endregion
 
 ## IMPORTANT REFERENCES
@@ -317,9 +318,20 @@ func check_input_mappings():
 	if can_freefly and not InputMap.has_action(input_freefly):
 		push_error("Freefly disabled. No InputAction found for input_freefly: " + input_freefly)
 		can_freefly = false
+
+func start_locker_animation_cooldown():
+	# Wait for cooldown period to prevent animation spam
+	await get_tree().create_timer(1.5).timeout
+	print("Player locker animation cooldown finished")
+	locker_animation_cooldown = false
 		
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and locker_interaction_triggered:
+	if event.is_action_pressed("interact") and locker_interaction_triggered and not locker_animation_cooldown:
+		locker_animation_cooldown = true  # Start cooldown
+		
+		# Start cooldown timer immediately in parallel (don't await here)
+		start_locker_animation_cooldown()
+		
 		if not in_locker:
 			$AnimationPlayer.play("locker_in")
 			in_locker = true

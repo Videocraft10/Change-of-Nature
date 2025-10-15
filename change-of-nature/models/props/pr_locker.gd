@@ -86,13 +86,15 @@ func teleport_and_move_player():
 	# Wait 0.8 seconds then teleport to exit location
 	await get_tree().create_timer(0.8).timeout
 	
-	# Teleport to exit location with only 180 degree rotation
+	# Teleport to exit location with locker's root rotation + 90 degrees left
 	player_ref.global_position = exit_loc.global_position
-	player_ref.global_rotation = Vector3(0, PI, 0)  # Set rotation to only 180 degrees on Y axis
+	var locker_rotation = self.global_rotation
+	locker_rotation.y -= PI/2  # Add 90 degrees to the left
+	player_ref.global_rotation = locker_rotation
 	
 	# Update the player's internal look rotation to match the new rotation
 	if "look_rotation" in player_ref:
-		player_ref.look_rotation.y = PI  # Update internal Y rotation tracking
+		player_ref.look_rotation.y = locker_rotation.y  # Update internal Y rotation tracking
 	
 	# Re-enable camera rotation
 	if "mouse_captured" in player_ref:
@@ -124,15 +126,15 @@ func handle_locker_exit():
 	# Wait a moment for the locker_out animation to start, then teleport to enter position
 	await get_tree().create_timer(0.1).timeout
 	
-	# Teleport player back to enter location with 180 degree rotation from stored enter angle
+	# Teleport player back to enter location with locker's root rotation + 90 degrees left
 	player_ref.global_position = enter_loc.global_position
-	var exit_rotation = stored_enter_rotation  # Use the stored rotation from when player entered
-	exit_rotation.y += PI  # Add 180 degrees (PI radians) to the stored enter rotation Y
-	player_ref.global_rotation = exit_rotation
+	var locker_rotation = self.global_rotation
+	locker_rotation.y -= PI/2  # Add 90 degrees to the left
+	player_ref.global_rotation = locker_rotation
 	
 	# Update the player's internal look rotation to match the new rotation
 	if "look_rotation" in player_ref:
-		player_ref.look_rotation.y = exit_rotation.y
+		player_ref.look_rotation.y = locker_rotation.y
 	
 	print("Player teleported back to enter location")
 	
