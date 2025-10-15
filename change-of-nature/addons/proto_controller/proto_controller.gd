@@ -166,8 +166,8 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		is_falling_after_jump = false
 		
-	# Apply gravity to velocity
-	if has_gravity:
+	# Apply gravity to velocity (but not when in locker)
+	if has_gravity and not in_locker:
 		if not is_on_floor():
 			var gravity_to_apply = get_gravity()
 			if is_falling_after_jump:

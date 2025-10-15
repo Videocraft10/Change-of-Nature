@@ -81,6 +81,11 @@ func teleport_and_move_player():
 	player_ref.global_position = enter_loc.global_position
 	player_ref.global_rotation = enter_loc.global_rotation
 	stored_enter_rotation = enter_loc.global_rotation  # Store the enter rotation for exit
+	
+	# Disable player collision when entering locker
+	if "collider" in player_ref:
+		player_ref.collider.disabled = true
+	
 	print("Player teleported to enter location")
 	
 	# Wait 0.8 seconds then teleport to exit location
@@ -138,9 +143,13 @@ func handle_locker_exit():
 	
 	print("Player teleported back to enter location")
 	
-	# Re-enable movement and interaction
+	# Re-enable movement, collision and interaction
 	if "can_move" in player_ref:
 		player_ref.can_move = true
+	
+	# Re-enable player collision when exiting locker
+	if "collider" in player_ref:
+		player_ref.collider.disabled = false
 	
 	is_transitioning = false
 	interactable.is_interactable = true  # Re-enable interaction

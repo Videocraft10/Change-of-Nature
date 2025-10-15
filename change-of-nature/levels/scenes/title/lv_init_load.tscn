@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bl0gxxjry1vkt"]
+[gd_scene load_steps=5 format=3 uid="uid://bl0gxxjry1vkt"]
 
-[ext_resource type="VideoStream" uid="uid://c5dmt5b6exov2" path="res://media/Intro NO MUSIC v2.ogv" id="1_13814"]
+[ext_resource type="Script" uid="uid://dbkk8lytl3l21" path="res://levels/scenes/title/lv_init_load.gd" id="1_nuhuu"]
+[ext_resource type="VideoStream" uid="uid://c7g8jryla8np7" path="res://media/Videocraft Studiosv2FINALLOW.ogv" id="2_inltv"]
 [ext_resource type="FontFile" uid="uid://co6004ceglhuk" path="res://fonts/SUSEMono-Bold.ttf" id="2_nuhuu"]
+[ext_resource type="FontFile" uid="uid://b6mdxjm5gbcfv" path="res://fonts/lex/Lexend-SemiBold.ttf" id="3_inltv"]
 
 [node name="LV_InitLoad" type="CanvasLayer"]
+script = ExtResource("1_nuhuu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0, 0, 0, 1)
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -31,19 +39,22 @@ theme_override_constants/margin_bottom = 80
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control/MarginContainer"]
 layout_mode = 2
-stream = ExtResource("1_13814")
+stream = ExtResource("2_inltv")
 autoplay = true
 
 [node name="Demo Info Container" type="VBoxContainer" parent="Control/MarginContainer"]
-visible = false
+layout_mode = 2
+
+[node name="MarginContainer3" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="Important info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_nuhuu")
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_inltv")
 theme_override_font_sizes/font_size = 67
-text = "Important info!"
+text = "NOTICE:"
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
 custom_minimum_size = Vector2(0, 50)
@@ -74,3 +85,5 @@ layout_mode = 2
 [node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
 layout_mode = 2
 text = "Exit"
+
+[connection signal="finished" from="Control/MarginContainer/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

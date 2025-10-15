@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://c6eoa875k0hg4"]
+[gd_scene load_steps=6 format=3 uid="uid://c6eoa875k0hg4"]
 
 [ext_resource type="PackedScene" uid="uid://hlujelco7ysk" path="res://models/props/raw/Edited_locker_2.tscn" id="1_05rrv"]
 [ext_resource type="Script" uid="uid://cwci5fet5cknh" path="res://models/props/pr_locker.gd" id="1_pxrge"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wh07e"]
 size = Vector3(1.125946, 2.9711914, 2.0668945)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pxrge"]
+size = Vector3(1, 2.9683838, 2.0288086)
 
 [node name="PR_Locker" type="Node3D"]
 script = ExtResource("1_pxrge")
@@ -26,3 +29,9 @@ interact_name = "Hide in Locker"
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0096588135, 1.405643, -0.0017089844)
 shape = SubResource("BoxShape3D_wh07e")
+
+[node name="LockerStatic" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LockerStatic"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4168091, 0.00024414063)
+shape = SubResource("BoxShape3D_pxrge")
