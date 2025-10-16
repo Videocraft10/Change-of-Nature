@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bl0gxxjry1vkt"]
+[gd_scene load_steps=4 format=3 uid="uid://bl0gxxjry1vkt"]
 
 [ext_resource type="Script" uid="uid://dbkk8lytl3l21" path="res://levels/scenes/title/lv_init_load.gd" id="1_nuhuu"]
 [ext_resource type="VideoStream" uid="uid://c7g8jryla8np7" path="res://media/Videocraft Studiosv2FINALLOW.ogv" id="2_inltv"]
-[ext_resource type="FontFile" uid="uid://co6004ceglhuk" path="res://fonts/SUSEMono-Bold.ttf" id="2_nuhuu"]
-[ext_resource type="FontFile" uid="uid://b6mdxjm5gbcfv" path="res://fonts/lex/Lexend-SemiBold.ttf" id="3_inltv"]
+[ext_resource type="FontFile" uid="uid://brt154yk4lrgj" path="res://fonts/lex/Lexend-ExtraBold.ttf" id="3_nuhuu"]
 
 [node name="LV_InitLoad" type="CanvasLayer"]
 script = ExtResource("1_nuhuu")
@@ -38,23 +37,23 @@ theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 80
 
 [node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control/MarginContainer"]
+visible = false
 layout_mode = 2
 stream = ExtResource("2_inltv")
-autoplay = true
 
 [node name="Demo Info Container" type="VBoxContainer" parent="Control/MarginContainer"]
 layout_mode = 2
 
 [node name="MarginContainer3" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 125)
 layout_mode = 2
 
 [node name="Important info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("3_inltv")
-theme_override_font_sizes/font_size = 67
-text = "NOTICE:"
+theme_override_fonts/font = ExtResource("3_nuhuu")
+theme_override_font_sizes/font_size = 40
+text = "Warning: please read before playing"
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
 custom_minimum_size = Vector2(0, 50)
@@ -62,28 +61,28 @@ layout_mode = 2
 
 [node name="Info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_horizontal = 4
 size_flags_vertical = 0
-theme_override_fonts/font = ExtResource("2_nuhuu")
+theme_override_colors/font_color = Color(0.5729883, 0.5729883, 0.5729883, 1)
+theme_override_fonts/font = ExtResource("3_nuhuu")
 theme_override_font_sizes/font_size = 20
-text = "
-Hello! Thanks for playing the demo! Here are some known bugs:
+text = "Some players may experience a sudden seizure when exposed to flashes of light 
+or in-game graphics. Som epeople may experience epilepsy while playing games, including those 
+without prior epileptic medical history. If you or your family has a history of epilepsy it is 
+reccomended to talk to a doctor before playing. If you experience any of the 
+following symptoms while playing, please stop and immediately consult your doctor before playing again: 
+eye pain; migraine; cramps; impaired consciousness (like fainting).
 
-    Lights sometimes load in off, but after a new room is opened they turn on. (SHOULD BE FIXED)
+In addition to the above symptoms, please stop playing immediately when you experience 
+headaches, dizziness, nausea, or motion sickness-like symptoms, or discomfort in certain 
+parts of your body. If symptoms do not subside after stopping the game, please seek medical 
+attention immediately.
 
-    Sometimes the game freezes on room loading; currently trying to find a solution. (MAYBE FIXED?)
-
-    The current demo is just a walk-through of infinite rooms to test performance; more to come!
-
-If you know any fixes to this or find more bugs, 
-DM Videocraft on Hack Club Slack or @Videocraft on Discord."
+Enjoy the game!"
+horizontal_alignment = 1
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-
-[node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
-layout_mode = 2
-text = "Exit"
 
 [connection signal="finished" from="Control/MarginContainer/VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

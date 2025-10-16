@@ -16,8 +16,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5097103, 0)
 use_collision = true
 
 [node name="Room" type="CSGBox3D" parent="protoCorridor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0429688, 0, 0)
-size = Vector3(22.085938, 7, 14)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0429688, 0, -0.48242188)
+size = Vector3(22.085938, 7, 13.035156)
 
 [node name="RoomCut" type="CSGBox3D" parent="protoCorridor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9999084, 0, 0)

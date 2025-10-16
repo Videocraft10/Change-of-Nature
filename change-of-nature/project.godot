@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Change of Nature"
 config/version="1"
-run/main_scene="uid://c2k2roh4q0rga"
+run/main_scene="uid://bl0gxxjry1vkt"
 config/features=PackedStringArray("4.5", "GL Compatibility")
 boot_splash/bg_color=Color(0.120698355, 0.15409899, 0.089330934, 1)
 config/icon="res://icon.svg"

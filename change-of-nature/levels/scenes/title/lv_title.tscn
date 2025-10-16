@@ -111,6 +111,7 @@ theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 80
 
 [node name="Main Container" type="VBoxContainer" parent="Control/MarginContainer"]
+visible = false
 layout_mode = 2
 
 [node name="GameTitle" type="Label" parent="Control/MarginContainer/Main Container"]
@@ -210,7 +211,6 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_gchbv")
 text = "DEMO INFO (READ BEFORE PLAYING)"
 
 [node name="Demo Info Container" type="VBoxContainer" parent="Control/MarginContainer"]
-visible = false
 layout_mode = 2
 
 [node name="Important info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
@@ -233,7 +233,8 @@ theme_override_font_sizes/font_size = 20
 text = "
 Hello! Thanks for playing the demo! Here are some known bugs:
 
-    Lights sometimes load in off, but after a new room is opened they turn on. (SHOULD BE FIXED)
+    Lights sometimes load in off, this is just a optimzation issue as 
+    only a limited number of lights can exist at once.
 
     Sometimes the game freezes on room loading; currently trying to find a solution. (MAYBE FIXED?)
 
