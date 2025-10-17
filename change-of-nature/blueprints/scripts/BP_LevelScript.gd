@@ -15,7 +15,6 @@ var song_cred_control: Control = null
 var NextRoomTurn = false
 var NextRoomFinal = false
 var NextRoomIsForced = false
-var RoomPreGenerated = false  # Set to true when a room is pre-generated
 
 #Turn Checks (so rooms dont clip)
 var LastTurnL = false
@@ -121,12 +120,6 @@ func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3
 
 	# Try to spawn enemy after door is opened
 	try_spawn_enemy_after_door()
-	
-	# If room was pre-generated, always spawn an enemy that starts at the last waypoint
-	if RoomPreGenerated:
-		print("Room was pre-generated! Force spawning enemy at last waypoint...")
-		spawn_enemy_at_last_waypoint()
-		RoomPreGenerated = false  # Reset the flag after spawning
 
 	# Handle forced room logic - you can modify the door's ForceNextRoom here if needed
 	# For example: door_node.ForceNextRoom = "res://some/special/room.tscn"
@@ -181,36 +174,6 @@ func try_spawn_enemy_after_door():
 			CurrentMonsterWeight = 0
 			SpawnMonster = false
 			print("Enemy spawn chance failed (50%), weight reset, multiplier increased to x", spawn_fail_multiplier)
-
-func spawn_enemy_at_last_waypoint():
-	"""Spawn an enemy that starts at the last waypoint and moves backwards"""
-	var enemy_scene_path = "res://blueprints/scenes/test_angler.tscn"
-	if ResourceLoader.exists(enemy_scene_path):
-		var enemy_scene = load(enemy_scene_path)
-		var enemy_instance = enemy_scene.instantiate()
-		
-		# Add to current scene
-		get_tree().current_scene.add_child(enemy_instance)
-		
-		# Set the enemy to spawn at last waypoint and move backwards
-		# The enemy controller will handle finding waypoints and setting up reverse movement
-		if enemy_instance.has_method("set_spawn_at_last_waypoint"):
-			enemy_instance.set_spawn_at_last_waypoint()
-			print("Enemy configured to spawn at last waypoint and move backwards")
-		else:
-			print("Warning: Enemy doesn't have set_spawn_at_last_waypoint method")
-		
-		# Emit signal to make all lights flicker
-		enemy_spawned.emit()
-		
-		# Fade out music on first angler spawn
-		if not first_angler_spawned:
-			first_angler_spawned = true
-			fade_out_music()
-		
-		print("Enemy spawned for pre-generated room (will spawn at last waypoint)")
-	else:
-		print("Enemy scene not found at: ", enemy_scene_path)
 
 func fade_out_music():
 	# Fade out the music over 4 seconds and then stop it

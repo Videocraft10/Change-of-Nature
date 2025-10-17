@@ -5,6 +5,7 @@ class_name TestAnglerEnemyWaypointController
 @export var rotation_speed: float = 5.0
 @export var waypoint_reach_distance: float = 1.0
 @export var speed_per_waypoint: float = 0.1  # Speed increase per waypoint (10% by default)
+@export var final_speed: float = 50.0  # Speed to use when more than 50 waypoints
 
 var sorted_waypoints: Array[Vector3] = []
 var current_waypoint_index: int = 0
@@ -12,49 +13,33 @@ var has_finished_waypoints: bool = false
 var extra_movement_timer: float = 0.0
 var extra_movement_duration: float = 5.0
 var movement_direction: Vector3
-var spawn_at_last: bool = false  # Set to true to spawn at last waypoint
-var wait_timer: float = 0.0  # Timer for 5-second wait
-var is_waiting: bool = false  # Whether the enemy is waiting before moving
+var base_move_speed: float = 2.0  # Store original move speed
+var is_speed_boosted: bool = false  # Track if currently boosted
 
 func _ready():
-	# Always spawn at world origin initially
+	# Always spawn at world origin
 	global_position = Vector3.ZERO
 	print("Test angler spawned at world origin.")
 	
 	# Find and sort all waypoints in the scene
 	find_and_sort_waypoints_from_position(global_position)
 	
-	# If spawn_at_last is true, move to last waypoint and set up reverse traversal
-	if spawn_at_last and sorted_waypoints.size() > 0:
-		current_waypoint_index = sorted_waypoints.size() - 1
-		global_position = sorted_waypoints[current_waypoint_index]
-		is_waiting = true
-		wait_timer = 0.0
-		print("Spawned at last waypoint (", current_waypoint_index, "), waiting 5 seconds before moving backwards")
-	else:
-		# Scale speed based on total waypoints
-		update_speed_based_on_waypoints()
-
-func set_spawn_at_last_waypoint():
-	"""Called by level script to configure reverse spawn"""
-	spawn_at_last = true
-	print("Enemy configured to spawn at last waypoint")
+	# Scale speed based on total waypoints
+	update_speed_based_on_waypoints()
 
 func _process(delta):
-	# Trauma causer functionality from test_angler.gd
+	# Trauma causer functionality from test_angler.gd - only if player is not in freefly
 	if has_node("trauma_causer"):
-		$trauma_causer.cause_trauma()
-		$trauma_causer.trauma_reduction_rate()
-	
-	# Handle 5-second wait if spawned at last waypoint
-	if is_waiting:
-		wait_timer += delta
-		if wait_timer >= 5.0:
-			is_waiting = false
-			print("Wait complete, starting movement backwards from waypoint ", current_waypoint_index)
-			# Update speed after waiting
-			update_speed_based_on_waypoints()
-		return  # Don't move while waiting
+		var player = get_tree().get_first_node_in_group("player")
+		var player_freeflying = player and "freeflying" in player and player.freeflying
+		
+		# Only cause trauma if player is not in freefly mode
+		if not player_freeflying:
+			$trauma_causer.cause_trauma()
+			$trauma_causer.trauma_reduction_rate()
+		else:
+			# Still call trauma reduction to allow trauma to decrease while in freefly
+			$trauma_causer.trauma_reduction_rate()
 	
 	if has_finished_waypoints:
 		# Move straight for 5 seconds then despawn
@@ -202,12 +187,23 @@ func build_nearest_neighbor_path_from_position(all_waypoints: Array, start_pos: 
 func update_speed_based_on_waypoints():
 	"""Update movement speed based on current number of waypoints"""
 	if sorted_waypoints.size() > 0:
-		var base_speed = 2.0
-		var speed_multiplier = 1.0 + (sorted_waypoints.size() - 1) * speed_per_waypoint
-		move_speed = base_speed * speed_multiplier
-		print("Total waypoints: ", sorted_waypoints.size(), " - Adjusted speed: ", move_speed, " (multiplier: ", speed_multiplier, ", per waypoint: ", speed_per_waypoint, ")")
+		var total_waypoints = sorted_waypoints.size()
+		
+		# If more than 50 waypoints, use final_speed and skip scaling
+		if total_waypoints > 50:
+			move_speed = final_speed
+			base_move_speed = final_speed
+			print("Total waypoints: ", total_waypoints, " (>50) - Using final speed: ", move_speed)
+		else:
+			# Normal scaling for 50 or fewer waypoints
+			var base_speed = 2.0
+			var speed_multiplier = 1.0 + (total_waypoints - 1) * speed_per_waypoint
+			move_speed = base_speed * speed_multiplier
+			base_move_speed = move_speed  # Store the base speed for this waypoint count
+			print("Total waypoints: ", total_waypoints, " - Adjusted speed: ", move_speed, " (multiplier: ", speed_multiplier, ", per waypoint: ", speed_per_waypoint, ")")
 	else:
 		move_speed = 2.0
+		base_move_speed = 2.0
 		print("No waypoints found, using base speed.")
 
 
@@ -218,31 +214,61 @@ func move_through_waypoints(delta):
 		queue_free()
 		return
 	
+	# Calculate remaining waypoints
+	var remaining_waypoints = sorted_waypoints.size() - current_waypoint_index
+	var total_waypoints = sorted_waypoints.size()
 	var target_waypoint = sorted_waypoints[current_waypoint_index]
+	
+	# Teleport mode: Jump to waypoints until 20 remain (works for ALL waypoint counts)
+	if remaining_waypoints > 20:
+		# Teleport mode: instantly jump to waypoints
+		if not is_speed_boosted:
+			print("Teleport mode activated! Total waypoints: ", total_waypoints, ", Remaining: ", remaining_waypoints)
+			is_speed_boosted = true
+		
+		# Directly teleport to the waypoint instead of moving
+		global_position = target_waypoint
+		
+		# Instantly mark as reached and move to next waypoint
+		print("Teleported to waypoint ", current_waypoint_index + 1, " of ", sorted_waypoints.size())
+		current_waypoint_index += 1
+		
+		# Check if we've reached the last waypoint
+		if current_waypoint_index >= sorted_waypoints.size():
+			check_for_new_waypoints()
+			
+			if current_waypoint_index >= sorted_waypoints.size():
+				has_finished_waypoints = true
+				if sorted_waypoints.size() >= 2:
+					var last_waypoint = sorted_waypoints[sorted_waypoints.size() - 1]
+					var second_last_waypoint = sorted_waypoints[sorted_waypoints.size() - 2]
+					movement_direction = (last_waypoint - second_last_waypoint).normalized()
+				else:
+					movement_direction = Vector3.FORWARD
+				print("Test angler finished all waypoints, moving straight for 5 seconds")
+		return  # Skip normal movement this frame
+	
+	# Normal movement mode (20 or fewer waypoints remaining)
+	if is_speed_boosted:
+		print("Teleport mode deactivated. Remaining waypoints: ", remaining_waypoints)
+		is_speed_boosted = false
+	
+	# Speed ramping: Only apply if total waypoints <= 50
+	if total_waypoints <= 50:
+		move_speed = base_move_speed  # Use calculated speed based on total waypoints
+	else:
+		move_speed = final_speed  # Use final_speed for >50 waypoints
+	
+	# Use normal movement for non-teleport mode
 	move_towards_position(target_waypoint, move_speed, delta)
 	
 	# Check if reached waypoint
 	if global_position.distance_to(target_waypoint) < waypoint_reach_distance:
 		print("Reached waypoint ", current_waypoint_index + 1, " of ", sorted_waypoints.size())
+		current_waypoint_index += 1
 		
-		# Move index based on direction (backwards if spawned at last)
-		if spawn_at_last:
-			current_waypoint_index -= 1  # Move backwards
-		else:
-			current_waypoint_index += 1  # Move forwards
-		
-		# Check if we've reached the end (or beginning if going backwards)
-		if spawn_at_last and current_waypoint_index < 0:
-			# Reached the first waypoint while going backwards
-			has_finished_waypoints = true
-			if sorted_waypoints.size() >= 2:
-				var first_waypoint = sorted_waypoints[0]
-				var second_waypoint = sorted_waypoints[1]
-				movement_direction = (first_waypoint - second_waypoint).normalized()
-			else:
-				movement_direction = Vector3.FORWARD
-			print("Test angler finished all waypoints (backwards), moving straight for 5 seconds")
-		elif not spawn_at_last and current_waypoint_index >= sorted_waypoints.size():
+		# Check if we've reached the last waypoint
+		if current_waypoint_index >= sorted_waypoints.size():
 			# Check for new waypoints before finishing
 			check_for_new_waypoints()
 			
@@ -285,16 +311,30 @@ func move_towards_position(target_pos: Vector3, speed: float, delta):
 		transform = transform.interpolate_with(target_transform, rotation_speed * delta)
 
 
-func _on_kill_area_area_entered(area: Area3D) -> void:
-	print("Kill area triggered by: ", area.name, " from parent: ", area.get_parent().name)
+func _on_kill_area_area_entered(_area: Area3D) -> void:
+	#print("Kill area triggered by: ", area.name, " from parent: ", area.get_parent().name)
+	pass
 	
-	# Check if the area belongs to player or if the parent is the player
-	var target_node = area.get_parent()
-	if area.is_in_group("player") or (target_node and target_node.is_in_group("player")):
-		print("Player detected! (Teleporting disabled for now)")
-		# Teleporting temporarily disabled
-		#if target_node:
-			#target_node.global_position = Vector3.ZERO
-			# Reset player velocity if it's a CharacterBody3D
-			#if target_node is CharacterBody3D:
-				#target_node.velocity = Vector3.ZERO
+func _on_kill_area_body_entered(body: Node3D) -> void: # For Player detection
+	#print("Kill area triggered by body: ", body.name)
+	
+	# Check if the body is the player
+	if body.is_in_group("player"):
+		# Check if player is in locker, safe area, or freefly mode
+		var is_in_locker = "in_locker" in body and body.in_locker
+		var is_safe = "safe" in body and body.safe
+		var is_freeflying = "freeflying" in body and body.freeflying
+		
+		# Only execute death logic if player is NOT safe, NOT in locker, and NOT freeflying
+		if not is_safe and not is_in_locker and not is_freeflying:
+			print("dead")
+			get_tree().change_scene_to_file("res://temp/lv_dead_title.tscn")
+		else:
+			if is_freeflying:
+				print("Player is in freefly mode - protected from angler")
+			elif is_in_locker:
+				print("Player is in locker - protected from angler")
+			elif is_safe:
+				print("Player is in safe area - no damage taken")
+			else:
+				print("Player is protected - no damage taken")
