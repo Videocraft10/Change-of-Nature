@@ -15,6 +15,9 @@ var extra_movement_duration: float = 5.0
 var movement_direction: Vector3
 var base_move_speed: float = 2.0  # Store original move speed
 var is_speed_boosted: bool = false  # Track if currently boosted
+var is_front_spawn: bool = false  # Track if this is a front-spawn enemy
+var is_moving_to_last_waypoint: bool = false  # Track if moving to starting position
+var move_backwards: bool = false  # Track if moving backwards through waypoints
 
 func _ready():
 	# Always spawn at world origin
@@ -26,6 +29,43 @@ func _ready():
 	
 	# Scale speed based on total waypoints
 	update_speed_based_on_waypoints()
+
+func set_spawn_at_last_waypoint():
+	"""Configure this enemy to spawn from the front (last waypoint, moving backwards)"""
+	print("Configuring enemy for FRONT-SPAWN mode")
+	is_front_spawn = true
+	is_moving_to_last_waypoint = true
+	move_backwards = true
+	
+	# Disable kill and trauma zones during initial movement to last waypoint
+	disable_danger_zones()
+	
+	# Set waypoint index to last waypoint
+	if not sorted_waypoints.is_empty():
+		current_waypoint_index = sorted_waypoints.size() - 1
+		print("Starting at last waypoint (", current_waypoint_index, ") for front-spawn")
+
+func disable_danger_zones():
+	"""Disable kill area and trauma zones"""
+	if has_node("kill_area"):
+		$kill_area.monitoring = false
+		$kill_area.monitorable = false
+		print("Disabled kill area")
+	
+	if has_node("trauma_causer"):
+		$trauma_causer.set_process(false)
+		print("Disabled trauma causer")
+
+func enable_danger_zones():
+	"""Re-enable kill area and trauma zones"""
+	if has_node("kill_area"):
+		$kill_area.monitoring = true
+		$kill_area.monitorable = true
+		print("Enabled kill area")
+	
+	if has_node("trauma_causer"):
+		$trauma_causer.set_process(true)
+		print("Enabled trauma causer")
 
 func _process(delta):
 	# Trauma causer functionality from test_angler.gd - only if player is not in freefly
@@ -229,23 +269,43 @@ func move_through_waypoints(delta):
 		# Directly teleport to the waypoint instead of moving
 		global_position = target_waypoint
 		
-		# Instantly mark as reached and move to next waypoint
+		# Instantly mark as reached and move to next/previous waypoint
 		print("Teleported to waypoint ", current_waypoint_index + 1, " of ", sorted_waypoints.size())
-		current_waypoint_index += 1
 		
-		# Check if we've reached the last waypoint
-		if current_waypoint_index >= sorted_waypoints.size():
-			check_for_new_waypoints()
-			
-			if current_waypoint_index >= sorted_waypoints.size():
+		# Handle front-spawn: if we've reached last waypoint during initial positioning
+		if is_front_spawn and is_moving_to_last_waypoint:
+			print("FRONT-SPAWN (Teleport): Reached last waypoint! Enabling danger zones and moving backwards")
+			enable_danger_zones()
+			is_moving_to_last_waypoint = false
+		
+		# Move to next/previous waypoint based on direction
+		if move_backwards:
+			current_waypoint_index -= 1
+			# Check if we've reached the first waypoint (moving backwards)
+			if current_waypoint_index < 0:
+				print("Front-spawn enemy reached beginning (waypoint 0)")
 				has_finished_waypoints = true
 				if sorted_waypoints.size() >= 2:
-					var last_waypoint = sorted_waypoints[sorted_waypoints.size() - 1]
-					var second_last_waypoint = sorted_waypoints[sorted_waypoints.size() - 2]
-					movement_direction = (last_waypoint - second_last_waypoint).normalized()
+					var first_waypoint = sorted_waypoints[0]
+					var second_waypoint = sorted_waypoints[1]
+					movement_direction = (first_waypoint - second_waypoint).normalized()
 				else:
-					movement_direction = Vector3.FORWARD
-				print("Test angler finished all waypoints, moving straight for 5 seconds")
+					movement_direction = -Vector3.FORWARD
+		else:
+			current_waypoint_index += 1
+			# Check if we've reached the last waypoint (moving forwards)
+			if current_waypoint_index >= sorted_waypoints.size():
+				check_for_new_waypoints()
+				
+				if current_waypoint_index >= sorted_waypoints.size():
+					has_finished_waypoints = true
+					if sorted_waypoints.size() >= 2:
+						var last_waypoint = sorted_waypoints[sorted_waypoints.size() - 1]
+						var second_last_waypoint = sorted_waypoints[sorted_waypoints.size() - 2]
+						movement_direction = (last_waypoint - second_last_waypoint).normalized()
+					else:
+						movement_direction = Vector3.FORWARD
+					print("Test angler finished all waypoints, moving straight for 5 seconds")
 		return  # Skip normal movement this frame
 	
 	# Normal movement mode (20 or fewer waypoints remaining)
@@ -265,24 +325,46 @@ func move_through_waypoints(delta):
 	# Check if reached waypoint
 	if global_position.distance_to(target_waypoint) < waypoint_reach_distance:
 		print("Reached waypoint ", current_waypoint_index + 1, " of ", sorted_waypoints.size())
-		current_waypoint_index += 1
 		
-		# Check if we've reached the last waypoint
-		if current_waypoint_index >= sorted_waypoints.size():
-			# Check for new waypoints before finishing
-			check_for_new_waypoints()
-			
-			# If still no more waypoints after checking, then finish
-			if current_waypoint_index >= sorted_waypoints.size():
+		# Handle front-spawn: if we've reached last waypoint during initial positioning
+		if is_front_spawn and is_moving_to_last_waypoint:
+			print("FRONT-SPAWN: Reached last waypoint! Enabling danger zones and moving backwards")
+			enable_danger_zones()
+			is_moving_to_last_waypoint = false
+			# Already set to move backwards, continue from current position
+		
+		# Move to next/previous waypoint based on direction
+		if move_backwards:
+			current_waypoint_index -= 1
+			# Check if we've reached the first waypoint (moving backwards)
+			if current_waypoint_index < 0:
+				print("Front-spawn enemy reached beginning (waypoint 0)")
 				has_finished_waypoints = true
 				# Set movement direction for straight movement
 				if sorted_waypoints.size() >= 2:
-					var last_waypoint = sorted_waypoints[sorted_waypoints.size() - 1]
-					var second_last_waypoint = sorted_waypoints[sorted_waypoints.size() - 2]
-					movement_direction = (last_waypoint - second_last_waypoint).normalized()
+					var first_waypoint = sorted_waypoints[0]
+					var second_waypoint = sorted_waypoints[1]
+					movement_direction = (first_waypoint - second_waypoint).normalized()
 				else:
-					movement_direction = Vector3.FORWARD  # Default direction
-				print("Test angler finished all waypoints, moving straight for 5 seconds")
+					movement_direction = -Vector3.FORWARD
+		else:
+			current_waypoint_index += 1
+			# Check if we've reached the last waypoint (moving forwards)
+			if current_waypoint_index >= sorted_waypoints.size():
+				# Check for new waypoints before finishing
+				check_for_new_waypoints()
+				
+				# If still no more waypoints after checking, then finish
+				if current_waypoint_index >= sorted_waypoints.size():
+					has_finished_waypoints = true
+					# Set movement direction for straight movement
+					if sorted_waypoints.size() >= 2:
+						var last_waypoint = sorted_waypoints[sorted_waypoints.size() - 1]
+						var second_last_waypoint = sorted_waypoints[sorted_waypoints.size() - 2]
+						movement_direction = (last_waypoint - second_last_waypoint).normalized()
+					else:
+						movement_direction = Vector3.FORWARD  # Default direction
+					print("Test angler finished all waypoints, moving straight for 5 seconds")
 
 func move_straight_and_despawn(delta):
 	# Move straight in the last direction
