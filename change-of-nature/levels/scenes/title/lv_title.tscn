@@ -221,7 +221,7 @@ theme_override_font_sizes/font_size = 67
 text = "Important info!"
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
 [node name="Info" type="Label" parent="Control/MarginContainer/Demo Info Container"]
@@ -240,11 +240,17 @@ Hello! Thanks for playing the demo! Here are some known bugs:
 
     The current demo is just a walk-through of infinite rooms to test performance; more to come!
 
+CONTROLS!!!
+WSAD to move
+Shift to sprint (demo only)
+Left control to no clip (demo only)
+Space to jump (might be removed)
+
 If you know any fixes to this or find more bugs, 
 DM Videocraft on Hack Club Slack or @Videocraft on Discord."
 
 [node name="MarginContainer2" type="MarginContainer" parent="Control/MarginContainer/Demo Info Container"]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
 [node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
