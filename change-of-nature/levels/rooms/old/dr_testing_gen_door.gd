@@ -73,6 +73,38 @@ func find_level_script() -> Node:
 func _process(_delta: float) -> void:
 	pass
 
+func mark_entry_door_as_generated(room_node: Node, entry_connection_point: Node):
+	"""Mark only the entry door of a pre-generated room (door closest to entry connection point)"""
+	var doors_to_check = [room_node]
+	var closest_door = null
+	var closest_distance = INF
+	
+	# Find all doors in the room
+	var all_doors = []
+	while doors_to_check.size() > 0:
+		var node = doors_to_check.pop_front()
+		
+		# Check if this node is a door (has RoomGenerated variable)
+		if "RoomGenerated" in node and node != room_node:
+			all_doors.append(node)
+		
+		# Add children to check
+		for child in node.get_children():
+			doors_to_check.append(child)
+	
+	# Find the door closest to the entry connection point
+	for door in all_doors:
+		var distance = door.global_position.distance_to(entry_connection_point.global_position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_door = door
+	
+	# Mark only the closest door (entry door) as generated
+	if closest_door:
+		closest_door.RoomGenerated = true
+		print("Marked ENTRY door as pre-generated: ", closest_door.name, " (other doors remain active)")
+	else:
+		print("Warning: No entry door found in pre-generated room")
 
 func _on_bp_small_door_body_entered(body: Node3D) -> void:
 	# Check if the body is the player and if a room hasn't been generated yet.
@@ -295,6 +327,9 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 						next_room_instance.rotate_object_local(Vector3(0, 1, 0), rotation_diff_2.y)
 						next_room_instance.rotate_object_local(Vector3(0, 0, 1), rotation_diff_2.z)
 						print("Pre-generated next room for front-spawn enemy, attached to: ", src_conn.name, " at position: ", src_conn.global_transform.origin)
+						
+						# Mark only the ENTRY door of the pre-generated room (the door at src_conn)
+						mark_entry_door_as_generated(next_room_instance, next_conn)
 						
 						# Now trigger the front-spawn enemy
 						print("Room pre-generated, now spawning front-spawn enemy...")

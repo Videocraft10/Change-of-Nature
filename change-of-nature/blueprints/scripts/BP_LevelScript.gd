@@ -93,6 +93,14 @@ func get_current_door_number() -> String:
 	return "%02d" % current_door_number
 
 func _on_dr_testing_gen_door_door_opened(door_node: Node3D, room_instance: Node3D) -> void: 
+	# Check if any front-spawn enemies are still moving to last waypoint and trigger instant arrival
+	var enemies = get_tree().get_nodes_in_group("node_enemy")
+	for enemy in enemies:
+		# Only trigger if the enemy has the method AND is actually moving to last waypoint
+		if enemy.has_method("trigger_instant_arrival"):
+			# The trigger_instant_arrival method will only set the flag if conditions are met
+			enemy.trigger_instant_arrival()
+	
 	# Play music on first door opening
 	if not first_door_opened:
 		first_door_opened = true

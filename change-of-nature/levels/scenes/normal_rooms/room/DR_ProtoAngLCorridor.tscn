@@ -34,9 +34,9 @@ operation = 2
 size = Vector3(13.8897705, 6, 11.5191345)
 
 [node name="DoorCutout" type="CSGBox3D" parent="protoCorridor"]
-transform = Transform3D(0.96592593, 0, 0.25881907, 0, 1, 0, -0.25881907, 0, 0.96592593, -24.173029, -1.5495851, 3.246274)
+transform = Transform3D(0.96592593, 0, 0.25881907, 0, 1, 0, -0.25881907, 0, 0.96592593, -24.145344, -1.5495851, 3.2388554)
 operation = 2
-size = Vector3(0.88378906, 2.8947754, 1.8258057)
+size = Vector3(1.9472656, 2.8947754, 1.8258057)
 
 [node name="DR_Testing_Gen_Door" parent="protoCorridor/DoorCutout" instance=ExtResource("1_i13jx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017772675, -1.4442945, 0.03338623)

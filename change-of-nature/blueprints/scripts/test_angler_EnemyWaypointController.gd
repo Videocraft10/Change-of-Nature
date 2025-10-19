@@ -18,6 +18,8 @@ var is_speed_boosted: bool = false  # Track if currently boosted
 var is_front_spawn: bool = false  # Track if this is a front-spawn enemy
 var is_moving_to_last_waypoint: bool = false  # Track if moving to starting position
 var move_backwards: bool = false  # Track if moving backwards through waypoints
+var force_instant_arrival: bool = false  # Force instant teleport to last waypoint
+var can_trigger_instant_arrival: bool = false  # Only true after enemy is fully spawned (prevents trigger on spawn door)
 
 func _ready():
 	# Always spawn at world origin
@@ -40,32 +42,57 @@ func set_spawn_at_last_waypoint():
 	# Disable kill and trauma zones during initial movement to last waypoint
 	disable_danger_zones()
 	
+	# Hide sprite during initial positioning
+	if has_node("Sprite3D"):
+		$Sprite3D.visible = false
+		print("Hidden Sprite3D for front-spawn positioning")
+	
 	# Set waypoint index to last waypoint
 	if not sorted_waypoints.is_empty():
 		current_waypoint_index = sorted_waypoints.size() - 1
 		print("Starting at last waypoint (", current_waypoint_index, ") for front-spawn")
+	
+	# Enable instant arrival trigger after a short delay (prevents triggering on spawn door)
+	await get_tree().create_timer(0.5).timeout
+	can_trigger_instant_arrival = true
+	print("Front-spawn enemy ready for instant arrival triggers")
+
+func trigger_instant_arrival():
+	"""Force the front-spawn enemy to instantly arrive at last waypoint (called when door opens)"""
+	if is_front_spawn and is_moving_to_last_waypoint and can_trigger_instant_arrival:
+		force_instant_arrival = true
+		print("Front-spawn enemy triggered for INSTANT ARRIVAL (door opened)")
+	elif is_front_spawn and is_moving_to_last_waypoint and not can_trigger_instant_arrival:
+		print("Front-spawn enemy not ready yet (spawn door opened, ignoring trigger)")
 
 func disable_danger_zones():
 	"""Disable kill area and trauma zones"""
-	if has_node("kill_area"):
-		$kill_area.monitoring = false
-		$kill_area.monitorable = false
+	if has_node("KillArea"):
+		$KillArea.monitoring = false
+		$KillArea.monitorable = false
 		print("Disabled kill area")
 	
 	if has_node("trauma_causer"):
-		$trauma_causer.set_process(false)
+		$trauma_causer.monitoring = false
+		$trauma_causer.monitorable = false
 		print("Disabled trauma causer")
 
 func enable_danger_zones():
 	"""Re-enable kill area and trauma zones"""
-	if has_node("kill_area"):
-		$kill_area.monitoring = true
-		$kill_area.monitorable = true
+	if has_node("KillArea"):
+		$KillArea.monitoring = true
+		$KillArea.monitorable = true
 		print("Enabled kill area")
 	
 	if has_node("trauma_causer"):
-		$trauma_causer.set_process(true)
+		$trauma_causer.monitoring = true
+		$trauma_causer.monitorable = true
 		print("Enabled trauma causer")
+	
+	# Show sprite when danger zones are enabled (front-spawn ready to attack)
+	if has_node("Sprite3D"):
+		$Sprite3D.visible = true
+		print("Shown Sprite3D - front-spawn attack begins")
 
 func _process(delta):
 	# Trauma causer functionality from test_angler.gd - only if player is not in freefly
@@ -259,8 +286,25 @@ func move_through_waypoints(delta):
 	var total_waypoints = sorted_waypoints.size()
 	var target_waypoint = sorted_waypoints[current_waypoint_index]
 	
-	# Teleport mode: Jump to waypoints until 20 remain (works for ALL waypoint counts)
-	if remaining_waypoints > 20:
+	# Check if front-spawn needs instant arrival (door opened while moving to last waypoint)
+	if is_front_spawn and is_moving_to_last_waypoint and force_instant_arrival:
+		# Instantly teleport to last waypoint
+		if current_waypoint_index < sorted_waypoints.size():
+			global_position = sorted_waypoints[current_waypoint_index]
+			print("INSTANT ARRIVAL: Front-spawn enemy teleported to last waypoint!")
+			
+			# Enable danger zones and start backwards movement
+			enable_danger_zones()
+			is_moving_to_last_waypoint = false
+			force_instant_arrival = false
+			
+			# Start moving backwards from last waypoint
+			current_waypoint_index -= 1
+		return
+	
+	# Teleport mode: Jump to waypoints until 20 remain
+	# EXCEPT for front-spawn enemies - they always use normal speed
+	if remaining_waypoints > 20 and not is_front_spawn:
 		# Teleport mode: instantly jump to waypoints
 		if not is_speed_boosted:
 			print("Teleport mode activated! Total waypoints: ", total_waypoints, ", Remaining: ", remaining_waypoints)

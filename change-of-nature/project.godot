@@ -43,6 +43,7 @@ rooms=""
 enemy_waypoints=""
 light=""
 e_angler=""
+node_enemy=""
 
 [input]
 
