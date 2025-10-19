@@ -237,11 +237,11 @@ func try_spawn_enemy_after_door():
 				
 				print("Enemy spawned - multiplier reset to 1")
 				
-				# After spawning, decide if NEXT enemy will be front-spawn (100% chance DEBUG - revert to 0.1 later)
+				# After spawning, decide if NEXT enemy will be front-spawn (10% chance)
 				if not next_enemy_is_front_spawn:  # Only roll if not already set
-					if randf() < 1.0:
+					if randf() < 0.1:
 						next_enemy_is_front_spawn = true
-						print("NEXT enemy will be a front-spawn (100% chance triggered)!")
+						print("NEXT enemy will be a front-spawn (10% chance triggered)!")
 					else:
 						next_enemy_is_front_spawn = false
 						print("Next enemy will be a normal back-spawn")
@@ -303,10 +303,10 @@ func spawn_front_enemy():
 		
 		print("Front-spawn enemy spawned - multiplier reset to 1")
 		
-		# After spawning, decide if NEXT enemy will be front-spawn (100% chance DEBUG - revert to 0.1 later)
-		if randf() < 1.0:
+		# After spawning, decide if NEXT enemy will be front-spawn (10% chance)
+		if randf() < 0.1:
 			next_enemy_is_front_spawn = true
-			print("NEXT enemy will be a front-spawn (100% chance triggered)!")
+			print("NEXT enemy will be a front-spawn (10% chance triggered)!")
 		else:
 			next_enemy_is_front_spawn = false
 			print("Next enemy will be a normal back-spawn")
