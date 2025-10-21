@@ -3,6 +3,7 @@
 <br/>
 
 *Created for Hackclub Shiba 2026*
+*discontnued, Shiba complete!*
 
 ### What is Hackclub Shiba?
 
