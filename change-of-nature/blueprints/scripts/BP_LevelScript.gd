@@ -10,6 +10,7 @@ var song_cred_control: Control = null
 
 @export_category("Monster Settings")
 @export var TestBaddieWeight = 0
+@export var debug_force_front_spawn: bool = false
 
 # Enemy spawn configuration with weighted chances
 # Each entry has a scene path and a weight (percentage)
@@ -239,9 +240,9 @@ func try_spawn_enemy_after_door():
 				
 				# After spawning, decide if NEXT enemy will be front-spawn (10% chance)
 				if not next_enemy_is_front_spawn:  # Only roll if not already set
-					if randf() < 0.1:
+					if debug_force_front_spawn or randf() < 0.1:
 						next_enemy_is_front_spawn = true
-						print("NEXT enemy will be a front-spawn (10% chance triggered)!")
+						print("NEXT enemy will be a front-spawn (forced by debug or 10% chance)!")
 					else:
 						next_enemy_is_front_spawn = false
 						print("Next enemy will be a normal back-spawn")
@@ -302,11 +303,11 @@ func spawn_front_enemy():
 			fade_out_music()
 		
 		print("Front-spawn enemy spawned - multiplier reset to 1")
-		
+
 		# After spawning, decide if NEXT enemy will be front-spawn (10% chance)
-		if randf() < 0.1:
+		if debug_force_front_spawn or randf() < 0.1:
 			next_enemy_is_front_spawn = true
-			print("NEXT enemy will be a front-spawn (10% chance triggered)!")
+			print("NEXT enemy will be a front-spawn (forced by debug or 10% chance)!")
 		else:
 			next_enemy_is_front_spawn = false
 			print("Next enemy will be a normal back-spawn")

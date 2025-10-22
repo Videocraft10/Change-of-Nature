@@ -20,6 +20,9 @@ var is_moving_to_last_waypoint: bool = false  # Track if moving to starting posi
 var move_backwards: bool = false  # Track if moving backwards through waypoints
 var force_instant_arrival: bool = false  # Force instant teleport to last waypoint
 var can_trigger_instant_arrival: bool = false  # Only true after enemy is fully spawned (prevents trigger on spawn door)
+var is_waiting_at_last_waypoint: bool = false  # True when front-spawn is waiting at last waypoint
+var wait_timer: float = 0.0  # Timer for 10-second wait at last waypoint
+var wait_duration: float = 10.0  # How long to wait at last waypoint before attacking
 
 func _ready():
 	# Always spawn at world origin
@@ -36,33 +39,42 @@ func set_spawn_at_last_waypoint():
 	"""Configure this enemy to spawn from the front (last waypoint, moving backwards)"""
 	print("Configuring enemy for FRONT-SPAWN mode")
 	is_front_spawn = true
-	is_moving_to_last_waypoint = true
+	is_moving_to_last_waypoint = false  # Not moving to it anymore - instant teleport
 	move_backwards = true
 	
-	# Disable kill and trauma zones during initial movement to last waypoint
+	# Disable kill and trauma zones (will remain off during wait)
 	disable_danger_zones()
 	
-	# Hide sprite during initial positioning
+	# Hide sprite during wait period
 	if has_node("Sprite3D"):
 		$Sprite3D.visible = false
-		print("Hidden Sprite3D for front-spawn positioning")
+		print("Hidden Sprite3D for front-spawn wait period")
 	
-	# Set waypoint index to last waypoint
+	# Instantly teleport to last waypoint
 	if not sorted_waypoints.is_empty():
 		current_waypoint_index = sorted_waypoints.size() - 1
-		print("Starting at last waypoint (", current_waypoint_index, ") for front-spawn")
+		global_position = sorted_waypoints[current_waypoint_index]
+		print("Front-spawn enemy INSTANTLY TELEPORTED to last waypoint (", current_waypoint_index, ")")
+		
+		# Start waiting at last waypoint
+		is_waiting_at_last_waypoint = true
+		wait_timer = 0.0
+		print("Front-spawn enemy waiting 10 seconds before attacking...")
+		
+		# Move to the waypoint before last, ready to move backwards
+		current_waypoint_index -= 1
 	
 	# Enable instant arrival trigger after a short delay (prevents triggering on spawn door)
 	await get_tree().create_timer(0.5).timeout
 	can_trigger_instant_arrival = true
-	print("Front-spawn enemy ready for instant arrival triggers")
+	print("Front-spawn enemy ready for door-open instant attack triggers")
 
 func trigger_instant_arrival():
-	"""Force the front-spawn enemy to instantly arrive at last waypoint (called when door opens)"""
-	if is_front_spawn and is_moving_to_last_waypoint and can_trigger_instant_arrival:
-		force_instant_arrival = true
-		print("Front-spawn enemy triggered for INSTANT ARRIVAL (door opened)")
-	elif is_front_spawn and is_moving_to_last_waypoint and not can_trigger_instant_arrival:
+	"""Force the front-spawn enemy to instantly start attack (called when door opens during wait)"""
+	if is_front_spawn and is_waiting_at_last_waypoint and can_trigger_instant_arrival:
+		print("Door opened! Front-spawn enemy INSTANTLY starting attack (skipping wait timer)")
+		start_front_spawn_attack()
+	elif is_front_spawn and is_waiting_at_last_waypoint and not can_trigger_instant_arrival:
 		print("Front-spawn enemy not ready yet (spawn door opened, ignoring trigger)")
 
 func disable_danger_zones():
@@ -94,7 +106,27 @@ func enable_danger_zones():
 		$Sprite3D.visible = true
 		print("Shown Sprite3D - front-spawn attack begins")
 
+func start_front_spawn_attack():
+	"""Start the front-spawn attack (called after wait timer or when door opens)"""
+	if not is_front_spawn:
+		return
+	
+	print("Front-spawn attack STARTING!")
+	is_waiting_at_last_waypoint = false
+	wait_timer = 0.0
+	
+	# Enable danger zones and show sprite
+	enable_danger_zones()
+
 func _process(delta):
+	# Handle front-spawn wait timer
+	if is_waiting_at_last_waypoint:
+		wait_timer += delta
+		if wait_timer >= wait_duration:
+			print("Front-spawn wait complete (10 seconds elapsed), starting attack!")
+			start_front_spawn_attack()
+		return  # Don't do normal movement while waiting
+	
 	# Trauma causer functionality from test_angler.gd - only if player is not in freefly
 	if has_node("trauma_causer"):
 		var player = get_tree().get_first_node_in_group("player")
@@ -286,22 +318,6 @@ func move_through_waypoints(delta):
 	var total_waypoints = sorted_waypoints.size()
 	var target_waypoint = sorted_waypoints[current_waypoint_index]
 	
-	# Check if front-spawn needs instant arrival (door opened while moving to last waypoint)
-	if is_front_spawn and is_moving_to_last_waypoint and force_instant_arrival:
-		# Instantly teleport to last waypoint
-		if current_waypoint_index < sorted_waypoints.size():
-			global_position = sorted_waypoints[current_waypoint_index]
-			print("INSTANT ARRIVAL: Front-spawn enemy teleported to last waypoint!")
-			
-			# Enable danger zones and start backwards movement
-			enable_danger_zones()
-			is_moving_to_last_waypoint = false
-			force_instant_arrival = false
-			
-			# Start moving backwards from last waypoint
-			current_waypoint_index -= 1
-		return
-	
 	# Teleport mode: Jump to waypoints until 20 remain
 	# EXCEPT for front-spawn enemies - they always use normal speed
 	if remaining_waypoints > 20 and not is_front_spawn:
@@ -315,12 +331,6 @@ func move_through_waypoints(delta):
 		
 		# Instantly mark as reached and move to next/previous waypoint
 		print("Teleported to waypoint ", current_waypoint_index + 1, " of ", sorted_waypoints.size())
-		
-		# Handle front-spawn: if we've reached last waypoint during initial positioning
-		if is_front_spawn and is_moving_to_last_waypoint:
-			print("FRONT-SPAWN (Teleport): Reached last waypoint! Enabling danger zones and moving backwards")
-			enable_danger_zones()
-			is_moving_to_last_waypoint = false
 		
 		# Move to next/previous waypoint based on direction
 		if move_backwards:
@@ -369,13 +379,6 @@ func move_through_waypoints(delta):
 	# Check if reached waypoint
 	if global_position.distance_to(target_waypoint) < waypoint_reach_distance:
 		print("Reached waypoint ", current_waypoint_index + 1, " of ", sorted_waypoints.size())
-		
-		# Handle front-spawn: if we've reached last waypoint during initial positioning
-		if is_front_spawn and is_moving_to_last_waypoint:
-			print("FRONT-SPAWN: Reached last waypoint! Enabling danger zones and moving backwards")
-			enable_danger_zones()
-			is_moving_to_last_waypoint = false
-			# Already set to move backwards, continue from current position
 		
 		# Move to next/previous waypoint based on direction
 		if move_backwards:

@@ -37,6 +37,7 @@ size = Vector3(0.6065674, 3.4064941, 52)
 
 [node name="Demo 1 World" type="Node3D" groups=["Level"]]
 script = ExtResource("1_as2pj")
+debug_force_front_spawn = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_00k7w")
