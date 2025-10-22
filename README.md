@@ -4,6 +4,8 @@
 
 *Created for Hackclub Shiba 2026*
 
+*Discontnued, Shiba complete!*
+
 ### What is Hackclub Shiba?
 
 Hack club is a non-profit organization that helps high school students get excited about coding! The top 30 games in Hackclub Shiba get to go to Tokyo, Japan and make a arcade with the games they made! (soo cool!)
