@@ -1,9 +1,10 @@
-[gd_scene load_steps=20 format=3 uid="uid://d3ul0uoa1ila"]
+[gd_scene load_steps=21 format=3 uid="uid://d3ul0uoa1ila"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://addons/proto_controller/proto_controller.tscn" id="1_72lju"]
 [ext_resource type="Script" uid="uid://da3hfg8a1cx0f" path="res://blueprints/scripts/BP_LevelScript.gd" id="1_guyg2"]
 [ext_resource type="Material" uid="uid://7m53gvamqhxa" path="res://materials/prototype/M_ProtoBaseplate.tres" id="1_ny0t1"]
 [ext_resource type="Material" uid="uid://dywdnduvgc4ps" path="res://materials/prototype/M_ProtoWall.tres" id="1_r4e4k"]
+[ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="4_1as3x"]
 [ext_resource type="PackedScene" uid="uid://bd1pjnumtk111" path="res://levels/testing/LV_screenshake_demo.tscn" id="4_r4e4k"]
 [ext_resource type="PackedScene" uid="uid://cslgeocb65cwj" path="res://blueprints/scenes/test_angler.tscn" id="5_wegei"]
 [ext_resource type="Script" uid="uid://dr8pswhf2d7mx" path="res://levels/testing/path_3d.gd" id="6_knuv6"]
@@ -70,15 +71,27 @@ transform = Transform3D(6.22, 0, 0, 0, 0.5, 5.38668, 0, -0.866025, 3.11, 6.39, 0
 size = Vector3(2, 1, 1)
 material = ExtResource("1_ny0t1")
 
+[node name="Character" parent="." instance=ExtResource("4_1as3x")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 30.544823, 0, 0)
+visible = false
+default_reticle = ""
+controls = {
+&"BACKWARD": "move_down",
+&"CROUCH": "crouch",
+&"FORWARD": "move_up",
+&"JUMP": "jump",
+&"LEFT": "move_left",
+&"PAUSE": "ui_cancel",
+&"RIGHT": "move_right",
+&"SPRINT": "sprint"
+}
+
 [node name="ProtoController" parent="." instance=ExtResource("1_72lju")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.775306, 0.442935, -0.592994)
 can_sprint = true
 can_freefly = true
 trauma_reduction_rate = 1.0
 noise = SubResource("FastNoiseLite_r4e4k")
-strobe_frequency = 50.0
-strobe_min_exposure = 0.5
-strobe_max_exposure = 1.0
 
 [node name="screenshake_demo" parent="." instance=ExtResource("4_r4e4k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8076, 1.41532, 3.00025)
