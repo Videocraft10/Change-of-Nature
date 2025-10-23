@@ -23,6 +23,9 @@ var can_trigger_instant_arrival: bool = false  # Only true after enemy is fully 
 var is_waiting_at_last_waypoint: bool = false  # True when front-spawn is waiting at last waypoint
 var wait_timer: float = 0.0  # Timer for 10-second wait at last waypoint
 var wait_duration: float = 10.0  # How long to wait at last waypoint before attacking
+@export var initial_wait_duration: float = 5.0 # How long normal spawns wait before starting movement
+var is_initial_waiting: bool = false
+var initial_wait_timer: float = 0.0
 
 func _ready():
 	# Always spawn at world origin
@@ -34,6 +37,12 @@ func _ready():
 	
 	# Scale speed based on total waypoints
 	update_speed_based_on_waypoints()
+
+	# Start initial wait for normal (back) spawns
+	if not is_front_spawn:
+		is_initial_waiting = true
+		initial_wait_timer = 0.0
+		print("Normal spawn: waiting ", initial_wait_duration, " seconds before movement")
 
 func set_spawn_at_last_waypoint():
 	"""Configure this enemy to spawn from the front (last waypoint, moving backwards)"""
@@ -68,6 +77,9 @@ func set_spawn_at_last_waypoint():
 	await get_tree().create_timer(0.5).timeout
 	can_trigger_instant_arrival = true
 	print("Front-spawn enemy ready for door-open instant attack triggers")
+
+	# If this was marked as an initial non-front wait, cancel it
+	is_initial_waiting = false
 
 func trigger_instant_arrival():
 	"""Force the front-spawn enemy to instantly start attack (called when door opens during wait)"""
@@ -126,6 +138,16 @@ func _process(delta):
 			print("Front-spawn wait complete (10 seconds elapsed), starting attack!")
 			start_front_spawn_attack()
 		return  # Don't do normal movement while waiting
+
+	# Handle initial wait for normal spawns
+	if is_initial_waiting:
+		initial_wait_timer += delta
+		if initial_wait_timer >= initial_wait_duration:
+			is_initial_waiting = false
+			initial_wait_timer = 0.0
+			print("Initial wait complete, normal spawn will begin movement")
+		# Don't proceed to movement until the initial wait completes
+		return
 	
 	# Trauma causer functionality from test_angler.gd - only if player is not in freefly
 	if has_node("trauma_causer"):
