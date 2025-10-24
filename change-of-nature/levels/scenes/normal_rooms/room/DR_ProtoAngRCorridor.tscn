@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://fdsc4vq1qq0p"]
 
-[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_d0eio"]
-[ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_wp04i"]
-[ext_resource type="PackedScene" uid="uid://o42mec4yynmq" path="res://models/props/PR_industrial_small_light.tscn" id="3_qwf2l"]
-[ext_resource type="PackedScene" uid="uid://bfiygaks5w4bk" path="res://models/props/PR_industial_light_large.tscn" id="4_5t3sx"]
-[ext_resource type="PackedScene" uid="uid://brvi0bgxs3esb" path="res://models/props/PR_PRFflood_light.tscn" id="5_xvnts"]
-[ext_resource type="PackedScene" uid="uid://cdayxyg7yeydm" path="res://blueprints/scenes/room_light.tscn" id="6_oom2q"]
-[ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="7_4snqd"]
-[ext_resource type="PackedScene" uid="uid://c20h5ci5n4wei" path="res://blueprints/prop scene/medium_prop.tscn" id="8_d0eio"]
+[ext_resource type="PackedScene" uid="uid://catipc47tyk1v" path="res://levels/rooms/old/DR_testing_gen_door.tscn" id="1_i13jx"]
+[ext_resource type="PackedScene" uid="uid://dp12k3nhbg735" path="res://models/props/PR_DoorSign.tscn" id="2_n5klb"]
+[ext_resource type="PackedScene" uid="uid://o42mec4yynmq" path="res://models/props/PR_industrial_small_light.tscn" id="3_gnb8q"]
+[ext_resource type="PackedScene" uid="uid://bfiygaks5w4bk" path="res://models/props/PR_industial_light_large.tscn" id="4_s34rv"]
+[ext_resource type="PackedScene" uid="uid://brvi0bgxs3esb" path="res://models/props/PR_PRFflood_light.tscn" id="5_xf8oe"]
+[ext_resource type="PackedScene" uid="uid://cdayxyg7yeydm" path="res://blueprints/scenes/room_light.tscn" id="6_jjut5"]
+[ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="7_y88cq"]
+[ext_resource type="PackedScene" uid="uid://c20h5ci5n4wei" path="res://blueprints/prop scene/medium_prop.tscn" id="8_i13jx"]
 
 [node name="DrProtoAngRCorridor" type="Node3D"]
 
@@ -38,10 +38,10 @@ transform = Transform3D(0.9659258, 0, -0.25881904, 0, 1, 0, 0.25881904, 0, 0.965
 operation = 2
 size = Vector3(0.88378906, 2.8947754, 1.8258057)
 
-[node name="DR_Testing_Gen_Door" parent="protoCorridor/DoorCutout" instance=ExtResource("1_d0eio")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.017772675, -1.4442945, 0.03338623)
+[node name="DR_Testing_Gen_Door" parent="protoCorridor/DoorCutout" instance=ExtResource("1_i13jx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1084505, -1.4442945, 0.03338612)
 
-[node name="PR_DoorSign" parent="protoCorridor/DoorCutout/DR_Testing_Gen_Door" instance=ExtResource("2_wp04i")]
+[node name="PR_DoorSign" parent="protoCorridor/DoorCutout/DR_Testing_Gen_Door" instance=ExtResource("2_n5klb")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.36075687, 2.4873028, -1.6491688)
 
 [node name="DoorCutout2" type="CSGBox3D" parent="protoCorridor"]
@@ -55,59 +55,59 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 8.99
 [node name="RoomSmallLights" type="Node3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.6304617, 0)
 
-[node name="IndustrialSmallLight" parent="RoomSmallLights" instance=ExtResource("3_qwf2l")]
+[node name="IndustrialSmallLight" parent="RoomSmallLights" instance=ExtResource("3_gnb8q")]
 transform = Transform3D(-8.742278e-08, 2, 0, -2, -8.742278e-08, 0, 0, 0, 2, 17.59, 2.3611917, 0)
 
-[node name="IndustrialSmallLight2" parent="RoomSmallLights" instance=ExtResource("3_qwf2l")]
+[node name="IndustrialSmallLight2" parent="RoomSmallLights" instance=ExtResource("3_gnb8q")]
 transform = Transform3D(-8.742278e-08, -1.9318516, -0.5176381, 2, -8.444392e-08, -2.262668e-08, 0, -0.5176381, 1.9318516, -48.526657, 0.94075483, -4.2825565)
 
 [node name="RoomLargeLights" type="Node3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -1.8531079, 2.6304617, 0)
 
-[node name="IndustialLightLarge" parent="RoomLargeLights" instance=ExtResource("4_5t3sx")]
+[node name="IndustialLightLarge" parent="RoomLargeLights" instance=ExtResource("4_s34rv")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 5.7035065, -6)
 
-[node name="IndustialLightLarge2" parent="RoomLargeLights" instance=ExtResource("4_5t3sx")]
+[node name="IndustialLightLarge2" parent="RoomLargeLights" instance=ExtResource("4_s34rv")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 5.7035065, 6)
 
-[node name="IndustialLightLarge3" parent="RoomLargeLights" instance=ExtResource("4_5t3sx")]
+[node name="IndustialLightLarge3" parent="RoomLargeLights" instance=ExtResource("4_s34rv")]
 transform = Transform3D(-0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881907, -26.102222, 5.7035065, -8.223545)
 
-[node name="IndustialLightLarge4" parent="RoomLargeLights" instance=ExtResource("4_5t3sx")]
+[node name="IndustialLightLarge4" parent="RoomLargeLights" instance=ExtResource("4_s34rv")]
 transform = Transform3D(-0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881907, -29, 5.7035065, 2.9999986)
 
 [node name="RoomFloodLights" type="Node3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.6304617, 0)
 
-[node name="PR_FloodLight" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -15.606877, 4.9301605, 10.436335)
 
-[node name="PR_FloodLight2" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight2" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 7.782897, 4.9301605, 10.436335)
 
-[node name="PR_FloodLight3" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight3" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 7.782897, 4.9301605, -10.50725)
 
-[node name="PR_FloodLight4" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight4" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -15.795766, 4.9301605, -10.50725)
 
-[node name="PR_FloodLight5" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight5" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(0.258819, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.258819, -46.034515, 4.9301605, 5.128234)
 
-[node name="PR_FloodLight6" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight6" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(0.258819, 0, 0.9659258, 0, 1, 0, -0.9659258, 0, 0.258819, -27.441727, 4.9301605, 9.97598)
 
-[node name="PR_FloodLight7" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight7" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(-0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881907, -21.792683, 4.9301605, -11.106547)
 
-[node name="PR_FloodLight8" parent="RoomFloodLights" instance=ExtResource("5_xvnts")]
+[node name="PR_FloodLight8" parent="RoomFloodLights" instance=ExtResource("5_xf8oe")]
 transform = Transform3D(-0.25881907, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881907, -40.56792, 4.9301605, -16.585728)
 
-[node name="RoomLight5" parent="." instance=ExtResource("6_oom2q")]
+[node name="RoomLight5" parent="." instance=ExtResource("6_jjut5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.650644, 3.8064728, -1.3017865)
 omni_range = 21.359243
 
-[node name="RoomLight3" parent="." instance=ExtResource("6_oom2q")]
+[node name="RoomLight3" parent="." instance=ExtResource("6_jjut5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4904368, 3.8064728, 0.047781825)
 omni_range = 22.066933
 
@@ -121,24 +121,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.254489, 0, 0)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
-material = ExtResource("7_4snqd")
+material = ExtResource("7_y88cq")
 
 [node name="Lockers" type="Node3D" parent="."]
 
-[node name="Medium Prop4" parent="Lockers" instance=ExtResource("8_d0eio")]
+[node name="Medium Prop4" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.0633764, 0.57705545, -4.9737935)
 
-[node name="Medium Prop3" parent="Lockers" instance=ExtResource("8_d0eio")]
+[node name="Medium Prop3" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.9366236, 0.57705545, -4.9737935)
 
-[node name="Medium Prop2" parent="Lockers" instance=ExtResource("8_d0eio")]
+[node name="Medium Prop2" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -5.936624, 0.57705545, 5.2002573)
 
-[node name="Medium Prop" parent="Lockers" instance=ExtResource("8_d0eio")]
+[node name="Medium Prop" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(0.25881916, 0, 0.96592575, 0, 1, 0, -0.96592575, 0, 0.25881916, -11.936625, 0.57705545, 5.2002563)
 
-[node name="Medium Prop5" parent="Lockers" instance=ExtResource("8_d0eio")]
+[node name="Medium Prop5" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(0.9659259, 0, -0.2588191, 0, 1, 0, 0.2588191, 0, 0.9659259, -24.369778, 0.57705545, 0.178092)
 
-[node name="Medium Prop6" parent="Lockers" instance=ExtResource("8_d0eio")]
+[node name="Medium Prop6" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(0.9659259, 0, -0.2588191, 0, 1, 0, 0.2588191, 0, 0.9659259, -22.558044, 0.57705545, -6.5833893)

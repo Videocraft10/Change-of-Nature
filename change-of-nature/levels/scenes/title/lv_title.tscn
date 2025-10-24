@@ -240,7 +240,7 @@ Hello! Thanks for playing the demo! Here are some known bugs:
 
     The current demo is just a walk-through of infinite rooms to test performance; more to come!
 
-CONTROLS!!!
+CONTROLS!!!			                                    	PLEASE DM ME IF YOU FIND A ROOM WITH NO EXIT!!!!
 WSAD to move
 Shift to sprint (demo only)
 Left control to no clip (demo only)
@@ -255,7 +255,7 @@ layout_mode = 2
 
 [node name="Exit Info" type="Button" parent="Control/MarginContainer/Demo Info Container"]
 layout_mode = 2
-text = "Exit"
+text = "PLAY!!!"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

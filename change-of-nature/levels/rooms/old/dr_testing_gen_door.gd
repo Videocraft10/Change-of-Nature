@@ -73,6 +73,30 @@ func find_level_script() -> Node:
 func _process(_delta: float) -> void:
 	pass
 
+func disable_all_active_doors_in_scene():
+	"""Disable all doors currently active in the scene (before pre-generating for front-spawn)"""
+	var all_doors = []
+	var nodes_to_check = [get_tree().current_scene]
+	
+	# Find all nodes with RoomGenerated variable (doors)
+	while nodes_to_check.size() > 0:
+		var node = nodes_to_check.pop_front()
+		
+		# Check if this node is a door (has RoomGenerated variable)
+		if "RoomGenerated" in node and not node.RoomGenerated:
+			all_doors.append(node)
+		
+		# Add children to check
+		for child in node.get_children():
+			nodes_to_check.append(child)
+	
+	# Disable all active doors
+	for door in all_doors:
+		door.RoomGenerated = true
+		print("Disabled door before front-spawn pre-generation: ", door.name)
+	
+	print("Disabled ", all_doors.size(), " active doors before pre-generating room")
+
 func mark_entry_door_as_generated(room_node: Node, entry_connection_point: Node):
 	"""Mark only the entry door of a pre-generated room (door closest to entry connection point)"""
 	var doors_to_check = [room_node]
@@ -264,6 +288,9 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 			print("Front-spawn enemy ready! Pre-generating next room...")
 			level_script.should_pre_generate_room = false  # Reset the flag
 			
+			# FIRST: Disable all currently active doors to prevent duplicate generation
+			disable_all_active_doors_in_scene()
+			
 			# Build available scenes list (same as above selection logic)
 			var next_available_scenes = []
 			for scene in room_files:
@@ -328,8 +355,9 @@ func _on_bp_small_door_body_entered(body: Node3D) -> void:
 						next_room_instance.rotate_object_local(Vector3(0, 0, 1), rotation_diff_2.z)
 						print("Pre-generated next room for front-spawn enemy, attached to: ", src_conn.name, " at position: ", src_conn.global_transform.origin)
 						
-						# Mark only the ENTRY door of the pre-generated room (the door at src_conn)
-						mark_entry_door_as_generated(next_room_instance, next_conn)
+						# NOTE: We don't mark doors in the pre-generated room because we already disabled all OLD doors
+						# The new room's doors should remain active for future generation
+						print("Pre-generated room's doors remain ACTIVE (all old doors were disabled)")
 						
 						# Now trigger the front-spawn enemy
 						print("Room pre-generated, now spawning front-spawn enemy...")

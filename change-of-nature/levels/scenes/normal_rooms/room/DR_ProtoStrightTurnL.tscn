@@ -20,8 +20,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.0429688, 0, 0)
 size = Vector3(22.085938, 7, 14)
 
 [node name="Room2" type="CSGBox3D" parent="ProtoTurnL"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -20.045258, 0, 7.331362)
-size = Vector3(29, 7, 14)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -19.872406, 0, 7.331362)
+size = Vector3(29, 7, 13.654297)
 
 [node name="RoomCut" type="CSGBox3D" parent="ProtoTurnL"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.749817, 0, -0.5)
