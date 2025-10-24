@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://brvi0bgxs3esb" path="res://models/props/PR_PRFflood_light.tscn" id="5_xf8oe"]
 [ext_resource type="PackedScene" uid="uid://cdayxyg7yeydm" path="res://blueprints/scenes/room_light.tscn" id="6_jjut5"]
 [ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="7_y88cq"]
-[ext_resource type="PackedScene" uid="uid://c6eoa875k0hg4" path="res://models/props/PR_locker.tscn" id="8_4bl62"]
+[ext_resource type="PackedScene" uid="uid://c20h5ci5n4wei" path="res://blueprints/prop scene/medium_prop.tscn" id="8_i13jx"]
 
 [node name="DrProtoAngRCorridor" type="Node3D"]
 
@@ -125,17 +125,20 @@ material = ExtResource("7_y88cq")
 
 [node name="Lockers" type="Node3D" parent="."]
 
-[node name="PR_Locker" parent="Lockers" instance=ExtResource("8_4bl62")]
+[node name="Medium Prop5" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 2.0633764, 0.57705545, -4.9737935)
 
-[node name="PR_Locker2" parent="Lockers" instance=ExtResource("8_4bl62")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5.9366236, 0.57705545, -4.9737935)
+[node name="Medium Prop4" parent="Lockers" instance=ExtResource("8_i13jx")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -0.9366236, 0.57705545, -4.9737935)
 
-[node name="PR_Locker4" parent="Lockers" instance=ExtResource("8_4bl62")]
+[node name="Medium Prop3" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(1.3113416e-07, 0, 1, 0, 1, 0, -1, 0, 1.3113416e-07, -5.936624, 0.57705545, 5.2002573)
 
-[node name="PR_Locker5" parent="Lockers" instance=ExtResource("8_4bl62")]
+[node name="Medium Prop2" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(0.25881884, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, 0.25881884, -14.487343, 0.57705545, -4.319158)
 
-[node name="PR_Locker3" parent="Lockers" instance=ExtResource("8_4bl62")]
+[node name="Medium Prop" parent="Lockers" instance=ExtResource("8_i13jx")]
 transform = Transform3D(0.9659258, 0, 0.25881898, 0, 1, 0, -0.25881898, 0, 0.9659258, -22.60787, 0.57705545, 6.5253506)
+
+[node name="Medium Prop6" parent="Lockers" instance=ExtResource("8_i13jx")]
+transform = Transform3D(0.9659258, 0, 0.25881898, 0, 1, 0, -0.25881898, 0, 0.9659258, -24.419603, 0.57705545, -0.23613024)
