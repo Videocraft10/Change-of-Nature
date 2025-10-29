@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://hlujelco7ysk"]
-
-[ext_resource type="PackedScene" uid="uid://cgk0obcopj7rb" path="res://models/props/raw/Locker.blend" id="1_dl4l6"]
-[ext_resource type="Script" uid="uid://cecvb80kls0yf" path="res://models/props/raw/edited_locker_2.gd" id="2_3gbmi"]
-
-[node name="Locker2" instance=ExtResource("1_dl4l6")]
-script = ExtResource("2_3gbmi")

@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccb8upmtcukyd"]
-
-[ext_resource type="PackedScene" uid="uid://bvnk7fde2il02" path="res://models/props/raw/FloodLight.blend" id="1_nkcjf"]
-[ext_resource type="Material" uid="uid://bjvnpi22xsk7q" path="res://materials/M_MasterEmissonLight.tres" id="2_kodfw"]
-
-[node name="FloodLight2" instance=ExtResource("1_nkcjf")]
-
-[node name="FloodLight" parent="." index="0"]
-surface_material_override/1 = ExtResource("2_kodfw")
